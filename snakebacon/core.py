@@ -54,7 +54,7 @@ class Core:
         # k_out = len(d_out)
         # return (thick_out, d_out, k_out)
 
-    def calibrate_dates(self, calib_curve, d_R, d_STD, t_a=3, t_b=4, cutoff=0.001, normal_distr=False):
+    def calibrate_dates(self, calib_curve, d_r, d_std, t_a=3, t_b=4, cutoff=0.001, normal_distr=False):
         """Python version of .bacon.calib() on line 908 in Bacon.R
         """
         # .bacon.calib - line 908
@@ -71,7 +71,7 @@ class Core:
         # I think we can do the below without a loop.
         for i in range(len(self.depth)):
             # TODO(brews): Rename columns, or have the columns passed in with names.
-            age_realizations = calib_curve.d_cal(rcmean=self.age[i] - d_R, w2=self.error[i] ** 2 + d_STD ** 2, t_a=t_a, t_b=t_b, cutoff=cutoff, normal_distr=normal_distr)
+            age_realizations = calib_curve.d_cal(rcmean=self.age[i] - d_r, w2=self.error[i] ** 2 + d_std ** 2, t_a=t_a, t_b=t_b, cutoff=cutoff, normal_distr=normal_distr)
             calib_probs.append(age_realizations)
         return (self.depth, calib_probs)
 
