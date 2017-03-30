@@ -71,18 +71,19 @@ class Core:
         # I think we can do the below without a loop.
         for i in range(len(self.depth)):
             # TODO(brews): Rename columns, or have the columns passed in with names.
-            age_realizations = calib_curve.d_cal(rcmean=self.age[i] - d_r, w2=self.error[i] ** 2 + d_std ** 2, t_a=t_a, t_b=t_b, cutoff=cutoff, normal_distr=normal_distr)
+            age_realizations = calib_curve.d_cal(rcmean=self.age[i] - d_r, w2=self.error[i] ** 2 + d_std ** 2,
+                                                 t_a=t_a, t_b=t_b, cutoff=cutoff, normal_distr=normal_distr)
             calib_probs.append(age_realizations)
-        return (self.depth, calib_probs)
+        return self.depth, calib_probs
 
 
 def read_corefile(fl):
     """Create proxy instance from Bacon proxy file
     """
-    indata = pd.read_table(fl, sep=r'\,\s*', index_col=None, engine = 'python')
-    outcore = Core(age = indata['age'].values,
-                   error = indata['error'].values,
-                   depth = indata['depth'].values,
-                   labid = indata['labID'].values,
-                   depth_units = 'meters')
+    indata = pd.read_table(fl, sep=r'\,\s*', index_col=None, engine='python')
+    outcore = Core(age=indata['age'].values,
+                   error=indata['error'].values,
+                   depth=indata['depth'].values,
+                   labid=indata['labID'].values,
+                   depth_units='meters')
     return outcore
