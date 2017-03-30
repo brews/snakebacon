@@ -9,8 +9,8 @@ class TestCalibCurveMethods(unittest.TestCase):
         np.random.seed(123)
         self.minitestcurve = curve.CalibCurve(calbp=np.arange(1, 4), c14age=np.arange(3, 0, -1),
                                               error=np.arange(21, 24), delta14c=None, sigma=None)
-        self.smalltestcurve = curve.CalibCurve(calbp = np.arange(1, 7), c14age = np.arange(6, 0, -1),
-                                               error = np.arange(21, 27), delta14c = None, sigma = None)
+        self.smalltestcurve = curve.CalibCurve(calbp=np.arange(1, 7), c14age=np.arange(6, 0, -1),
+                                               error=np.arange(21, 27), delta14c=None, sigma=None)
 
     def test_d_cal_normal(self):
         goalmini = np.array([[2.959184, 0.01904568], [3.000000, 0.01900584]])

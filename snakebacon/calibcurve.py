@@ -47,9 +47,9 @@ def read_14c(fl):
     """
     indata = pd.read_csv(fl, index_col=None, skiprows=11, header=None,
                          names=['calbp', 'c14age', 'error', 'delta14c', 'sigma'])
-    outcurve = CalibCurve(calbp = indata['calbp'].values,
-                          c14age = indata['c14age'].values,
-                          error = indata['error'].values,
-                          delta14c = indata['delta14c'].values,
-                          sigma = 'sigma')
+    outcurve = CalibCurve(calbp=indata['calbp'].values,
+                          c14age=indata['c14age'].values,
+                          error=indata['error'].values,
+                          delta14c=indata['delta14c'].values,
+                          sigma='sigma')
     return outcurve
