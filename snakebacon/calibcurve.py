@@ -7,20 +7,52 @@ log = logging.getLogger(__name__)
 
 
 class CalibCurve:
+    """A calibration curve
+    """
 
     def __init__(self, calbp, c14age, error, delta14c, sigma):
+        """Create a calibration curve instance
+
+        Parameters
+        ----------
+        calbp : ndarray
+        c14age : ndarray
+        error : ndarray
+        delta14c : ndarray
+        sigma : ndarray
+        
+        """
         self.calbp = calbp
         self.c14age = c14age
         self.error = error
         self.delta14c = delta14c
         self.sigma = sigma
 
-    def d_cal(self, rcmean, w2, t_a=3, t_b=4, cutoff=0.001, normal_distr=False):
-        """ Line 943 of Bacon.R
-        cc : calib_curve (3-col format)
-        rcmean : det['age'][i] - d_R
-        w2 : dat['error'][i]^2 + d_STD**2
+    def d_cal(self, rcmean, w2, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
+        """Get calendar date probabilities
+        
+        Parameters
+        ----------
+        rcmean : scalar
+            Reservoir-adjusted age.
+        w2 : scalar
+            r'$w^2_j(\theta)$' from pg 461 & 463 of Blaauw and Christen 2011.
+        cutoff : scalar, optional
+            Unknown.
+        normal_distr : Bool, optional
+            Use normal distribution for date errors. If False, then use Student's t-distribution.
+        t_a : scalar, optional
+            Student's t-distribution parameter, a. t_a - 1 must equal t_b.
+        t_b : scalar, optional
+            Student's t-distribution parameter, b. t_a - 1 must equal t_b.
+
+        
+        #Line 943 of Bacon.R
+        #cc : calib_curve (3-col format)
+        #rcmean : det['age'][i] - d_R
+        #w2 : dat['error'][i]^2 + d_STD**2
         """
+        assert t_a - 1 == t_b
         if normal_distr:
             # TODO(brews): Test this. Line 946 of Bacon.R.
             std = np.sqrt(self.error ** 2 + w2)

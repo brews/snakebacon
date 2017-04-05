@@ -12,8 +12,21 @@ log = logging.getLogger(__name__)
 
 
 class Core:
+    """A sediment core
+    """
 
     def __init__(self, age, error, depth, labid, depth_units='meters'):
+        """Create a sediment Core instance
+        
+        Parameters
+        ----------
+        age : ndarray
+        error : ndarray
+        depth : ndarray
+        labid : ndarray
+        depth_units : string, optional
+        
+        """
         # TODO(brews): Add support for `pint` unit handling. Note that Bacon uses cm for depth.
         self.labid = labid
         self.age = age
@@ -21,8 +34,10 @@ class Core:
         self.depth = depth
 
     def suggest_accumulation_rate(self):
-        """From core age-depth data, suggest accum. rate
+        """From core age-depth data, suggest accumulation rate
+        
         Follow's Bacon's method @ Bacon.R ln 30 - 44
+        
         """
         # Suggested round vals.
         sugg = np.tile([1, 2, 5], (4, 1)) * np.reshape(np.repeat([0.1, 1.0, 10, 100], 3), (4, 3))
@@ -34,6 +49,17 @@ class Core:
 
     def suggest_thick(self, reswarn, thick=5, d_min=None, d_max=None):
         """ Bacon.R lines #76 - #87
+                
+        Parameters
+        ----------
+        reswarn : Unknown
+        thick : int, optional
+            Sediment segment thickness.
+        d_min : float, optional
+            Minimum depth.
+        d_max : float, optional
+            Maximum depth.
+
         """
         # TODO(brews): Missing py equivalent to R's `pretty()`, then can finish. See https://stackoverflow.com/questions/43075617/python-function-equivalent-to-rs-pretty
         # @ Bacon.R line #72.
@@ -58,19 +84,46 @@ class Core:
         # k_out = len(d_out)
         # return (thick_out, d_out, k_out)
 
-    def calibrate_dates(self, calib_curve, d_r, d_std, t_a=3, t_b=4, cutoff=0.001, normal_distr=False):
-        """Python version of .bacon.calib() on line 908 in Bacon.R
+    def calibrate_dates(self, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
+        """Get probability of calendar dates for each depth segment in core
+        
+        Parameters
+        ----------
+        calib_curve : Curve
+            Radiocarbon calibration curve.
+        d_r : scalar or ndarray
+            Carbon reservoir offset.
+        d_std : scalar or ndarray
+            Carbon reservoir offset error standard deviation.
+        cutoff : scalar, optional
+            Unknown.
+        normal_distr : Bool, optional
+            Use normal distribution for date errors. If False, then use Student's t-distribution.
+        t_a : scalar, optional
+            Student's t-distribution parameter, a. t_a - 1 must equal t_b.
+        t_b : scalar, optional
+            Student's t-distribution parameter, b. t_a - 1 must equal t_b.
+            
+        Returns
+        -------
+        out : (ndarray, list)
+            out[0] is ndarray of sediment segment depths. out[1] is a list of ndarray of probabilities with one ndarray 
+            per core segment. len(out[0]) == len(out[1])
+
+        Python version of .bacon.calib() on line 908 in Bacon.R
         """
         # .bacon.calib - line 908
 
         # rcmean = 4128; w2 = 4225; t_a=3; t_b=4
-        # test = d_cal(cc = calib_curve.rename(columns = {0:'a', 1:'b', 2:'c'}), rcmean = 4128, w2 = 4225, t_a=t_a, t_b=t_b, cutoff=cutoff, normal = normal)
+        # test = d_cal(cc = calib_curve.rename(columns = {0:'a', 1:'b', 2:'c'}), rcmean = 4128, w2 = 4225, t_a=t_a,
+        # t_b=t_b, cutoff=cutoff, normal = normal)
 
         # Line 959 of Bacon.R
         # calib = list(dets.iloc[:, 3])
         # Now Bacon goes and checks the ncol in the dets See line #960 in Bacon.R
 
         # Line #973
+        assert t_a - 1 == t_b
         calib_probs = []
         # I think we can do the below without a loop.
         for i in range(len(self.depth)):
@@ -94,6 +147,7 @@ def read_corefile(fl):
 
 def plot_acc_prior(mem_shape, mem_mean, thick):
     """Plot accumulation rate varibility between neighbouring depths ("memory") prior
+    
     # PlotAccPrior @ Bacon.R ln 113 -> ln 1097-1115
     """
     x = np.linspace(0, 1, 100)
@@ -106,6 +160,7 @@ def plot_acc_prior(mem_shape, mem_mean, thick):
 
 def calib_plot(x, normalize=False):
     """Plot calibration curve
+    
         # calib.plot(info,
     #            date.res = date.res, rotate.axes = rotate.axes, width = width, cutoff = cutoff, rev.d = rev.d, rev.yr = rev.yr, normalise.dists = normalise.dists, C14.col = C14.col, C14.border = C14.border, cal.col = cal.col, cal.border = cal.border)
     # @ Bacon.R ln 1009 - 1052
