@@ -30,7 +30,7 @@ class Core:
         # TODO(brews): Add support for `pint` unit handling. Note that Bacon uses cm for depth.
         self.labid = labid
         self.age = age
-        self.error = error
+        self.error = error  # Note this is called "std" in output .bacon file.
         self.depth = depth
 
     def suggest_accumulation_rate(self):
@@ -123,7 +123,7 @@ class Core:
         # Now Bacon goes and checks the ncol in the dets See line #960 in Bacon.R
 
         # Line #973
-        assert t_a - 1 == t_b
+        assert (t_a - 1) == t_b
         calib_probs = []
         # I think we can do the below without a loop.
         for i in range(len(self.depth)):

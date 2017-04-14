@@ -10,7 +10,7 @@ class CalibCurve:
     """A calibration curve
     """
 
-    def __init__(self, calbp, c14age, error, delta14c, sigma):
+    def __init__(self, calbp, c14age, error, delta14c=None, sigma=None):
         """Create a calibration curve instance
 
         Parameters
@@ -25,8 +25,36 @@ class CalibCurve:
         self.calbp = calbp
         self.c14age = c14age
         self.error = error
-        self.delta14c = delta14c
-        self.sigma = sigma
+        if delta14c is None:
+            delta14c = np.zeros(calbp.shape)
+        self.delta14c = delta14c  # d_R
+        if sigma is None:
+            sigma = np.zeros(calbp.shape)
+        self.sigma = sigma # d_R variance?
+
+
+    def c14age_from_age(self, theta):
+        """Interpolate C14 mean age and variance from true age
+
+        Parameters
+        ----------
+        theta : float
+            A true age value in calendar years BP.
+
+        Returns
+        -------
+        A tuple, (mu, std), giving the mean and standard deviation of corresponding C14 age, interpolated from the curve.
+
+        Dertived from bacon @ cal.h lines 156 - 193.
+
+        """
+        idx = np.searchsorted(self.calbp, theta)
+        mu = self.c14age[idx - 1] + (theta - self.calbp[idx - 1]) * (self.c14age[idx] - self.c14age[idx - 1]) / (
+        self.c14age[idx] - self.calbp[idx - 1])
+        sig = self.error[idx - 1] + (theta - self.calbp[idx - 1]) * (self.error[idx] - self.error[idx - 1]) / (
+        self.c14age[idx] - self.calbp[idx - 1])
+        return (mu, sig)
+
 
     def d_cal(self, rcmean, w2, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
         """Get calendar date probabilities
