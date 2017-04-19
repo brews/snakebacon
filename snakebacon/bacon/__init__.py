@@ -1,0 +1,1 @@
+from baconwrap import cook

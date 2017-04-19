@@ -1,8 +1,5 @@
-# from bacon cimport main
-# import malloc
-# import free
-# from libc.stdlib cimport free
 from libc.stdlib cimport malloc, free
+
 
 def cook(args):
     cdef extern from "bacon.c":
