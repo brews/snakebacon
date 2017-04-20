@@ -1,35 +1,25 @@
 from libc.stdlib cimport malloc, free
 
 
-def cook(args):
+def cook(str infile, str outfile, int ssize):
     cdef extern from "bacon.c":
-            int main(int argc, char *argv[])
+        int main(int argc, char *argv[])
     cdef char **outgoing_argv
-        # we put this in try/finally to assure we don't leak memory
+    cdef bytes binfile
+    cdef bytes boutfile
+    cdef char* cinfile
+    cdef char* coutfile
+    cdef char* cssize
+    cdef int argcount = 4
+    outgoing_argv = <char**> malloc(argcount * sizeof(char*))
     try:
-        # first, allocate the memory.
-        outgoing_argv = <char**> malloc(len(args) * sizeof(char*))
-        # then we iterate through args to put the strings in our
-        # char array, using Python C api to get char* from str
-        for i in range(len(args)):
-            outgoing_argv[i] = args[i]
-            # outgoing_argv[i] = PyUnicode_AsUTF8(args[i])
-        main(len(args), outgoing_argv)
+        binfile = infile.encode('utf8')
+        cinfile = binfile
+        boutfile = outfile.encode('utf8')
+        coutfile = boutfile
+        outgoing_argv[1] = cinfile
+        outgoing_argv[2] = coutfile
+        outgoing_argv[3] = cssize
+        return main(argcount, outgoing_argv)
     finally:
-         # lastly, we want to make sure we free any
-         # allocated memory.
         free(outgoing_argv)
-
-    # # args = [bytes(x) for x in args]
-    # cdef const char** c_argv = <const char**> malloc(len(args) * sizeof(char*))
-    # # c_argv = <char**>malloc(sizeof(char*) * len(args))
-    # if c_argv is NULL:
-    #     raise MemoryError()
-    # try:
-    #     for idx, s in enumerate(args):
-    #        c_argv[idx] = s
-    #     # test(len(args), c_argv)
-    # finally:
-    #     free(c_argv)
-    # main(len(args), c_argv)
-    # main(2, "eggs")
