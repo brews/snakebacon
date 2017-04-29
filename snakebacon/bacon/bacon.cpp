@@ -22,6 +22,13 @@ the files:
 #include <unistd.h>
 #include <string.h>
 
+// #include "vector.c" // brews: I added this. Needed cp_vector(double*, double*, int).
+// #include "ranfun.c" // brews: I added this. Needed fcmp(double, double, double).
+// #include "Matrix.c"
+// #include "kernel.c"
+// #include "input.c"
+
+
 #include "bacon.h"
 #include "input.h"
 
@@ -40,7 +47,7 @@ the files:
 #define ACCEP_EV 20
 
 
-int main(int argc, char *argv[]) {// Command line: bacon inputfile outputfile  
+int notmain(int argc, char *argv[]) {// Command line: bacon inputfile outputfile  
 
 /*
 

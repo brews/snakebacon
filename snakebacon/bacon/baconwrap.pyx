@@ -3,7 +3,7 @@ from libc.stdlib cimport malloc, free
 
 def cook(str infile, str outfile, int ssize):
     cdef extern from "bacon.cpp":
-        int main(int argc, char *argv[])
+        int notmain(int argc, char *argv[])
     cdef char **outgoing_argv
     cdef bytes binfile
     cdef bytes boutfile
@@ -22,13 +22,12 @@ def cook(str infile, str outfile, int ssize):
 
         bssize = str(ssize).encode('utf8')
         cssize = bssize
-
+        
         outgoing_argv[1] = cinfile
         outgoing_argv[2] = coutfile
         outgoing_argv[3] = cssize
-        return main(argcount, outgoing_argv)
+        return notmain(argcount, outgoing_argv)
     finally:
         free(outgoing_argv)
-
 
 # cook('MSB2K_20.bacon', 'out.bacon', 2000)

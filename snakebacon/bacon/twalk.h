@@ -26,7 +26,6 @@
 #include <time.h>
 
 
-
 #include "ranfun.h"
 
 
