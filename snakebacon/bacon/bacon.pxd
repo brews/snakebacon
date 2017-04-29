@@ -1,1 +1,1 @@
-cdef int main(int argc, char *argv[])
+cdef int notmain(int argc, char *argv[])
