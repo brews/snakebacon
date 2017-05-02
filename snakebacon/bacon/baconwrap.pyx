@@ -1,4 +1,16 @@
+import pandas as pd
 from libc.stdlib cimport malloc, free
+
+
+def read_baconout(path):
+    """Read output from _baconmain"""
+    d = pd.read_table(path, delim_whitespace=True, header=None)
+    # TODO(brews): Not sure about the outgoing structure here. Might transpose depending on which is easier in later analysis.
+    out = {'theta': d.iloc[:, 0].values,  # `theta0` or often just `theta`, array (i) of Age of sedimentation core head.
+           'x': d.iloc[:, 1:-2].values,  # `x`, 2d array (i, j) of sediment accumulation rates for each segment (j) down the sediment core of each MCMC iteration (i).
+           'w': d.iloc[:, -2].values,  # `w`, array (i) of memory or coherence of accumulation rates along sediment core.
+           'objective': d.iloc[:, -1].values}  # `Us`, array (i) of objective or energy function used in the twalk MCMC.
+    return out
 
 
 def _baconmain(str infile, str outfile, int ssize):
