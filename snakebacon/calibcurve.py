@@ -70,9 +70,9 @@ class CalibCurve:
         normal_distr : Bool, optional
             Use normal distribution for date errors. If False, then use Student's t-distribution.
         t_a : scalar, optional
-            Student's t-distribution parameter, a. t_a - 1 must equal t_b.
+            Student's t-distribution parameter, a. t_b - 1 must equal t_b.
         t_b : scalar, optional
-            Student's t-distribution parameter, b. t_a - 1 must equal t_b.
+            Student's t-distribution parameter, b. t_b - 1 must equal t_b.
 
         
         #Line 943 of Bacon.R
@@ -80,7 +80,7 @@ class CalibCurve:
         #rcmean : det['age'][i] - d_R
         #w2 : dat['error'][i]^2 + d_STD**2
         """
-        assert t_a - 1 == t_b
+        assert t_b - 1 == t_a
         if normal_distr:
             # TODO(brews): Test this. Line 946 of Bacon.R.
             std = np.sqrt(self.error ** 2 + w2)
