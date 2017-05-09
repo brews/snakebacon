@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from libc.stdlib cimport malloc, free
 
@@ -5,11 +6,52 @@ from libc.stdlib cimport malloc, free
 def read_baconout(path):
     """Read output from _baconmain"""
     d = pd.read_table(path, delim_whitespace=True, header=None)
+    # TODO(brews): Function cannot handle hiatus
     # TODO(brews): Not sure about the outgoing structure here. Might transpose depending on which is easier in later analysis.
     out = {'theta': d.iloc[:, 0].values,  # `theta0` or often just `theta`, array (i) of Age of sedimentation core head.
-           'x': d.iloc[:, 1:-2].values,  # `x`, 2d array (i, j) of sediment accumulation rates for each segment (j) down the sediment core of each MCMC iteration (i).
+           'x': d.iloc[:, 1:-2].values.T,  # `x`, 2d array (i, j) of sediment accumulation rates for each segment (i) down the sediment core of each MCMC iteration (j).
            'w': d.iloc[:, -2].values,  # `w`, array (i) of memory or coherence of accumulation rates along sediment core.
            'objective': d.iloc[:, -1].values}  # `Us`, array (i) of objective or energy function used in the twalk MCMC.
+    return out
+
+
+def agedepth(d, x, deltac, x0, c0):
+    """Get true age for a depth
+
+    Parameters
+    ----------
+    d : float
+        Sediment depth (in cm).
+    x : 1 or 2darray
+        i-length array of sedimentation rates (yr/cm). Can also be (i, j) array where i is along sediment core segments 
+        and j is iterations or realizations of the core.
+    deltac : float
+        Change in depth for a uniform depth segments (cm).
+    x0 : float or 1darray
+        Age-depth model abscissa (in cm).  If array, dimension should be iterations or realizations of the sediment 
+        core.
+    c0 : Uniform depth segment abscissa (in cm).
+
+    Returns
+    -------
+    Numeric giving true age at given depth.
+    """
+    # TODO(brews): Funciton needs to be tested. Carefully.
+    # TODO(brews): Function cannot handle hiatus
+    # See lines 77 - 100 of hist2.cpp
+    assert d >= c0
+    out = x0.copy()
+    i = int(np.floor((d - c0) / deltac))
+    for j in range(i):
+        out += x[j] * deltac
+    ci = c0 + i * deltac
+    assert ci <= d
+    # next_x = x[i + 1]
+    try:
+        next_x = x[i + 1]
+    except IndexError:
+        next_x = x[i]
+    out += next_x * (d - ci)
     return out
 
 
