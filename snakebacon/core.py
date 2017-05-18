@@ -3,7 +3,7 @@ import numpy as np
 import scipy.stats as stats
 import pandas as pd
 
-import matplotlib as plt
+import matplotlib.pylab as plt
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 
@@ -123,7 +123,7 @@ class Core:
         # Now Bacon goes and checks the ncol in the dets See line #960 in Bacon.R
 
         # Line #973
-        assert (t_a - 1) == t_b
+        assert t_b - 1 == t_a
         calib_probs = []
         # I think we can do the below without a loop.
         for i in range(len(self.depth)):
