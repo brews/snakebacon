@@ -37,7 +37,7 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     outlines.append('Cal 1 : {0}, {1};\n'.format(cc1, postbomb))
     outlines.append('Cal 2 : {0};\n'.format(cc2))  # TODO(brews): This is very weird @ ln 400:406.
     outlines.append('Cal 3 : {0}, {1};\n'.format(cc3, postbomb))
-    # TODO(brews): Find out if this last bit is a way to specify a calibration curve directory.
+    # TODO(brews): Find out if this last bit is a way to specify a calibration curve directory. ln 409
     # outlines.append('Cal 4 : {0}, {1};'.format(cc3, postbomb))
     # Something with os.path.sep on windows, see Bacon.R 406:409
     outlines.append('\n##   id.   yr    std   depth  d.R  d.STD     t.a   t.b   cc\n')
