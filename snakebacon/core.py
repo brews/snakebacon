@@ -161,6 +161,8 @@ def plot_acc_prior(mem_shape, mem_mean, thick):
 def calib_plot(x, normalize=False):
     """Plot calibration curve
     
+    I believe this plots the output from a Core instance's calibrate_dates() output.
+    
         # calib.plot(info,
     #            date.res = date.res, rotate.axes = rotate.axes, width = width, cutoff = cutoff, rev.d = rev.d, rev.yr = rev.yr, normalise.dists = normalise.dists, C14.col = C14.col, C14.border = C14.border, cal.col = cal.col, cal.border = cal.border)
     # @ Bacon.R ln 1009 - 1052
