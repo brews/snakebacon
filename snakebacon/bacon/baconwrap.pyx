@@ -1,5 +1,4 @@
 import os
-import sys
 import datetime
 import shutil
 import contextlib
@@ -7,15 +6,7 @@ import tempfile
 import numpy as np
 import pandas as pd
 from libc.stdlib cimport malloc, free
-import inspect
-
-
-if not hasattr(sys.modules[__name__], '__file__'):
-    __file__ = inspect.getfile(inspect.currentframe())
-
-
-HERE = os.path.abspath(os.path.dirname(__file__))
-CURVEDIR_PATH = os.path.join(HERE, 'Curves')
+from .Curves import here as curvespath
 
 
 @contextlib.contextmanager
@@ -34,9 +25,9 @@ def run_bacon(inpath, outpath, ssize):
     cwd = os.getcwd()
     inpath_fl = os.path.basename(inpath)
     outpath_fl = os.path.basename(outpath)
-    curves_dir = os.path.basename(CURVEDIR_PATH)
+    curves_dir = os.path.basename(curvespath)
     with tempfile.TemporaryDirectory() as tmpdir:
-        shutil.copytree(CURVEDIR_PATH, os.path.join(tmpdir, curves_dir))
+        shutil.copytree(curvespath, os.path.join(tmpdir, curves_dir))
         shutil.copy2(inpath, tmpdir)
         with try_chdir(tmpdir):
             _baconmain(inpath_fl, outpath_fl, ssize)
