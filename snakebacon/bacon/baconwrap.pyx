@@ -1,8 +1,47 @@
 import os
+import sys
 import datetime
+import shutil
+import contextlib
+import tempfile
 import numpy as np
 import pandas as pd
 from libc.stdlib cimport malloc, free
+import inspect
+
+
+if not hasattr(sys.modules[__name__], '__file__'):
+    __file__ = inspect.getfile(inspect.currentframe())
+
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+CURVEDIR_PATH = os.path.join(HERE, 'Curves')
+
+
+@contextlib.contextmanager
+def try_chdir(path):
+    """Use in `with as`, returning to CWD afterwards"""
+    curdir = os.getcwd()
+    try:
+        os.chdir(path)
+        yield
+    finally:
+        os.chdir(curdir)
+
+
+def run_bacon(inpath, outpath, ssize):
+    """TODO: Something of a test function for now."""
+    cwd = os.getcwd()
+    inpath_fl = os.path.basename(inpath)
+    outpath_fl = os.path.basename(outpath)
+    curves_dir = os.path.basename(CURVEDIR_PATH)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        shutil.copytree(CURVEDIR_PATH, os.path.join(tmpdir, curves_dir))
+        shutil.copy2(inpath, tmpdir)
+        with try_chdir(tmpdir):
+            _baconmain(inpath_fl, outpath_fl, ssize)
+        shutil.copy2(os.path.join(tmpdir, outpath_fl), outpath)
+    print('done')
 
 
 def read_baconout(path):
