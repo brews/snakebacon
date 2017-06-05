@@ -81,46 +81,6 @@ def write_baconin(path, **kwargs):
         fl.writelines(outlines)
 
 
-def agedepth(d, x, deltac, x0, c0):
-    """Get true age for a depth
-
-    Parameters
-    ----------
-    d : float
-        Sediment depth (in cm).
-    x : 1 or 2darray
-        i-length array of sedimentation rates (yr/cm). Can also be (i, j) array where i is along sediment core segments 
-        and j is iterations or realizations of the core.
-    deltac : float
-        Change in depth for a uniform depth segments (cm).
-    x0 : float or 1darray
-        Age-depth model abscissa (in cm).  If array, dimension should be iterations or realizations of the sediment 
-        core.
-    c0 : Uniform depth segment abscissa (in cm).
-
-    Returns
-    -------
-    Numeric giving true age at given depth.
-    """
-    # TODO(brews): Funciton needs to be tested. Carefully.
-    # TODO(brews): Function cannot handle hiatus
-    # See lines 77 - 100 of hist2.cpp
-    assert d >= c0
-    out = x0.copy()
-    i = int(np.floor((d - c0) / deltac))
-    for j in range(i):
-        out += x[j] * deltac
-    ci = c0 + i * deltac
-    assert ci <= d
-    # next_x = x[i + 1]
-    try:
-        next_x = x[i + 1]
-    except IndexError:
-        next_x = x[i]
-    out += next_x * (d - ci)
-    return out
-
-
 def _baconmain(str infile, str outfile, int ssize):
     """Run bacon MCMC on input file, and put output into outfile
     
