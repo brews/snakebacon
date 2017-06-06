@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-import snakebacon.core as core
+import snakebacon.results as core
 
 class TestCoreMethods(unittest.TestCase):
 

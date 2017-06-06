@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-import snakebacon.calibcurve as curve
+import snakebacon.records as curve
 
 
 class TestCalibCurveMethods(unittest.TestCase):
