@@ -37,7 +37,7 @@ class TestBaconwrap(unittest.TestCase):
 
     def test_run_baconmcmc(self):
         testcore_path = path.join(here, 'MSB2K.csv')
-        c = snek.read_corefile(testcore_path)
+        c = snek.read_dates(testcore_path)
         fullrun_victim = baconwrap.run_baconmcmc(core_labid=c.labid, core_age=c.age, core_error=c.error,
                                                  core_depth=c.depth, depth_min=1.5, depth_max=99.5, cc=[1],
                                                  cc1='IntCal13', cc2='Marine13', cc3='SHCal13', cc4='ConstCal',
