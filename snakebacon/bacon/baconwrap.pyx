@@ -20,7 +20,28 @@ def try_chdir(path):
         os.chdir(curdir)
 
 
-def run_bacon(inpath, outpath, ssize):
+def run_baconmcmc(ssize=2000, **kwargs):
+    """TODO: Something of a test function for now.
+
+    Parameters
+    ----------
+        ssize : ???
+        **kwargs : Bacon MCMC run parameters passed to `write_baconin()`.
+    """
+    cwd = os.getcwd()
+    infile_str = 'intobacon.txt'
+    outfile_str = 'outofbacon.bacon'
+    curves_dir = os.path.basename(curvespath)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        write_baconin(os.path.join(tmpdir, infile_str), **kwargs)
+        shutil.copytree(curvespath, os.path.join(tmpdir, curves_dir))
+        with try_chdir(tmpdir):
+            _baconmain(infile_str, outfile_str, ssize)
+        out = read_baconout(os.path.join(tmpdir, outpath_fl))
+    return out
+
+
+def run_baconmcmcfiles(inpath, outpath, ssize=2000):
     """TODO: Something of a test function for now."""
     cwd = os.getcwd()
     inpath_fl = os.path.basename(inpath)
