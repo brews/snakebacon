@@ -34,6 +34,13 @@ def read_dates(fl):
                          depth_units='meters')
     return outcore
 
+
+def read_proxy(fl):
+    """Read a file to create a proxy record instance
+    """
+    pass
+
+
 class SedimentRecord:  # Make ABC
     """A sediment core
     """
