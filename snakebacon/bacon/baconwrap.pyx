@@ -37,7 +37,7 @@ def run_baconmcmc(ssize=2000, **kwargs):
         shutil.copytree(curvespath, os.path.join(tmpdir, curves_dir))
         with try_chdir(tmpdir):
             _baconmain(infile_str, outfile_str, ssize)
-        out = read_baconout(os.path.join(tmpdir, outpath_fl))
+            out = read_baconout(outfile_str)
     return out
 
 
