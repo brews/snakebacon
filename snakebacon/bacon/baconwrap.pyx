@@ -21,12 +21,18 @@ def try_chdir(path):
 
 
 def run_baconmcmc(ssize=2000, **kwargs):
-    """TODO: Something of a test function for now.
+    """Run bacon MCMC, given parameters.
 
     Parameters
     ----------
-        ssize : ???
-        **kwargs : Bacon MCMC run parameters passed to `write_baconin()`.
+        ssize : int
+        ???  # TODO(brews): I have no idea what this actually does.
+        **kwargs :
+        Bacon MCMC run parameters passed to `write_baconin()`.
+
+    Returns
+    -------
+    Output from bacon MCMC.
     """
     cwd = os.getcwd()
     infile_str = 'intobacon.txt'
@@ -42,7 +48,7 @@ def run_baconmcmc(ssize=2000, **kwargs):
 
 
 def run_baconmcmcfiles(inpath, outpath, ssize=2000):
-    """TODO: Something of a test function for now."""
+    """Run bacon MCMC using bacon file at inpath and write results to outpath"""
     cwd = os.getcwd()
     inpath_fl = os.path.basename(inpath)
     outpath_fl = os.path.basename(outpath)
@@ -53,11 +59,25 @@ def run_baconmcmcfiles(inpath, outpath, ssize=2000):
         with try_chdir(tmpdir):
             _baconmain(inpath_fl, outpath_fl, ssize)
         shutil.copy2(os.path.join(tmpdir, outpath_fl), outpath)
-    print('done')
+    print('Done.')
 
 
 def read_baconout(path):
-    """Read output from _baconmain"""
+    """Read output file from bacon MCMC
+
+    Parameters
+    ----------
+    path : str
+        Path of file output from bacon MCMC.
+
+    Returns
+    -------
+    Dictionary with four members. 'theta' (or 'theta0') array (i) of calendar age of sedimentation core head for i MCMC
+    iterations retained. 'x', a 2d array (j, i) of sediment accumulation rates for each fixed-length segment (j) down
+    the sediment core of each MCMC iteration member (i). 'w', array (i) of memory or coherence of accumulation rates
+    along sediment core for each MCMC iteration member. 'objective' (i.e. 'Us'), an array (i) of objective or energy
+    function values used in the twalk MCMC.
+    """
     d = pd.read_table(path, delim_whitespace=True, header=None)
     # TODO(brews): Function cannot handle hiatus
     # TODO(brews): Not sure about the outgoing structure here. Might transpose depending on which is easier in later analysis.
@@ -71,7 +91,7 @@ def read_baconout(path):
 def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, depth_max, cc, cc1, cc2, cc3, cc4, d_r,
                  d_std, t_a, t_b, k, th01, th02, mem_strength, mem_mean, acc_shape, acc_mean, minyr=-1000, maxyr=1e6,
                   normal=False, postbomb=0):
-    """Get string to write to .bacon file
+    """Make list of strings to write to .bacon file
 
     Parameters
     ----------
@@ -186,7 +206,7 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
 
 
 def write_baconin(path, **kwargs):
-    """Write .bacon file to be read into baconmain
+    """Write .bacon file to be read into bacon MCMC
     """
     outlines = _baconin_str(**kwargs)
     with open(path, 'w') as fl:
