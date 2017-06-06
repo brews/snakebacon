@@ -1,4 +1,9 @@
 from .records import CalibCurve, read_14c, Core, read_corefile
+import logging
+
+
+log = logging.getLogger(__name__)
+
 
 class AgeDepthModel:
 
