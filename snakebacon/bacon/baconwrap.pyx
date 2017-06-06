@@ -72,6 +72,67 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
                  d_std, t_a, t_b, k, th01, th02, mem_strength, mem_mean, acc_shape, acc_mean, minyr=-1000, maxyr=1e6,
                   normal=False, postbomb=0):
     """Get string to write to .bacon file
+
+    Parameters
+    ----------
+    core_labid : n-length iterable of strs
+        Laboratory ID for each core sample.
+    core_age : n-length iterable of floats
+        Carbon-14 age of each core sample.
+    core_error : n-length iterable of floats
+        Carbon-14 age error (standard deviation) for each core sample.  # TODO(brews): Clarify what this means.
+    core_depth : n-length iterable of floats
+        Depth (cm) at which each core sample was taken.
+    depth_min : float
+        Minimum core depth (cm) to be considered. If outside the range of core_depth, will be extrapolated.
+    depth_max : float
+        Maximum core depth (cm) to be considered. If outside the range of core_depth, will be extrapolated.
+    cc : list of ints
+        Int indicating which calibration curve to use for each core sample (i.e. 'cc1', 'cc2', ... 'cc4'). If list
+        contains single value, this value is used for all core samples.
+    cc1 : str
+        String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
+    cc2 : str
+        String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
+    cc3 : str
+        String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
+    cc4 : str
+        String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
+    d_r : n-length iterable of floats
+        Delta carbon reservoir (delta R) values for each core sample. If single value is given, it will be used for all
+        core samples.
+    d_std : n-length iterable of floats
+        Delta carbon reservoir (delta R) standard deviation for each core sample. If single value is given, it will be
+        used for all core samples.
+    t_a : n-length iterable of floats
+        Parameter 'a' used in t-walk MCMC. If single value is given, it will be used for all core samples. Must be one
+        less than 't_b'. Default is 3.
+    t_b : n-length iterable of floats
+        Parameter 'b' used in t-walk MCMC. If single value is given, it will be used for all core samples. Must be one
+        greater than 't_a'. Default is 4.
+    k : int
+        Number of fixed-length segments to divide core into for MCMC.
+    minyr : int
+        Lowest year considered in MCMC.  # TODO(brews): See line 368 of Bacon.R. Note how this is calculated.
+    maxyr : int
+        Highest year considered in MCMC.  # TODO(brews): See line 370 of Bacon.R. Note how this is calculated.
+    th01 : int
+        Initial guess for top-most fixed segment age. # TODO(brews): Check on this @ ln 474 of Bacon.R
+    th02 : int
+        Initial guess for second-to-top-most fixed segment age. # TODO(sbm): Check on this @ ln 474 of Bacon.R
+    acc_mean : float
+        Mean sediment accumulation rate (cm/yr).
+    acc_shape : float
+        Sediment accumulation rate distribution shape.
+    mem_strength: float
+        Mean sediment accumulation rate strength from one fixed-length segment to the next.  # TODO(brews): Find more details on this.
+    mem_mean: float
+        Mean sediment accumulation rate memory from one fixed-length segment to the next. Must be between 1 and 0.
+
+    Returns
+    -------
+    List of strings for each line of a text file to be read into the bacon MCMC.
+
     See .write.Bacon.file @ Bacon.R ln 385-480
     """
     # import snakebacon as snek
