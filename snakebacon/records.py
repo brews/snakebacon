@@ -49,11 +49,31 @@ class SedimentRecord:  # Make ABC
         pass
 
 
+class ProxyRecord(SedimentRecord):
+
+    def __init__(self, depth, labid=None, **kwargs):
+        """Create a proxy record instance
+
+        Parameters
+        ----------
+        depth : ndarray
+            n-length array indicating depth (cm) of sediment core measurement sample.
+        labid : ndarray
+            Optional n-length array of lab IDs for each sediment core sample.
+        **kwargs : dict of ndarrays
+            Proxy sample measurements corresponding to 'depth'. Missing values should be 'None' or 'numpy.nan'.
+        """
+        self.dates = None
+        self.depth = depth
+        self.depth = labid
+        for k, v in kwargs:
+            setattr(self, k, v)
+
 
 class DateRecord(SedimentRecord):
 
     def __init__(self, age, error, depth, labid, depth_units='meters'):
-        """Create a sediment Core instance
+        """Create a sediment core date instance
 
         Parameters
         ----------
@@ -169,12 +189,6 @@ class DateRecord(SedimentRecord):
                                                  t_a=t_a, t_b=t_b, cutoff=cutoff, normal_distr=normal_distr)
             calib_probs.append(age_realizations)
         return self.depth, calib_probs
-
-
-class ProxyRecord(SedimentRecord):
-
-    def __init__(self):
-        pass
 
 
 class CalibCurve:
