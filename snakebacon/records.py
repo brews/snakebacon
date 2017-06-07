@@ -81,9 +81,24 @@ class DatedProxyRecord(ProxyRecord):
         assert len(data.depth) == len(age)
         self.age = age
 
+    def n_members(self):
+        """Get number of MCMC ensemble members in calendar age estimates"""
+        try:
+            n = len(self.age[0])
+        except TypeError:
+            n = 1
+        return n
+
     def to_pandas(self):
-        """Convert to pandas.DataFrame"""
-        pass
+        """Convert record to pandas.DataFrame"""
+        agedepthdf = pd.DataFrame(self.age, index = self.data.depth)
+        agedepthdf.columns = ['mciter' + str(x) for x in range(self.n_members())]
+        out = (agedepthdf.join(self.data.set_index('depth'))
+                         .reset_index()
+                         .melt(id_vars=self.data.columns.values, var_name='mciter', value_name='age'))
+        if self.n_members() == 1:
+            out = out.drop('mciter', axis=1)
+        return out
 
 
 class DateRecord(SedimentRecord):
