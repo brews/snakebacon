@@ -22,13 +22,15 @@ class McmcResults:
         self.objective = mcmcout['objective']
 
     def burnin(self, n):
-        """Remove the the earliest n values from the MCMC output"""
+        """Remove the earliest n ensemble members from the MCMC output"""
         self.sediment_rate = self.sediment_rate[:, n:]
         self.headage = self.headage[n:]
         self.sediment_memory = self.sediment_memory[n:]
         self.objective = self.objective[n:]
 
-        pass
+    def n_members(self):
+        """Get number of MCMC ensemble members in results"""
+        return len(self.objective)
 
     def plot(self):
         pass

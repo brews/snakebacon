@@ -1,4 +1,5 @@
 import logging as logging
+from copy import deepcopy
 import numpy as np
 import matplotlib.pylab as plt
 
@@ -20,12 +21,40 @@ class AgeDepthModel:
         self.depth = np.arange(kwargs['depth_min'], kwargs['depth_max'] + 1)
         self.age_ensemble = np.array([self.agedepth(d=dx) for dx in self.depth])
         self.age_median = np.median(self.age_ensemble, axis=1)
-        self.conf_interv = {2.5=np.percentile(self.age_ensemble, q=2.5, axis=1),
-                            97.5=np.percentile(self.age_ensemble, q=97.5, axis=1)}
+        self.conf_interv = {2.5:np.percentile(self.age_ensemble, q=2.5, axis=1),
+                            97.5:np.percentile(self.age_ensemble, q=97.5, axis=1)}
 
-    def date(self, proxy, how='median'):
-        """Date a proxy record"""
-        pass
+    def date(self, proxy, how='median', n=500):
+        """Date a proxy record
+
+        Parameters
+        ----------
+        proxy : ProxyRecord
+        how : str
+            How to perform the dating. 'median' returns the average of the MCMC ensemble. 'ensemble' returns a 'n'
+            randomly selected members of the MCMC ensemble. Default is 'median'.
+        n : int
+            If 'how' is 'ensemble', the function will randomly select 'n' MCMC ensemble members, with replacement.
+
+        Returns
+        -------
+        A dated ProxyRecord, copied from 'proxy'.
+        """
+        assert how in ['median', 'ensemble']
+        proxyout = deepcopy(proxy)
+        ens_members = self.mcmcfit.n_members()
+        if how == 'ensemble':
+            select_idx = np.random.choice(range(ens_members), size=n, replace=True)
+        out = []
+        for d in proxyout.data.depth.values:
+            age = self.agedepth(d)
+            if how == 'median':
+                age = np.median(age)
+            elif how == 'ensemble':
+                age = age[select_idx]
+            out.append(age)
+        proxyout.dates = out
+        return proxyout
 
     def plot(self, agebins=50):
         """Age-depth plot"""
