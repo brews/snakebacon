@@ -23,8 +23,8 @@ class McmcResults:
 
     def burnin(self, n):
         """Remove the the earliest n values from the MCMC output"""
-        self.headage = self.headage[:, n:]
-        self.sediment_rate = self.sediment_rate[n:]
+        self.sediment_rate = self.sediment_rate[:, n:]
+        self.headage = self.headage[n:]
         self.sediment_memory = self.sediment_memory[n:]
         self.objective = self.objective[n:]
 
