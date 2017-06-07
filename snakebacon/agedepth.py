@@ -20,10 +20,10 @@ class AgeDepthModel:
         self.depth = np.arange(kwargs['depth_min'], kwargs['depth_max'] + 1)
         self.age_ensemble = np.array([self.agedepth(d=dx) for dx in self.depth])
         self.age_median = np.median(self.age_ensemble, axis=1)
-        self.conf_interv = dict(low=np.percentile(self.age_ensemble, q=2.5, axis=1),
-                                high=np.percentile(self.age_ensemble, q=97.5, axis=1))
+        self.conf_interv = {2.5=np.percentile(self.age_ensemble, q=2.5, axis=1),
+                            97.5=np.percentile(self.age_ensemble, q=97.5, axis=1)}
 
-    def date(self, proxy):
+    def date(self, proxy, how='median'):
         """Date a proxy record"""
         pass
 
@@ -31,8 +31,8 @@ class AgeDepthModel:
         """Age-depth plot"""
         plt.hist2d(np.repeat(self.depth, self.age_ensemble.shape[1]), self.age_ensemble.flatten(), (len(self.depth), agebins), cmin=1)
         plt.step(self.depth, self.age_median, where='mid', color='red')
-        plt.step(self.depth, self.conf_interv['high'], where='mid', color='red', linestyle=':')
-        plt.step(self.depth, self.conf_interv['low'], where='mid', color='red', linestyle=':')
+        plt.step(self.depth, self.conf_interv[97.5], where='mid', color='red', linestyle=':')
+        plt.step(self.depth, self.conf_interv[2.5], where='mid', color='red', linestyle=':')
         plt.ylabel('Age (cal yr BP)')
         plt.xlabel('Depth (cm)')
         plt.grid()
