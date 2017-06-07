@@ -18,25 +18,24 @@ class AgeDepthModel:
             self.mcmcfit.burnin(200)
         self.thick = (kwargs['depth_max'] - kwargs['depth_min']) / kwargs['k']
         self.depth = np.arange(kwargs['depth_min'], kwargs['depth_max'] + 1)
-        self.cal_age = np.array([self.agedepth(d=dx) for dx in self.depth])
-        # ds = np.array([agedepth(d=dx, x=test['x'], deltac=5, x0=test['theta'], c0=1.5) for dx in d])
+        self.age_ensemble = np.array([self.agedepth(d=dx) for dx in self.depth])
+        self.age_median = np.median(self.age_ensemble, axis=1)
+        self.conf_interv = dict(low=np.percentile(self.age_ensemble, q=2.5, axis=1),
+                                high=np.percentile(self.age_ensemble, q=97.5, axis=1))
 
     def date(self, proxy):
         """Date a proxy record"""
         pass
 
-    def plot(self):
+    def plot(self, agebins=50):
         """Age-depth plot"""
-        plt.hist2d(np.repeat(self.depth, self.cal_age.shape[1]), self.cal_age.flatten(), (len(self.depth), 50), cmin=1)
-        plt.step(self.depth, np.median(self.cal_age, axis=1), where='mid', color='red')
-        lower_env = np.percentile(self.cal_age, q=2.5, axis=1)
-        upper_env = np.percentile(self.cal_age, q=97.5, axis=1)
-        plt.step(self.depth, upper_env, where='mid', color='red', linestyle=':')
-        plt.step(self.depth, lower_env, where='mid', color='red', linestyle=':')
+        plt.hist2d(np.repeat(self.depth, self.age_ensemble.shape[1]), self.age_ensemble.flatten(), (len(self.depth), agebins), cmin=1)
+        plt.step(self.depth, self.age_median, where='mid', color='red')
+        plt.step(self.depth, self.conf_interv['high'], where='mid', color='red', linestyle=':')
+        plt.step(self.depth, self.conf_interv['low'], where='mid', color='red', linestyle=':')
         plt.ylabel('Age (cal yr BP)')
         plt.xlabel('Depth (cm)')
         plt.grid()
-
 
     def agedepth(self, d):
         """Get calendar age for a depth
