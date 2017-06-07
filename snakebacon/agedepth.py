@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pylab as plt
 
 from .mcmc import McmcResults
+from .records import DatedProxyRecord
 
 
 log = logging.getLogger(__name__)
@@ -38,23 +39,21 @@ class AgeDepthModel:
 
         Returns
         -------
-        A dated ProxyRecord, copied from 'proxy'.
+        A DatedProxyRecord, copied from 'proxy'.
         """
         assert how in ['median', 'ensemble']
-        proxyout = deepcopy(proxy)
         ens_members = self.mcmcfit.n_members()
         if how == 'ensemble':
             select_idx = np.random.choice(range(ens_members), size=n, replace=True)
         out = []
-        for d in proxyout.data.depth.values:
+        for d in proxy.data.depth.values:
             age = self.agedepth(d)
             if how == 'median':
                 age = np.median(age)
             elif how == 'ensemble':
                 age = age[select_idx]
             out.append(age)
-        proxyout.dates = out
-        return proxyout
+        return DatedProxyRecord(proxy.data.copy(), out)
 
     def plot(self, agebins=50):
         """Age-depth plot"""

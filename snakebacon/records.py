@@ -60,8 +60,30 @@ class ProxyRecord(SedimentRecord):
         data : DataFrame
             Pandas dataframe containing columns with proxy sample measurements. Must also have 'depth' column.
         """
-        self.dates = None
+        assert 'depth' in data.columns.values
         self.data = data
+
+
+class DatedProxyRecord(ProxyRecord):
+
+    def __init__(self, data, age):
+        """Create a dated proxy record instance
+
+        Parameters
+        ----------
+        data : DataFrame
+            Pandas dataframe containing columns with proxy sample measurements. Must also have 'depth' column.
+        age : iterable
+            Iterable containing calendar year, or a list of years (cal yr BP) for corresponding to each sample depth in
+            data.depth.
+        """
+        super().__init__(data)
+        assert len(data.depth) == len(age)
+        self.age = age
+
+    def to_pandas(self):
+        """Convert to pandas.DataFrame"""
+        pass
 
 
 class DateRecord(SedimentRecord):
