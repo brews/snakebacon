@@ -148,6 +148,10 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
         Mean sediment accumulation rate strength from one fixed-length segment to the next.  # TODO(brews): Find more details on this.
     mem_mean: float
         Mean sediment accumulation rate memory from one fixed-length segment to the next. Must be between 1 and 0.
+    normal: bool
+        Whether to use a normal for radiocarbon age. Default is 'False', using Student's t based distribution.
+    postbomb: int
+        # TODO(brews): I know nothing about this.
 
     Returns
     -------
