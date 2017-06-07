@@ -26,7 +26,7 @@ def read_14c(fl):
 def read_dates(fl):
     """Create proxy instance from Bacon proxy file
     """
-    indata = pd.read_table(fl, sep=r'\,\s*', index_col=None, engine='python')
+    indata = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python')
     outcore = DateRecord(age=indata['age'].values,
                          error=indata['error'].values,
                          depth=indata['depth'].values,
@@ -38,7 +38,8 @@ def read_dates(fl):
 def read_proxy(fl):
     """Read a file to create a proxy record instance
     """
-    pass
+    outcore = ProxyRecord(data = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python'))
+    return outcore
 
 
 class SedimentRecord:  # Make ABC
@@ -51,23 +52,16 @@ class SedimentRecord:  # Make ABC
 
 class ProxyRecord(SedimentRecord):
 
-    def __init__(self, depth, labid=None, **kwargs):
+    def __init__(self, data):
         """Create a proxy record instance
 
         Parameters
         ----------
-        depth : ndarray
-            n-length array indicating depth (cm) of sediment core measurement sample.
-        labid : ndarray
-            Optional n-length array of lab IDs for each sediment core sample.
-        **kwargs : dict of ndarrays
-            Proxy sample measurements corresponding to 'depth'. Missing values should be 'None' or 'numpy.nan'.
+        data : DataFrame
+            Pandas dataframe containing columns with proxy sample measurements. Must also have 'depth' column.
         """
         self.dates = None
-        self.depth = depth
-        self.depth = labid
-        for k, v in kwargs:
-            setattr(self, k, v)
+        self.data = data
 
 
 class DateRecord(SedimentRecord):
