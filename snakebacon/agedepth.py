@@ -39,7 +39,7 @@ class AgeDepthModel:
 
 
     def agedepth(self, d):
-        """Get true age for a depth
+        """Get calendar age for a depth
 
         Parameters
         ----------
@@ -50,7 +50,6 @@ class AgeDepthModel:
         -------
         Numeric giving true age at given depth.
         """
-        # TODO(brews): Funciton needs to be tested. Carefully.
         # TODO(brews): Function cannot handle hiatus
         # See lines 77 - 100 of hist2.cpp
         x = self.mcmcfit.sediment_rate
