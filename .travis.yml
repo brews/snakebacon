@@ -10,4 +10,6 @@ install:
 
 script:
   - python setup.py check -m -r -s
+  - python setup.py build_ext
+#  - python setup.py bdist_wheel
   - python -m unittest
