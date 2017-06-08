@@ -1,3 +1,5 @@
+from os import path
+
 from Cython.Build import cythonize
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
@@ -6,6 +8,7 @@ MAJOR = 0
 MINOR = 0
 MICRO = 1
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
+FULLVERSION = VERSION
 
 
 def write_version_py(filename=None):
@@ -14,8 +17,8 @@ version = '%s'
 short_version = '%s'
 """
     if not filename:
-        filename = os.path.join(
-            os.path.dirname(__file__), 'snakebacon', 'version.py')
+        filename = path.join(
+            path.dirname(__file__), 'snakebacon', 'version.py')
 
     a = open(filename, 'w')
     try:
@@ -24,8 +27,7 @@ short_version = '%s'
         a.close()
 
 
-if write_version:
-    write_version_py()
+write_version_py()
 
 bacon = Extension("snakebacon.bacon.baconwrap",
                   sources=["snakebacon/bacon/baconwrap.pyx",
