@@ -1,5 +1,6 @@
 include README.md
 include LICENSE
+include requirements.txt
 recursive-include snakebacon/tests/*.csv
 recursive-include snakebacon/tests/*.py
 recursive-include snakebacon/bacon/Curves/*.14C
