@@ -19,16 +19,11 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
 
-  # Replace dep1 dep2 ... with your dependencies
-#  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coverage docutils pip
-#  - source activate test-environment
-#  - conda install -c conda-forge gsl openblas numpy pandas cython matplotlib
   - conda env create -q -f environment.yml
   - source activate snakebacon
-#  - python setup.py check -m -r -s
+  - python setup.py check -m -r -s
   - python setup.py build_ext --inplace
-#  - pip install -r requirements.txt
-#  - python setup.py install
+  - python setup.py install --user
 
 script:
 #  - python setup.py bdist_wheel
