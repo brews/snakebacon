@@ -1,6 +1,8 @@
-include README.md
 include LICENSE
-include requirements.txt
+recursive-include doc *
+prune doc/_build
+prune doc/generated
+global-exclude .DS_Store
 recursive-include snakebacon/tests/*.csv
 recursive-include snakebacon/tests/*.py
 recursive-include snakebacon/bacon/Curves/*.14C
