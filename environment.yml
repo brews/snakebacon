@@ -5,12 +5,13 @@ channels: !!python/tuple
 dependencies:
 - cloog=0.18.0=0
 - conda-forge::blas=1.1=openblas
-- conda-forge::ca-certificates=2017.1.23=1
+- conda-forge::ca-certificates=2017.4.17=0
 - conda-forge::certifi=2017.4.17=py36_0
 - conda-forge::cycler=0.10.0=py36_0
 - conda-forge::cython=0.25.2=py36_1
 - conda-forge::dbus=1.10.10=3
 - conda-forge::decorator=4.0.11=py36_0
+- conda-forge::docutils=0.13.1=py36_0
 - conda-forge::expat=2.1.0=2
 - conda-forge::fontconfig=2.12.1=4
 - conda-forge::freetype=2.7=1
@@ -19,9 +20,9 @@ dependencies:
 - conda-forge::gmp=6.1.2=0
 - conda-forge::gsl=2.2.1=blas_openblas_2
 - conda-forge::gst-plugins-base=1.8.0=0
-- conda-forge::gstreamer=1.8.0=1
+- conda-forge::gstreamer=1.8.0=2
 - conda-forge::icu=58.1=1
-- conda-forge::ipython=6.0.0=py36_0
+- conda-forge::ipython=6.1.0=py36_0
 - conda-forge::ipython_genutils=0.2.0=py36_0
 - conda-forge::jedi=0.10.0=py36_0
 - conda-forge::joblib=0.11=py36_0
@@ -33,8 +34,8 @@ dependencies:
 - conda-forge::libxcb=1.12=1
 - conda-forge::libxml2=2.9.4=4
 - conda-forge::mako=1.0.6=py36_0
-- conda-forge::markupsafe=0.23=py36_1
-- conda-forge::matplotlib=2.0.0=np112py36_3
+- conda-forge::markupsafe=1.0=py36_0
+- conda-forge::matplotlib=2.0.2=np112py36_0
 - conda-forge::mpc=1.0.3=4
 - conda-forge::mpfr=3.1.5=0
 - conda-forge::ncurses=5.9=10
@@ -42,7 +43,7 @@ dependencies:
 - conda-forge::numpy=1.12.1=py36_blas_openblas_200
 - conda-forge::openblas=0.2.19=2
 - conda-forge::openssl=1.0.2k=0
-- conda-forge::pandas=0.19.2=np112py36_1
+- conda-forge::pandas=0.20.2=np112py36_0
 - conda-forge::patsy=0.4.1=py36_0
 - conda-forge::pcre=8.39=0
 - conda-forge::pexpect=4.2.1=py36_0
@@ -53,11 +54,11 @@ dependencies:
 - conda-forge::py=1.4.33=py36_0
 - conda-forge::pygments=2.2.0=py36_0
 - conda-forge::pyparsing=2.2.0=py36_0
-- conda-forge::pyqt=5.6.0=py36_2
-- conda-forge::python=3.6.1=0
+- conda-forge::pyqt=5.6.0=py36_4
+- conda-forge::python=3.6.1=3
 - conda-forge::python-dateutil=2.6.0=py36_0
 - conda-forge::pytz=2017.2=py36_0
-- conda-forge::qt=5.6.2=2
+- conda-forge::qt=5.6.2=3
 - conda-forge::readline=6.2=0
 - conda-forge::scipy=0.19.0=np112py36_blas_openblas_200
 - conda-forge::setuptools=33.1.1=py36_0
@@ -68,7 +69,7 @@ dependencies:
 - conda-forge::theano=0.9.0=py36_0
 - conda-forge::tk=8.5.19=1
 - conda-forge::tornado=4.5.1=py36_0
-- conda-forge::tqdm=4.11.2=py36_0
+- conda-forge::tqdm=4.14.0=py36_0
 - conda-forge::traitlets=4.3.2=py36_0
 - conda-forge::wcwidth=0.1.7=py36_0
 - conda-forge::wheel=0.29.0=py36_0
