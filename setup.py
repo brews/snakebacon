@@ -2,6 +2,31 @@ from Cython.Build import cythonize
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
 
+MAJOR = 0
+MINOR = 0
+MICRO = 1
+VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
+
+
+def write_version_py(filename=None):
+    cnt = """\
+version = '%s'
+short_version = '%s'
+"""
+    if not filename:
+        filename = os.path.join(
+            os.path.dirname(__file__), 'snakebacon', 'version.py')
+
+    a = open(filename, 'w')
+    try:
+        a.write(cnt % (FULLVERSION, VERSION))
+    finally:
+        a.close()
+
+
+if write_version:
+    write_version_py()
+
 bacon = Extension("snakebacon.bacon.baconwrap",
                   sources=["snakebacon/bacon/baconwrap.pyx",
                            "snakebacon/bacon/input.cpp",
