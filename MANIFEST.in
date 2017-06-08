@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+recursive-include snakebacon/tests/*.csv
+recursive-include snakebacon/tests/*.py
+recursive-include snakebacon/bacon/Curves/*.14C
+recursive-include snakebacon *.pyx *.px[di] *.h *.c *.cpp
