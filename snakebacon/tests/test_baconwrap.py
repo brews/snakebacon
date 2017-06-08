@@ -1,6 +1,8 @@
 import unittest
 from os import path
+
 import numpy as np
+
 import snakebacon as snek
 from snakebacon.bacon import baconwrap
 
@@ -12,7 +14,6 @@ here = path.abspath(path.dirname(__file__))
 
 
 class TestBaconwrap(unittest.TestCase):
-
     def test__baconin_str(self):
         # Not very clever test, but okay first pass.
         victim = baconwrap._baconin_str(core_labid=np.array(['a', 'b', 'c']), core_age=np.array([1, 2, 3]),
@@ -33,7 +34,6 @@ class TestBaconwrap(unittest.TestCase):
                 '\n##\t\t K   MinYr   MaxYr   th0   th0p   w.a   w.b   alpha  beta  dmin  dmax\n',
                 'Bacon 0: FixT, 20, -1000, 1000000.0, 4147, 4145, 2.8, 1.2000000000000002, 1.5, 0.075, 1.5, 99.5;\n']
         self.assertCountEqual(victim[1:], goal[1:])  # Skip first line because datetime won't match.
-
 
     def test_run_baconmcmc(self):
         testcore_path = path.join(here, 'MSB2K.csv')

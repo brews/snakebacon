@@ -1,8 +1,10 @@
 import unittest
 from copy import deepcopy
 from os import path
+
 import numpy as np
 import pandas as pd
+
 from snakebacon import read_dates, ProxyRecord
 from snakebacon.agedepth import AgeDepthModel
 
@@ -17,7 +19,6 @@ fullrun_agemodel = AgeDepthModel(read_dates(path.join(here, 'MSB2K.csv')),
 
 
 class TestAgeDepth(unittest.TestCase):
-
     def setUp(self):
         self.testdummy = deepcopy(fullrun_agemodel)
 
@@ -52,7 +53,7 @@ class TestAgeDepth(unittest.TestCase):
         goal_ens_2_idx0 = 4503.01
         goal_ens_2_nmember = 2
         goal_ens_20_nmember = 20
-        testproxy = ProxyRecord(pd.DataFrame({'depth' : np.arange(1.5, 4.5), 'a' : np.arange(20, 23)}))
+        testproxy = ProxyRecord(pd.DataFrame({'depth': np.arange(1.5, 4.5), 'a': np.arange(20, 23)}))
         victim_median = self.testdummy.date(testproxy, how='median')
         victim_ens_2 = self.testdummy.date(testproxy, how='ensemble', n=2)
         victim_ens_20 = self.testdummy.date(testproxy, how='ensemble', n=20)
@@ -64,7 +65,6 @@ class TestAgeDepth(unittest.TestCase):
         self.assertEqual(goal_ens_2_nmember, len(victim_ens_2.age[0]))
 
         self.assertEqual(goal_ens_20_nmember, len(victim_ens_20.age[0]))
-
 
     def test_agedepth(self):
         goal_len = 3232

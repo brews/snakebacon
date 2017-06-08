@@ -241,7 +241,7 @@ int filescan(char *fnam, int file_header=0) {
 			header = fgets( header, (size_t) BUFF_SIZE, F);
 			header[strlen(header)-1] = '\0'; //remove the \n
 		}
-		
+
 		gsl_matrix_fscanf( F, ma);
 	
 		fclose(F);

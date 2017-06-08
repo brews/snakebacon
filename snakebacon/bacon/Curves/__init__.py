@@ -5,5 +5,4 @@ C/C++ scripts.
 
 from os import path as _path
 
-
 here = _path.abspath(_path.dirname(__file__))

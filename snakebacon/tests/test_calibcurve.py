@@ -1,10 +1,11 @@
 import unittest
+
 import numpy as np
+
 import snakebacon.records as curve
 
 
 class TestCalibCurveMethods(unittest.TestCase):
-
     def setUp(self):
         np.random.seed(123)
         self.minitestcurve = curve.CalibCurve(calbp=np.arange(1, 4), c14age=np.arange(3, 0, -1),
@@ -30,7 +31,6 @@ class TestCalibCurveMethods(unittest.TestCase):
 
 
 class TestRead14c(unittest.TestCase):
-
     @unittest.skip('Test not written')
     def test_read_14c(self):
         self.assertEqual(True, False)

@@ -13,14 +13,14 @@
 #define RANFUN_H
 
 
-#define min(x,y) ((x) < (y) ? (x) : (y))
-#define max(x,y) ((x) > (y) ? (x) : (y))
+#define min(x, y) ((x) < (y) ? (x) : (y))
+#define max(x, y) ((x) > (y) ? (x) : (y))
 
-inline double sqr( double x) { return (x*x);}
+inline double sqr(double x) { return (x * x); }
 
 //interface for gsl_compare
 // x==y, 0, x<y, -1, x>y, 1.
-int fcmp (double x, double y, double epsilon = 0.00000000001); 
+int fcmp(double x, double y, double epsilon = 0.00000000001);
 
 /*Interface with gsl*/
 
@@ -64,7 +64,7 @@ double GammaDens(double x, double a, double b); /*density for beta, as above */
 double BetaSim(double a, double b); /*Beta: p(x) dx = K x^{a-1} (1-x)^{b-1} dx */
 double BetaDens(double x, double a, double b); /*density for beta, as above */
 
-unsigned int BiSim( double p, int n); /*Binomial: p^k (1-p)^{n-k} */
+unsigned int BiSim(double p, int n); /*Binomial: p^k (1-p)^{n-k} */
 
 /*Log of Special function Gamma*/
 

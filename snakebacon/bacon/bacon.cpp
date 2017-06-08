@@ -60,41 +60,41 @@ int notmain(int argc, char *argv[]) {// Command line: bacon inputfile outputfile
  - 
 */
 
-	if (argc < 4) {
-		printf("Usage: bacon inputfile outputfile ssize\n");
-		
-		exit(0);
-	}
-	
-	char  ax[BUFFSIZE];
-	
-	//Program file
-	//sprintf( ax, "Cores/%s/%s.bacon", argv[1], argv[2]);
-	sprintf( ax, "%s", argv[1]);
-	//Read everything from the program file
-	Input All( ax, MAXNUMOFCURVES, MAXNUMOFDETS); 
-	
-	
+    if (argc < 4) {
+        printf("Usage: bacon inputfile outputfile ssize\n");
 
-	//File to save the twalk output
-	sprintf( ax, "%s", argv[2]);
-	
-	int ssize;
-	sscanf( argv[3], " %d", &ssize);
-	
-	//ssize is the final sample size needed
-	//ssize = it/(ACCEP_EV * All.Dim() * EVERY_MULT) - BURN_IN_MULT
-	//Then we let
-	
-	int it = ACCEP_EV * All.Dim() * EVERY_MULT * (ssize + BURN_IN_MULT);
-	
-	int every=  -1*EVERY_MULT*All.Dim(); // only accepted iterations
-	
-	//Run the twalk
-	All.RunTwalk( ax, it, every);
-	
-	
-	All.PrintNumWarnings();
+        exit(0);
+    }
+
+    char ax[BUFFSIZE];
+
+    //Program file
+    //sprintf( ax, "Cores/%s/%s.bacon", argv[1], argv[2]);
+    sprintf(ax, "%s", argv[1]);
+    //Read everything from the program file
+    Input All(ax, MAXNUMOFCURVES, MAXNUMOFDETS);
+
+
+
+    //File to save the twalk output
+    sprintf(ax, "%s", argv[2]);
+
+    int ssize;
+    sscanf(argv[3], " %d", &ssize);
+
+    //ssize is the final sample size needed
+    //ssize = it/(ACCEP_EV * All.Dim() * EVERY_MULT) - BURN_IN_MULT
+    //Then we let
+
+    int it = ACCEP_EV * All.Dim() * EVERY_MULT * (ssize + BURN_IN_MULT);
+
+    int every = -1 * EVERY_MULT * All.Dim(); // only accepted iterations
+
+    //Run the twalk
+    All.RunTwalk(ax, it, every);
+
+
+    All.PrintNumWarnings();
 
 /*
 	char  ax2[BUFFSIZE];
@@ -148,13 +148,13 @@ int notmain(int argc, char *argv[]) {// Command line: bacon inputfile outputfile
 		
 	printf("Final sample size %d\n", ss);
 */
-	
-	printf("bacon: suggested burn in= %d\n", All.Dim() * EVERY_MULT * BURN_IN_MULT);
-	printf(FAREWELL);
-	
-	
-	return All.Dim() * EVERY_MULT * BURN_IN_MULT;
 
-	
+    printf("bacon: suggested burn in= %d\n", All.Dim() * EVERY_MULT * BURN_IN_MULT);
+    printf(FAREWELL);
+
+
+    return All.Dim() * EVERY_MULT * BURN_IN_MULT;
+
+
 }
 

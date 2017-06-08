@@ -1,7 +1,9 @@
 import unittest
 from copy import deepcopy
 from os import path
+
 import numpy as np
+
 from snakebacon import read_dates
 from snakebacon.mcmc import McmcResults
 
@@ -16,7 +18,6 @@ fullrun_victim = McmcResults(read_dates(path.join(here, 'MSB2K.csv')),
 
 
 class TestMcmcResults(unittest.TestCase):
-
     def setUp(self):
         self.testdummy = deepcopy(fullrun_victim)
 
@@ -50,7 +51,6 @@ class TestMcmcResults(unittest.TestCase):
         self.assertEqual(n_goal, len(self.testdummy.headage))
         self.assertEqual(n_goal, len(self.testdummy.sediment_memory))
         self.assertEqual(n_goal, len(self.testdummy.sediment_rate[0]))
-
 
 
 if __name__ == '__main__':

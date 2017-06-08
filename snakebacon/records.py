@@ -1,12 +1,11 @@
 import logging
-import numpy as np
-import scipy.stats as stats
-import pandas as pd
 
 import matplotlib.pylab as plt
-from matplotlib.patches import Polygon
+import numpy as np
+import pandas as pd
+import scipy.stats as stats
 from matplotlib.collections import PatchCollection
-
+from matplotlib.patches import Polygon
 
 log = logging.getLogger(__name__)
 
@@ -23,6 +22,7 @@ def read_14c(fl):
                           sigma='sigma')
     return outcurve
 
+
 def read_dates(fl):
     """Create proxy instance from Bacon proxy file
     """
@@ -38,7 +38,7 @@ def read_dates(fl):
 def read_proxy(fl):
     """Read a file to create a proxy record instance
     """
-    outcore = ProxyRecord(data = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python'))
+    outcore = ProxyRecord(data=pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python'))
     return outcore
 
 
@@ -51,7 +51,6 @@ class SedimentRecord:  # Make ABC
 
 
 class ProxyRecord(SedimentRecord):
-
     def __init__(self, data):
         """Create a proxy record instance
 
@@ -65,7 +64,6 @@ class ProxyRecord(SedimentRecord):
 
 
 class DatedProxyRecord(ProxyRecord):
-
     def __init__(self, data, age):
         """Create a dated proxy record instance
 
@@ -91,18 +89,17 @@ class DatedProxyRecord(ProxyRecord):
 
     def to_pandas(self):
         """Convert record to pandas.DataFrame"""
-        agedepthdf = pd.DataFrame(self.age, index = self.data.depth)
+        agedepthdf = pd.DataFrame(self.age, index=self.data.depth)
         agedepthdf.columns = ['mciter' + str(x) for x in range(self.n_members())]
         out = (agedepthdf.join(self.data.set_index('depth'))
-                         .reset_index()
-                         .melt(id_vars=self.data.columns.values, var_name='mciter', value_name='age'))
+               .reset_index()
+               .melt(id_vars=self.data.columns.values, var_name='mciter', value_name='age'))
         if self.n_members() == 1:
             out = out.drop('mciter', axis=1)
         return out
 
 
 class DateRecord(SedimentRecord):
-
     def __init__(self, age, error, depth, labid, depth_units='meters'):
         """Create a sediment core date instance
 
