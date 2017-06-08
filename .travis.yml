@@ -4,17 +4,29 @@ python:
   - "3.6"
   - "nightly"
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libgsl0-dev libopenblas-base
-  - ld -lopenblas --verbose
-
 install:
-  - pip install tox coverage docutils
-  - pip install -r requirements.txt
+  - sudo apt-get update
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
 
-script:
+  # Replace dep1 dep2 ... with your dependencies
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION tox coverage docutils pip numpy cython pandas matplotlib gsl openblas
+  - source activate test-environment
   - python setup.py check -m -r -s
   - python setup.py build_ext
+#  - pip install -r requirements.txt
+  - python setup.py install
+
+script:
 #  - python setup.py bdist_wheel
   - python -m unittest
