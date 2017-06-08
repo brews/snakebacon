@@ -20,7 +20,7 @@ install:
   - conda info -a
 
   # Replace dep1 dep2 ... with your dependencies
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION tox coverage docutils pip numpy cython pandas matplotlib gsl openblas
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coverage docutils pip numpy cython pandas matplotlib gsl openblas
   - source activate test-environment
   - python setup.py check -m -r -s
   - python setup.py build_ext
