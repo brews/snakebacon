@@ -7,6 +7,7 @@ python:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libgsl0-dev libopenblas-base
+  - ld -lopenblas --verbose
 
 install:
   - pip install tox coverage docutils
