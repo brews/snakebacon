@@ -12,9 +12,6 @@ class TestDateRecordMethods(unittest.TestCase):
         test_victim = testcore.suggest_accumulation_rate()
         self.assertEqual(test_victim, goal)
 
-    @unittest.skip('Test not written')
-    def test_suggest_thick(self):
-        pass
 
     @unittest.skip('Test not written')
     def test_calibrate_dates(self):

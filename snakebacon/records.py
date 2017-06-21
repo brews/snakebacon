@@ -132,43 +132,6 @@ class DateRecord(SedimentRecord):
         sugg = sugg.flat[ballpacc.argmin()]  # Suggest rounded acc.rate with lowest abs diff.
         return sugg
 
-    def suggest_thick(self, reswarn, thick=5, d_min=None, d_max=None):
-        """ Bacon.R lines #76 - #87
-
-        Parameters
-        ----------
-        reswarn : Unknown
-        thick : int, optional
-            Sediment segment thickness.
-        d_min : float, optional
-            Minimum depth.
-        d_max : float, optional
-            Maximum depth.
-
-        """
-        # TODO(brews): Missing py equivalent to R's `pretty()`, then can finish. See https://stackoverflow.com/questions/43075617/python-function-equivalent-to-rs-pretty
-        # @ Bacon.R line #72.
-        # "assign depths, possibly suggest alternative value for thick"
-        # Bacon.R now checks to see if we want suggested values @ line #76
-        # thick, d, k = suggest_thick(k, d, reswarn, thick, d_min, d_max)
-        if d_min is None:
-            d_min = self.depth.min()
-        if d_max is None:
-            d_max = self.depth.max()
-        d = np.arange(np.floor(d_min), np.ceil(d_max), thick)
-        k = len(d)
-        # ans = 'n'  # brews: What is this for?
-        # if len(reswarn) == 2:
-        #     if k < np.min(reswarn):
-        #         # Stopped on line #80 in Bacon.R. Need to write 'pretty()' in python.
-        #         sugg = np.min( thick * (k/np.min(reswarn)) )
-        #     elif k > np.max(reswarn):
-        #         pass
-        # thick = sugg
-        # d_out = np.arange(np.floor(d_min), np.ceil(d_max), thick)
-        # k_out = len(d_out)
-        # return (thick_out, d_out, k_out)
-
     def calibrate_dates(self, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
         """Get probability of calendar dates for each depth segment in core
 
