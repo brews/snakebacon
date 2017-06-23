@@ -10,18 +10,73 @@ log = logging.getLogger(__name__)
 
 
 class AgeDepthModel:
-    def __init__(self, *args, **kwargs):
-        self.mcmcfit = McmcResults(*args, **kwargs)
-        try:
-            self.mcmcfit.burnin(kwargs['burnin'])
-        except KeyError:
-            self.mcmcfit.burnin(200)
-        self.thick = (kwargs['depth_max'] - kwargs['depth_min']) / kwargs['k']
-        self.depth = np.arange(kwargs['depth_min'], kwargs['depth_max'] + 1)
-        self.age_ensemble = np.array([self.agedepth(d=dx) for dx in self.depth])
-        self.age_median = np.median(self.age_ensemble, axis=1)
-        self.conf_interv = {2.5: np.percentile(self.age_ensemble, q=2.5, axis=1),
-                            97.5: np.percentile(self.age_ensemble, q=97.5, axis=1)}
+    def __init__(self, coredates, *, mcmc_kwargs, hold_fit=False, burnin=200):
+        self.coredates = coredates
+        self.burnin = int(burnin)
+        self.mcmc_kwargs = dict(mcmc_kwargs)
+        self._mcmcfit = None
+        self._thick = None
+        self._depth = None
+        self._age_ensemble = None
+        self._age_median = None
+        self._conf_interv = None
+        if not hold_fit:
+            self.fit()
+
+    @property
+    def mcmcfit(self):
+        if self._mcmcfit is not None:
+            return self._mcmcfit
+        else:
+            raise NeedFitError('Needs to be fit() first')
+
+    @property
+    def thick(self):
+        if self._thick is not None:
+            return self._thick
+        else:
+            raise NeedFitError('Needs to be fit() first')
+
+    @property
+    def depth(self):
+        if self._depth is not None:
+            return self._depth
+        else:
+            raise NeedFitError('Needs to be fit() first')
+
+    @property
+    def age_ensemble(self):
+        if self._age_ensemble is not None:
+            return self._age_ensemble
+        else:
+            raise NeedFitError('Needs to be fit() first')
+
+    @property
+    def age_median(self):
+        if self._age_median is not None:
+            return self._age_median
+        else:
+            raise NeedFitError('Needs to be fit() first')
+
+    @property
+    def conf_interv(self):
+        if self._conf_interv is not None:
+            return self._conf_interv
+        else:
+            raise NeedFitError('Needs to be fit() first')
+
+    def fit(self):
+        """Fit MCMC AgeDepthModel"""
+        self._mcmcfit = McmcResults(self.coredates, **self.mcmc_kwargs)
+        self._mcmcfit.burnin(self.burnin)
+        dmin = min(self._mcmcfit.depth_segments)
+        dmax = max(self._mcmcfit.depth_segments)
+        self._thick = (dmax - dmin) / len(self.mcmcfit.depth_segments)
+        self._depth = np.arange(dmin, dmax + 1)
+        self._age_ensemble = np.array([self.agedepth(d=dx) for dx in self.depth])
+        self._age_median = np.median(self.age_ensemble, axis=1)
+        self._conf_interv = {2.5: np.percentile(self.age_ensemble, q=2.5, axis=1),
+                             97.5: np.percentile(self.age_ensemble, q=97.5, axis=1)}
 
     def date(self, proxy, how='median', n=500):
         """Date a proxy record
@@ -96,3 +151,7 @@ class AgeDepthModel:
             next_x = x[i - 1]
         out += next_x * (d - ci)
         return out
+
+
+class NeedFitError(Exception):
+    pass

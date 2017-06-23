@@ -1,5 +1,7 @@
 import logging
 
+import numpy as np
+
 from snakebacon.bacon import run_baconmcmc
 
 log = logging.getLogger(__name__)
@@ -16,6 +18,7 @@ class McmcResults:
         #                                   acc_mean = 20, acc_shape = 1.5, mem_strength = 4, mem_mean = 0.7)
         mcmcout = run_baconmcmc(core_labid=coredates.labid, core_age=coredates.age,
                                 core_error=coredates.error, core_depth=coredates.depth, **kwargs)
+        self.depth_segments = np.linspace(kwargs['depth_min'], kwargs['depth_max'], kwargs['k'])
         self.headage = mcmcout['theta']
         self.sediment_rate = mcmcout['x']
         self.sediment_memory = mcmcout['w']
