@@ -42,7 +42,7 @@ def read_proxy(fl):
     return outcore
 
 
-class SedimentRecord:  # Make ABC
+class SedimentRecord:  # TODO(brews): Make ABC?
     """A sediment core
     """
 
