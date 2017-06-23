@@ -37,7 +37,7 @@ class AgeDepthModel:
 
         Returns
         -------
-        A DatedProxyRecord, copied from 'proxy'.
+        DatedProxyRecord
         """
         assert how in ['median', 'ensemble']
         ens_members = self.mcmcfit.n_members()

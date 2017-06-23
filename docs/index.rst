@@ -1,49 +1,45 @@
-.. snakebacon documentation master file, created by sphinx-quickstart on Thu Jun  8 08:56:05 2017. You can adapt this
-   file completely to your liking, but it should at leastcontain the root `toctree` directive.
 
-Welcome to snakebacon's documentation!
-======================================
+
+|
+
+Sediment core age modeling in Python
+====================================
+
+**snakebacon** is an open source Python package that blah blah
+
+Our goal is to blah blah blah `bacon_`.
+
+.. _bacon: http://pandas.pydata.org
+
+Documentation
+-------------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
-.. automodule:: snakebacon
+   whats_new
+   faq
+   examples
+   installing
+   io
+   plots
+   api
+   internals
 
-.. autoclass:: CalibCurve
-   :members:
+See also
+--------
 
-.. autoclass:: DateRecord
-   :members:
+- Look at this list of all the cool things we publish.
 
-.. autoclass:: ProxyRecord
-   :members:
+Get in touch
+------------
 
-.. autoclass:: DatedProxyRecord
-   :members:
+- Report bugs or view the source code `on GitHub`_.
 
-.. autoclass:: AgeDepthModel
-   :members:
+.. _on GitHub: http://github.com/brews/snakebacon
 
-.. autofunction:: read_14c
+License
+-------
+snakebacon is available under the open source `GPLv3`__.
 
-.. autofunction:: read_dates
-
-.. autofunction:: read_proxy
-
-.. automodule:: snakebacon.mcmc
-
-.. autoclass:: McmcResults
-   :members:
-
-.. automodule:: snakebacon.bacon
-
-.. autofunction:: run_baconmcmc
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+__ http://www.gnu.org/licenses/
