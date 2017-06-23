@@ -65,6 +65,9 @@ class AgeDepthModel:
         else:
             raise NeedFitError('Needs to be fit() first')
 
+    def __repr__(self):
+        return '%s(coredates=%r, mcmc_kwargs=%r, burnin=%r)' % (type(self).__name__, self.coredates, self.mcmc_kwargs, self.burnin)
+
     def fit(self):
         """Fit MCMC AgeDepthModel"""
         self._mcmcfit = McmcResults(self.coredates, **self.mcmc_kwargs)

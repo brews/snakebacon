@@ -59,8 +59,10 @@ class ProxyRecord(SedimentRecord):
             Pandas dataframe containing columns with proxy sample measurements. Must also have 'depth' column.
         """
         assert 'depth' in data.columns.values
-        self.data = data
+        self.data = pd.DataFrame(data)
 
+    def __repr__(self):
+        return '%s(data=%r)' % (type(self).__name__, self.data)
 
 class DatedProxyRecord(ProxyRecord):
     def __init__(self, data, age):
@@ -76,7 +78,10 @@ class DatedProxyRecord(ProxyRecord):
         """
         super().__init__(data)
         assert len(data.depth) == len(age)
-        self.age = age
+        self.age = np.array(age)
+
+    def __repr__(self):
+        return '%s(data=%r, age=%r)' % (type(self).__name__, self.data, self.age)
 
     def n_members(self):
         """Get number of MCMC ensemble members in calendar age estimates"""
@@ -110,10 +115,13 @@ class DateRecord(SedimentRecord):
         labid : ndarray
 
         """
-        self.labid = labid
-        self.age = age
-        self.error = error  # Note this is called "std" in output .bacon file.
-        self.depth = depth
+        self.labid = np.array(labid)
+        self.age = np.array(age)
+        self.error = np.array(error)  # Note this is called "std" in output .bacon file.
+        self.depth = np.array(depth)
+
+    def __repr__(self):
+        return '%s(age=%r, error=%r, depth=%r, labid=%r)' % (type(self).__name__, self.age, self.error, self.depth, self.labid)
 
     def suggest_accumulation_rate(self):
         """From core age-depth data, suggest accumulation rate
@@ -195,15 +203,18 @@ class CalibCurve:
         sigma : ndarray
 
         """
-        self.calbp = calbp
-        self.c14age = c14age
-        self.error = error
+        self.calbp = np.array(calbp)
+        self.c14age = np.array(c14age)
+        self.error = np.array(error)
         if delta14c is None:
             delta14c = np.zeros(calbp.shape)
-        self.delta14c = delta14c  # d_R
+        self.delta14c = np.array(delta14c)  # d_R
         if sigma is None:
             sigma = np.zeros(calbp.shape)
-        self.sigma = sigma  # d_R variance?
+        self.sigma = np.array(sigma)  # d_R variance?
+
+    def __repr__(self):
+        return '%s(calbp=%r, c14age=%r, error=%r, delta14c=%r, sigma=%r)' % (type(self).__name__, self.calbp, self.c14age, self.error, delta14c, self.sigma)
 
     def c14age_from_age(self, theta):
         """Interpolate C14 mean age and variance from true age
@@ -225,7 +236,7 @@ class CalibCurve:
             self.c14age[idx] - self.calbp[idx - 1])
         sig = self.error[idx - 1] + (theta - self.calbp[idx - 1]) * (self.error[idx] - self.error[idx - 1]) / (
             self.c14age[idx] - self.calbp[idx - 1])
-        return (mu, sig)
+        return mu, sig
 
     def d_cal(self, rcmean, w2, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
         """Get calendar date probabilities
