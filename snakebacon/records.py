@@ -30,8 +30,7 @@ def read_dates(fl):
     outcore = DateRecord(age=indata['age'].values,
                          error=indata['error'].values,
                          depth=indata['depth'].values,
-                         labid=indata['labID'].values,
-                         depth_units='meters')
+                         labid=indata['labID'].values)
     return outcore
 
 
@@ -100,7 +99,7 @@ class DatedProxyRecord(ProxyRecord):
 
 
 class DateRecord(SedimentRecord):
-    def __init__(self, age, error, depth, labid, depth_units='meters'):
+    def __init__(self, age, error, depth, labid):
         """Create a sediment core date instance
 
         Parameters
@@ -109,10 +108,8 @@ class DateRecord(SedimentRecord):
         error : ndarray
         depth : ndarray
         labid : ndarray
-        depth_units : string, optional
 
         """
-        # TODO(brews): Add support for `pint` unit handling. Note that Bacon uses cm for depth.
         self.labid = labid
         self.age = age
         self.error = error  # Note this is called "std" in output .bacon file.
