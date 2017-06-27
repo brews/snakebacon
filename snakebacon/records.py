@@ -41,15 +41,7 @@ def read_proxy(fl):
     return outcore
 
 
-class SedimentRecord:  # TODO(brews): Make ABC?
-    """A sediment core
-    """
-
-    def __init__(self):
-        pass
-
-
-class ProxyRecord(SedimentRecord):
+class ProxyRecord():
     def __init__(self, data):
         """Create a proxy record instance
 
@@ -63,6 +55,7 @@ class ProxyRecord(SedimentRecord):
 
     def __repr__(self):
         return '%s(data=%r)' % (type(self).__name__, self.data)
+
 
 class DatedProxyRecord(ProxyRecord):
     def __init__(self, data, age):
@@ -103,7 +96,7 @@ class DatedProxyRecord(ProxyRecord):
         return out
 
 
-class DateRecord(SedimentRecord):
+class DateRecord():
     def __init__(self, age, error, depth, labid):
         """Create a sediment core date instance
 
