@@ -88,9 +88,9 @@ def read_baconout(path):
     return out
 
 
-def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, depth_max, cc, cc1, cc2, cc3, cc4, d_r,
-                 d_std, t_a, t_b, k, th01, th02, mem_strength, mem_mean, acc_shape, acc_mean, minyr=-1000, maxyr=1e6,
-                  normal=False, postbomb=0):
+def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, depth_max, cc, d_r, d_std, k, th01, th02,
+                 mem_strength, mem_mean, acc_shape, acc_mean, t_a=3, t_b=4, cc1='IntCal13', cc2='Marine13',
+                 cc3='SHCal13', cc4='ConstCal', minyr=-1000, maxyr=1e6, normal=False, postbomb=0):
     """Make list of strings to write to .bacon file
 
     Parameters
@@ -110,14 +110,18 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     cc : list of ints
         Int indicating which calibration curve to use for each core sample (i.e. 'cc1', 'cc2', ... 'cc4'). If list
         contains single value, this value is used for all core samples.
-    cc1 : str
+    cc1 : str, optional
         String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
-    cc2 : str
+        Default is 'IntCal13'.
+    cc2 : str, optional
         String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
-    cc3 : str
+        Default is 'Marine13'
+    cc3 : str, optional
         String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
-    cc4 : str
+        Default is 'SHCal13'.
+    cc4 : str, optional
         String indicating calibration curve option. Must be one of 'IntCal13', 'Marine13', 'SHCal13', 'ConstCal'.
+        Default is 'ConstCal'.
     d_r : n-length iterable of floats
         Delta carbon reservoir (delta R) values for each core sample. If single value is given, it will be used for all
         core samples.
@@ -132,9 +136,9 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
         greater than 't_a'. Default is 4.
     k : int
         Number of fixed-length segments to divide core into for MCMC.
-    minyr : int
+    minyr : int, optional
         Lowest year considered in MCMC.  # TODO(brews): See line 368 of Bacon.R. Note how this is calculated.
-    maxyr : int
+    maxyr : int, optional
         Highest year considered in MCMC.  # TODO(brews): See line 370 of Bacon.R. Note how this is calculated.
     th01 : int
         Initial guess for top-most fixed segment age. # TODO(brews): Check on this @ ln 474 of Bacon.R
@@ -148,9 +152,9 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
         Mean sediment accumulation rate strength from one fixed-length segment to the next.  # TODO(brews): Find more details on this.
     mem_mean: float
         Mean sediment accumulation rate memory from one fixed-length segment to the next. Must be between 1 and 0.
-    normal: bool
+    normal: bool, optional
         Whether to use a normal for radiocarbon age. Default is 'False', using Student's t based distribution.
-    postbomb: int
+    postbomb: int, optional
         # TODO(brews): I know nothing about this.
 
     Returns
