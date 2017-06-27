@@ -214,7 +214,7 @@ class CalibCurve:
         self.sigma = np.array(sigma)  # d_R variance?
 
     def __repr__(self):
-        return '%s(calbp=%r, c14age=%r, error=%r, delta14c=%r, sigma=%r)' % (type(self).__name__, self.calbp, self.c14age, self.error, delta14c, self.sigma)
+        return '%s(calbp=%r, c14age=%r, error=%r, delta14c=%r, sigma=%r)' % (type(self).__name__, self.calbp, self.c14age, self.error, self.delta14c, self.sigma)
 
     def c14age_from_age(self, theta):
         """Interpolate C14 mean age and variance from true age
