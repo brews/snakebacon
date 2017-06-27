@@ -97,23 +97,35 @@ class DatedProxyRecord(ProxyRecord):
 
 
 class DateRecord():
-    def __init__(self, age, error, depth, labid):
+    def __init__(self, obj=None, **kwargs):
         """Create a sediment core date instance
 
         Parameters
         ----------
-        age : ndarray
-        error : ndarray
-        depth : ndarray
-        labid : ndarray
+        obj : obj, optional
+            Object with iterable attributes 'labid', 'age', 'error', and 'depth'. Assumes that depth is in increasing order
+            order. Cannot use **kwargs if passing obj.
+        **kwargs : optional
+            Must include objects with iterables for 'labid', 'age', 'error', and 'depth'. Assumes depth is in in
+            increasing order. Only parsed if obj is None.
 
+        Returns
+        -------
+        A DateRecord instance.
         """
-        self.labid = np.array(labid)
-        self.age = np.array(age)
-        self.error = np.array(error)  # Note this is called "std" in output .bacon file.
-        self.depth = np.array(depth)
+        if obj is not None:
+            self.labid = np.array(obj.labid)
+            self.age = np.array(obj.age)
+            self.error = np.array(obj.error)  # Note this is called "std" in output .bacon file.
+            self.depth = np.array(obj.depth)
+        else:
+            self.labid = np.array(kwargs['labid'])
+            self.age = np.array(kwargs['age'])
+            self.error = np.array(kwargs['error'])
+            self.depth = np.array(kwargs['depth'])
 
     def __repr__(self):
+        # return '%s(%r)' % (type(self).__name__, self)
         return '%s(age=%r, error=%r, depth=%r, labid=%r)' % (type(self).__name__, self.age, self.error, self.depth, self.labid)
 
     def suggest_accumulation_rate(self):
