@@ -15,10 +15,10 @@ def read_14c(fl):
     """
     indata = pd.read_csv(fl, index_col=None, skiprows=11, header=None,
                          names=['calbp', 'c14age', 'error', 'delta14c', 'sigma'])
-    outcurve = CalibCurve(calbp=indata['calbp'].values,
-                          c14age=indata['c14age'].values,
-                          error=indata['error'].values,
-                          delta14c=indata['delta14c'].values,
+    outcurve = CalibCurve(calbp=indata['calbp'],
+                          c14age=indata['c14age'],
+                          error=indata['error'],
+                          delta14c=indata['delta14c'],
                           sigma='sigma')
     return outcurve
 
@@ -27,10 +27,10 @@ def read_dates(fl):
     """Create proxy instance from Bacon proxy file
     """
     indata = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python')
-    outcore = DateRecord(age=indata['age'].values,
-                         error=indata['error'].values,
-                         depth=indata['depth'].values,
-                         labid=indata['labID'].values)
+    outcore = DateRecord(age=indata['age'],
+                         error=indata['error'],
+                         depth=indata['depth'],
+                         labid=indata['labID'])
     return outcore
 
 
