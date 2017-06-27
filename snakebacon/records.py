@@ -19,7 +19,7 @@ def read_14c(fl):
                           c14age=indata['c14age'],
                           error=indata['error'],
                           delta14c=indata['delta14c'],
-                          sigma='sigma')
+                          sigma=indata['sigma'])
     return outcurve
 
 
