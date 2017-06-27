@@ -155,7 +155,9 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     normal: bool, optional
         Whether to use a normal for radiocarbon age. Default is 'False', using Student's t based distribution.
     postbomb: int, optional
-        # TODO(brews): I know nothing about this.
+        Integer indicating which post-bomb curve to use for radiocarbon calibration. `0` is no curve. `1` is
+        'postbomb_NH1.14C'. `2` is 'postbomb_NH2.14C'. `3` is 'postbomb_NH3.14C'. `4` is 'postbomb_SH1-2.14C'.
+        `5` is 'postbomb_SH3.14C'.
 
     Returns
     -------
