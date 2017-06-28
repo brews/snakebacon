@@ -41,7 +41,7 @@ def read_proxy(fl):
     return outcore
 
 
-class ProxyRecord():
+class ProxyRecord:
     def __init__(self, data):
         """Create a proxy record instance
 
@@ -164,9 +164,10 @@ class DateRecord():
 
         Returns
         -------
-        out : (ndarray, list)
-            out[0] is ndarray of sediment segment depths. out[1] is a list of ndarray of probabilities with one ndarray
-            per core segment. len(out[0]) == len(out[1])
+        depth : ndarray
+            Depth of Fixed-length sediment segment.
+        probs : list of ndarrays
+            Probabilities with one ndarray per fixed-length core segment.
 
         Python version of .bacon.calib() on line 908 in Bacon.R
         """
@@ -181,13 +182,16 @@ class DateRecord():
         # Now Bacon goes and checks the ncol in the dets See line #960 in Bacon.R
 
         # Line #973
+        # TODO(brews): Need to rewrite this so that is can handle *potenially* multible parameters per depths (i.e. t_b, etc)
+        # TODO(brews): Write CalibrationDecoderRing, translating calibration curve codes into class instances which can be modified by adding postbomb curves.
         assert t_b - 1 == t_a
         calib_probs = []
         # I think we can do the below without a loop.
+        rcmean = self.age - d_r
+        w2 = self.error ** 2 + d_std ** 2
         for i in range(len(self.depth)):
-            # TODO(brews): Rename columns, or have the columns passed in with names.
-            age_realizations = calib_curve.d_cal(rcmean=self.age[i] - d_r, w2=self.error[i] ** 2 + d_std ** 2,
-                                                 t_a=t_a, t_b=t_b, cutoff=cutoff, normal_distr=normal_distr)
+            age_realizations = calib_curve.d_cal(rcmean=rcmean, w2=w2, t_a=t_a, t_b=t_b, cutoff=cutoff,
+                                                 normal_distr=normal_distr)
             calib_probs.append(age_realizations)
         return self.depth, calib_probs
 

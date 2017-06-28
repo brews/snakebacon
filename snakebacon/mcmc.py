@@ -29,4 +29,5 @@ class McmcResults:
         return len(self.objective)
 
     def plot(self):
+        # TODO(brews):
         pass

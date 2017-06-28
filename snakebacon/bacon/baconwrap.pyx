@@ -80,7 +80,6 @@ def read_baconout(path):
     """
     d = pd.read_table(path, delim_whitespace=True, header=None)
     # TODO(brews): Function cannot handle hiatus
-    # TODO(brews): Not sure about the outgoing structure here. Might transpose depending on which is easier in later analysis.
     out = {'theta': d.iloc[:, 0].values,  # `theta0` or often just `theta`, array (i) of Age of sedimentation core head.
            'x': d.iloc[:, 1:-2].values.T,  # `x`, 2d array (i, j) of sediment accumulation rates for each segment (i) down the sediment core of each MCMC iteration (j).
            'w': d.iloc[:, -2].values,  # `w`, array (i) of memory or coherence of accumulation rates along sediment core.

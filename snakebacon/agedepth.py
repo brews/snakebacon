@@ -155,6 +155,17 @@ class AgeDepthModel:
         out += next_x * (d - ci)
         return out
 
+    def prior_dates(self):
+        # TODO(brews): Write function for prior dates distributions
+        pass
+
+    def prior_sediment_rate(self):
+        # TODO(brews): Write function for prior sediment rate distributions
+        pass
+
+    def prior_sediment_memory(self):
+        # TODO(brews): Write function for prior sediment memory distributions
+        pass
 
 class NeedFitError(Exception):
     pass
