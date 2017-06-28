@@ -7,7 +7,35 @@ from snakebacon.bacon import run_baconmcmc
 log = logging.getLogger(__name__)
 
 
-class McmcResults:
+class McmcProblem:
+    def __init___(self, coredates, **kwargs):
+        # TODO(brews): Write function to initialize McmcSetup
+        pass
+
+    def prior_dates(self):
+        # TODO(brews): Write function for prior dates distributions
+        pass
+
+    def prior_sediment_rate(self):
+        # TODO(brews): Write function for prior sediment rate distributions
+        pass
+
+    def prior_sediment_memory(self):
+        # TODO(brews): Write function for prior sediment memory distributions
+        pass
+
+
+class McmcSetup(McmcProblem):
+    def __init___(self, coredates, **kwargs):
+        # TODO(brews): Write function to initialize McmcSetup
+        pass
+
+    def run(self):
+        # TODO(brews): Write function to run McmcSetup.
+        pass
+
+
+class McmcResults(McmcProblem):
     def __init__(self, coredates, **kwargs):
         mcmcout = run_baconmcmc(core_labid=coredates.labid, core_age=coredates.age,
                                 core_error=coredates.error, core_depth=coredates.depth, **kwargs)
