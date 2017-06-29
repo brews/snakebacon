@@ -51,6 +51,7 @@ class ProxyRecord:
             Pandas dataframe containing columns with proxy sample measurements. Must also have 'depth' column.
         """
         assert 'depth' in data.columns.values
+        assert 'age' not in data.columns.values
         self.data = pd.DataFrame(data)
 
     def __repr__(self):
