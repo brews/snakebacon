@@ -140,9 +140,9 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     maxyr : int, optional
         Highest year considered in MCMC.  # TODO(brews): See line 370 of Bacon.R. Note how this is calculated.
     th01 : int
-        Initial guess for top-most fixed segment age. # TODO(brews): Check on this @ ln 474 of Bacon.R
+        Initial ballpark guess for top-most fixed segment age. # TODO(brews): Check on this @ ln 474 of Bacon.R
     th02 : int
-        Initial guess for second-to-top-most fixed segment age. # TODO(sbm): Check on this @ ln 474 of Bacon.R
+        Another Initial ballpark guess for fixed segment age. # TODO(sbm): Check on this @ ln 474 of Bacon.R
     acc_mean : float
         Mean sediment accumulation rate (cm/yr).
     acc_shape : float
