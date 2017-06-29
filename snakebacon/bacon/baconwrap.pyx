@@ -88,7 +88,7 @@ def read_baconout(path):
 
 
 def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, depth_max, cc, d_r, d_std, k, th01, th02,
-                 mem_strength, mem_mean, acc_shape, acc_mean, t_a=3, t_b=4, cc1='IntCal13', cc2='Marine13',
+                 mem_strength, mem_mean, acc_shape, acc_mean, t_a=None, t_b=None, cc1='IntCal13', cc2='Marine13',
                  cc3='SHCal13', cc4='ConstCal', minyr=-1000, maxyr=1e6, normal=False, postbomb=0):
     """Make list of strings to write to .bacon file
 
@@ -172,6 +172,10 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     if depth_min < min(core_depth):
         extrap = [np.nan, max(core_age), np.max([1e4, np.max(100 * core_error)]), depth_max, 0]
         dets = np.array([np.array([core_labid, core_age, core_error, core_depth]).T, extrap])
+    if t_a is None:
+        t_a = [3]
+    if t_b is None:
+        t_b = [4]
     outlines = list()
     outlines.append('## Ran on {0}\n\n'.format(datetime.datetime.today().strftime('%c')))
     outlines.append('Cal 0 : ConstCal;\n')
