@@ -129,11 +129,9 @@ class DateRecord():
         return '%s(age=%r, error=%r, depth=%r, labid=%r)' % (type(self).__name__, self.age, self.error, self.depth, self.labid)
 
     def suggest_accumulation_rate(self):
-        """From core age-depth data, suggest accumulation rate
-
-        Follow's Bacon's method @ Bacon.R ln 30 - 44
-
+        """From core age-depth data, suggest mean accumulation rate (cm/y)
         """
+        # Follow's Bacon's method @ Bacon.R ln 30 - 44
         # Suggested round vals.
         sugg = np.tile([1, 2, 5], (4, 1)) * np.reshape(np.repeat([0.1, 1.0, 10, 100], 3), (4, 3))
         # Get ballpark accumulation rates, uncalibrated dates.
