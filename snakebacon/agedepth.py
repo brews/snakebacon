@@ -3,7 +3,7 @@ import logging as logging
 import matplotlib.pylab as plt
 import numpy as np
 
-from .mcmc import McmcResults
+from .mcmc import McmcSetup
 from .records import DatedProxyRecord
 
 log = logging.getLogger(__name__)
@@ -11,9 +11,8 @@ log = logging.getLogger(__name__)
 
 class AgeDepthModel:
     def __init__(self, coredates, *, mcmc_kwargs, hold_fit=False, burnin=200):
-        self.coredates = coredates
         self.burnin = int(burnin)
-        self.mcmc_kwargs = dict(mcmc_kwargs)
+        self.setup = McmcSetup(coredates, **mcmc_kwargs)
         self._mcmcfit = None
         self._thick = None
         self._depth = None
@@ -66,11 +65,11 @@ class AgeDepthModel:
             raise NeedFitError('Needs to be fit() first')
 
     def __repr__(self):
-        return '%s(coredates=%r, mcmc_kwargs=%r, burnin=%r)' % (type(self).__name__, self.coredates, self.mcmc_kwargs, self.burnin)
+        return '%s(coredates=%r, mcmc_kwargs=%r, burnin=%r)' % (type(self).__name__, self.mcmcsetup.coredates, self.mcmc_kwargs, self.burnin)
 
     def fit(self):
         """Fit MCMC AgeDepthModel"""
-        self._mcmcfit = McmcResults(self.coredates, **self.mcmc_kwargs)
+        self._mcmcfit = self.setup.run()
         self._mcmcfit.burnin(self.burnin)
         dmin = min(self._mcmcfit.depth_segments)
         dmax = max(self._mcmcfit.depth_segments)
