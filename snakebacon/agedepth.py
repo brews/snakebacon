@@ -140,7 +140,7 @@ class AgeDepthModel:
         deltac = self.thick
         c0 = min(self.depth)  # Uniform depth segment abscissa (in cm).
         assert d >= c0
-        out = theta0.copy()
+        out = theta0.astype(float)
         i = int(np.floor((d - c0) / deltac))
         for j in range(i):
             out += x[j] * deltac
