@@ -1,0 +1,39 @@
+# CI on Windows via appveyor
+# This file was based on Olivier Grisel's python-appveyor-demo and xarray's setup
+branches:
+  only:
+    - master
+    - dev
+
+environment:
+
+  matrix:
+    - PYTHON: "C:\\Python36-conda64"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
+      CONDA_ENV: "py36-windows"
+
+install:
+  # Install miniconda Python
+  - "powershell ./ci/install_python.ps1"
+
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+  # Check that we have the expected version and architecture for Python
+  - "python --version"
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+
+  # install xarray and dependencies
+  - "conda env create --file ./environment.yml"
+  - "activate snakebacon"
+  - "python setup.py check -m -r -s"
+  - "python setup.py build_ext --inplace --compiler=msvc"
+  - "python setup.py install --user"
+
+build: false
+
+test_script:
+  - "python -m unittest"
