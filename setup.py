@@ -51,8 +51,11 @@ setup(name='snakebacon',
       classifiers=[
           'Development Status :: 3 - Alpha',
 
+          'Operating System :: POSIX',
+
           'Intended Audience :: Developers',
           'Intended Audience :: Science/Research',
+
           'Topic :: Scientific/Engineering',
           'Topic :: Software Development',
 
