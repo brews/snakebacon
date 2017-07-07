@@ -60,7 +60,7 @@ setup(name='snakebacon',
 
           'Programming Language :: Python :: 3'],
       keywords='marine radiocarbon c14',
-      packages=find_packages(exclude=['contrib', 'docs', 'build']),
+      packages=find_packages(exclude=['contrib', 'docs', 'build', 'ci']),
       install_requires=['setuptools', 'numpy', 'cython', 'pandas', 'matplotlib'],
       extras_require={'dev': ['check-manifest']},
       ext_modules=cythonize([bacon]))
