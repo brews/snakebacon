@@ -179,15 +179,3 @@ intersphinx_mapping = {
     'pandas': ('http://pandas.pydata.org/pandas-docs/stable/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
 }
-
-# From https://read-the-docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
-# attempt work around for C-dependencies.
-from unittest.mock import MagicMock
-
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-            return MagicMock()
-
-MOCK_MODULES = ['Cython', 'pandas', 'argparse', 'numpy', 'pandas']
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)

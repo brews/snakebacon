@@ -27,8 +27,6 @@ dependencies:
 - glib=2.51.4=0
 - gmp=6.1.2=0
 - gsl=2.2.1=blas_openblas_2
-- gst-plugins-base=1.8.0=0
-- gstreamer=1.8.0=2
 - icu=58.1=1
 - idna=2.5=py36_0
 - imagesize=0.7.1=py36_0
