@@ -7,6 +7,7 @@ dependencies:
   - numpy=1.11.2
   - pandas=0.20.1
   - cython=0.25.2
+  - openblas=0.2.19
   - gsl=2.2.1
   - openblas=0.2.19
   - numpydoc=0.6.0
