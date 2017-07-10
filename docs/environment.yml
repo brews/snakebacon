@@ -105,7 +105,9 @@ dependencies:
 - xz=5.2.2=0
 - zlib=1.2.11=0
 - cloog=0.18.0=0
+- gcc=4.8.5=7
 - isl=0.12.2=0
+- libgcc=5.2.0=0
 - libgfortran=3.0.0=1
 - pip:
   - ipython-genutils==0.2.0
