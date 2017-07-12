@@ -63,7 +63,7 @@ setup(name='snakebacon',
 
           'Programming Language :: Python :: 3'],
       keywords='marine radiocarbon c14',
-      install_requires=['setuptools', 'numpy', 'Cython', 'pandas', 'matplotlib'],
+      install_requires=['setuptools', 'numpy', 'Cython', 'pandas', 'matplotlib', 'scipy'],
       extras_require={'dev': ['check-manifest']},
       packages=find_packages(),
       package_data={'snakebacon': ['tests/*.csv', 'bacon/Curves/*.14C']},
