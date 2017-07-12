@@ -18,7 +18,6 @@ matrix:
       env:
         - CONDA_ENV=py35
         - OS_ENV=MacOSX
-      disable_homebrew: true
 
 before_install:
   - sudo apt-get update
