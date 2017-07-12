@@ -1,114 +1,15 @@
 name: snakebacon-docs
-channels:
-  - conda-forge
-  - defaults
 dependencies:
-- alabaster=0.7.10=py36_0
-- args=0.1.0=py36_0
-- asn1crypto=0.22.0=py36_0
-- babel=2.3.4=py36_0
-- blas=1.1=openblas
-- ca-certificates=2017.4.17=0
-- certifi=2017.4.17=py36_0
-- cffi=1.10.0=py36_0
-- chardet=3.0.2=py36_1
-- clint=0.5.1=py36_0
-- cryptography=1.9=py36_0
-- cycler=0.10.0=py36_0
-- cython=0.25.2=py36_1
-- dbus=1.10.10=3
-- decorator=4.0.11=py36_0
-- docutils=0.13.1=py36_0
-- expat=2.2.1=0
-- flake8=3.3.0=py36_0
-- fontconfig=2.12.1=4
-- freetype=2.7=1
-- gettext=0.19.7=1
-- glib=2.51.4=0
-- gmp=6.1.2=0
-- gsl=2.2.1=blas_openblas_2
-- icu=58.1=1
-- idna=2.5=py36_0
-- imagesize=0.7.1=py36_0
-- ipython=6.1.0=py36_0
-- ipython_genutils=0.2.0=py36_0
-- jedi=0.10.0=py36_0
-- jinja2=2.9.5=py36_0
-- joblib=0.11=py36_0
-- jpeg=9b=0
-- libffi=3.2.1=3
-- libgpuarray=0.6.8=0
-- libiconv=1.14=4
-- libpng=1.6.28=0
-- libxcb=1.12=1
-- libxml2=2.9.4=4
-- mako=1.0.6=py36_0
-- markupsafe=1.0=py36_0
-- matplotlib=2.0.2=np113py36_0
-- mccabe=0.6.1=py36_0
-- mpc=1.0.3=4
-- mpfr=3.1.5=0
-- ncurses=5.9=10
-- nose=1.3.7=py36_2
-- numpy=1.13.1=py36_blas_openblas_200
-- numpydoc=0.7.0=py36_0
-- openblas=0.2.19=2
-- openssl=1.0.2l=0
-- packaging=16.8=py36_0
-- pandas=0.20.2=np113py36_1
-- patsy=0.4.1=py36_0
-- pcre=8.39=0
-- pexpect=4.2.1=py36_0
-- pickleshare=0.7.3=py36_0
-- pip=9.0.1=py36_0
-- pkginfo=1.2.1=py36_0
-- prompt_toolkit=1.0.14=py36_0
-- ptyprocess=0.5.2=py36_0
-- py=1.4.34=py36_0
-- pycodestyle=2.3.1=py36_0
-- pycparser=2.18=py36_0
-- pyflakes=1.5.0=py36_0
-- pygments=2.2.0=py36_0
-- pygpu=0.6.8=np113py36_0
-- pyopenssl=16.2.0=py36_0
-- pyparsing=2.2.0=py36_0
-- pysocks=1.6.7=py36_0
-- pytest=3.1.3=py36_0
-- python=3.6.1=3
-- python-dateutil=2.6.0=py36_0
-- pytz=2017.2=py36_0
-- readline=6.2=0
-- requests=2.18.1=py36_0
-- requests-toolbelt=0.8.0=py36_0
-- scipy=0.19.1=np113py36_blas_openblas_200
-- setuptools=33.1.1=py36_0
-- simplegeneric=0.8.1=py36_0
-- sip=4.18=py36_1
-- six=1.10.0=py36_1
-- snowballstemmer=1.2.1=py36_0
-- sphinx=1.6.3=py36_0
-- sphinx_rtd_theme=0.2.4=py36_0
-- sphinxcontrib-websupport=1.0.1=py36_0
-- sqlite=3.13.0=1
-- theano=0.9.0=py36_1
-- tk=8.5.19=1
-- tornado=4.5.1=py36_0
-- tqdm=4.14.0=py36_0
-- traitlets=4.3.2=py36_0
-- twine=1.8.1=py36_1
-- typing=3.6.1=py36_0
-- urllib3=1.21.1=py36_1
-- wcwidth=0.1.7=py36_0
-- wheel=0.29.0=py36_0
-- xorg-libxau=1.0.8=3
-- xorg-libxdmcp=1.1.2=3
-- xz=5.2.2=0
-- zlib=1.2.11=0
-- cloog=0.18.0=0
-- gcc=4.8.5=7
-- isl=0.12.2=0
-- libgcc=5.2.0=0
-- libgfortran=3.0.0=1
-- pip:
-  - ipython-genutils==0.2.0
-  - prompt-toolkit==1.0.14
+  - python=3.5
+  - cython
+  - gcc
+  - gsl
+  - openblas
+  - setuptools
+  - docutils
+  - matplotlib
+  - numpy
+  - numpydoc
+  - ipython
+  - pandas
+  - scipy
