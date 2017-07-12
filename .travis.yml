@@ -19,8 +19,8 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
 
-  - conda env create -q -f environment.yml
-  - source activate snakebacon
+  - conda env create -q -f ci/requirements.yml
+  - source activate test_env
   - python setup.py check -m -r -s
   - python setup.py build_ext --inplace
   - python setup.py install --user

@@ -1,0 +1,13 @@
+name: test_env
+dependencies:
+  - python
+  - cython
+  - gcc
+  - gsl
+  - openblas
+  - setuptools
+  - docutils
+  - matplotlib
+  - numpy
+  - pandas
+  - scipy
