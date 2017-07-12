@@ -1,4 +1,4 @@
-from os import path
+import os
 
 from Cython.Build import cythonize
 from setuptools import setup, find_packages
@@ -17,8 +17,8 @@ version = '%s'
 short_version = '%s'
 """
     if not filename:
-        filename = path.join(
-            path.dirname(__file__), 'snakebacon', 'version.py')
+        filename = os.path.join(
+            os.path.dirname(__file__), 'snakebacon', 'version.py')
 
     a = open(filename, 'w')
     try:
@@ -29,17 +29,22 @@ short_version = '%s'
 
 write_version_py()
 
-bacon = Extension("snakebacon.bacon.baconwrap",
-                  sources=["snakebacon/bacon/baconwrap.pyx",
-                           "snakebacon/bacon/input.cpp",
-                           "snakebacon/bacon/Matrix.cpp",
-                           "snakebacon/bacon/ranfun.cpp",
-                           "snakebacon/bacon/vector.cpp",
-                           "snakebacon/bacon/kernel.cpp"],
-                  language="c++",
-                  libraries=["gsl", "openblas"],
-                  extra_compile_args=["-xc++", "-lstdc++", "-shared-libgcc",
-                                      "-O2", "-fopenmp"])
+bacon_extension_kwargs = dict(sources = ["snakebacon/bacon/baconwrap.pyx",
+                                         "snakebacon/bacon/input.cpp",
+                                         "snakebacon/bacon/Matrix.cpp",
+                                         "snakebacon/bacon/ranfun.cpp",
+                                         "snakebacon/bacon/vector.cpp",
+                                         "snakebacon/bacon/kernel.cpp"],
+                              language = "c++",
+                              libraries = ["gsl", "openblas"],
+                              extra_compile_args = ["-xc++", "-lstdc++", "-shared-libgcc",
+                                                    "-O2", "-fopenmp"])
+
+# Deal with bad linking bug with conda in readthedocs builds.
+if os.environ.get('READTHEDOCS') == 'True':
+    bacon_extension_kwargs['include_dirs'] = ['~/miniconda3/envs/snakebacon-docs/include']
+
+bacon = Extension("snakebacon.bacon.baconwrap", **bacon_extension_kwargs)
 
 setup(name='snakebacon',
       version='0.0.1',
