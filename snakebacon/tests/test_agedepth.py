@@ -37,7 +37,7 @@ class TestAgeDepth(unittest.TestCase):
         np.testing.assert_allclose(self.testdummy.age_median[0], goal_agemedian_edges[0], atol=15)
         np.testing.assert_allclose(self.testdummy.age_median[-1], goal_agemedian_edges[-1], atol=3)
 
-        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][0], goal_agemedian_025[0], atol=5e-1)
+        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][0], goal_agemedian_025[0], atol=3)
         np.testing.assert_allclose(self.testdummy.conf_interv[2.5][-1], goal_agemedian_025[-1], atol=3)
 
         np.testing.assert_allclose(self.testdummy.conf_interv[97.5][0], goal_agemedian_975[0], atol=5)
@@ -74,7 +74,7 @@ class TestAgeDepth(unittest.TestCase):
         # Fuzzy to deal with vars across platforms.
         np.testing.assert_allclose(len(victim), goal_len, atol=50)
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=10)
-        np.testing.assert_allclose(victim.var(), goal_var, atol=200)
+        np.testing.assert_allclose(victim.var(), goal_var, atol=550)
 
 
 if __name__ == '__main__':
