@@ -52,16 +52,17 @@ class TestBaconwrap(unittest.TestCase):
         w_mean_goal = 0.06277018029195805
         x0_mean_goal = 14.487713009032634
         xneg1_mean_goal = 15.65397709810606
-        self.assertEqual(niter_goal, len(fullrun_victim['objective']))
-        self.assertEqual(niter_goal, len(fullrun_victim['w']))
-        self.assertEqual(niter_goal, len(fullrun_victim['x'][0]))
-        self.assertEqual(niter_goal, len(fullrun_victim['x'][-1]))
+        # Fuzzy to deal with vars across platforms.
+        np.testing.assert_allclose(len(fullrun_victim['objective']), niter_goal, atol=50)
+        np.testing.assert_allclose(len(fullrun_victim['w']), niter_goal, atol=50)
+        np.testing.assert_allclose(len(fullrun_victim['x'][0]), niter_goal, atol=50)
+        np.testing.assert_allclose(len(fullrun_victim['x'][-1]), niter_goal, atol=50)
         self.assertEqual(nsegs_goal, len(fullrun_victim['x']))
-        np.testing.assert_allclose(fullrun_victim['objective'].mean(), objective_mean_goal, atol=1e-2)
-        np.testing.assert_allclose(fullrun_victim['theta'].mean(), theta_mean_goal, atol=1)
+        np.testing.assert_allclose(fullrun_victim['objective'].mean(), objective_mean_goal, atol=1e-1)
+        np.testing.assert_allclose(fullrun_victim['theta'].mean(), theta_mean_goal, atol=15)
         np.testing.assert_allclose(fullrun_victim['w'].mean(), w_mean_goal, atol=1e-2)
-        np.testing.assert_allclose(fullrun_victim['x'][0].mean(), x0_mean_goal, atol=1e-2)
-        np.testing.assert_allclose(fullrun_victim['x'][-1].mean(), xneg1_mean_goal, atol=1e-2)
+        np.testing.assert_allclose(fullrun_victim['x'][0].mean(), x0_mean_goal, atol=2)
+        np.testing.assert_allclose(fullrun_victim['x'][-1].mean(), xneg1_mean_goal, atol=2)
 
 
 # class TestRead14c(unittest.TestCase):
