@@ -14,10 +14,14 @@ matrix:
         - CONDA_ENV=py36
         - JOB_OS=Linux
     - os: osx
+      language: generic
 #      python: 3.5
       env:
         - CONDA_ENV=py35
         - JOB_OS=MacOSX
+      before_install:
+        - brew update
+        - brew install python3
 
 before_install:
   - sudo apt-get update
