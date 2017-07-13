@@ -35,12 +35,12 @@ class TestAgeDepth(unittest.TestCase):
         self.assertTupleEqual(goal_depthrange, (min(self.testdummy.depth), max(self.testdummy.depth)))
 
         np.testing.assert_allclose(self.testdummy.age_median[0], goal_agemedian_edges[0], atol=15)
-        np.testing.assert_allclose(self.testdummy.age_median[-1], goal_agemedian_edges[-1], atol=3)
+        np.testing.assert_allclose(self.testdummy.age_median[-1], goal_agemedian_edges[-1], atol=5)
 
-        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][0], goal_agemedian_025[0], atol=3)
-        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][-1], goal_agemedian_025[-1], atol=3)
+        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][0], goal_agemedian_025[0], atol=10)
+        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][-1], goal_agemedian_025[-1], atol=10)
 
-        np.testing.assert_allclose(self.testdummy.conf_interv[97.5][0], goal_agemedian_975[0], atol=5)
+        np.testing.assert_allclose(self.testdummy.conf_interv[97.5][0], goal_agemedian_975[0], atol=10)
         np.testing.assert_allclose(self.testdummy.conf_interv[97.5][-1], goal_agemedian_975[-1], atol=10)
 
         self.assertEqual(goal_ageensemble_shape[0], len(self.testdummy.age_ensemble))
