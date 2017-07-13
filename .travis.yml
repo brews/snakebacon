@@ -14,7 +14,7 @@ matrix:
         - CONDA_ENV=py36
         - JOB_OS=Linux
     - os: osx
-      python: 3.5
+#      python: 3.5
       env:
         - CONDA_ENV=py35
         - JOB_OS=MacOSX
