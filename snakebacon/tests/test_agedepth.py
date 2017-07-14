@@ -8,14 +8,16 @@ import pandas as pd
 from snakebacon import read_dates, ProxyRecord
 from snakebacon.agedepth import AgeDepthModel
 
+
 here = path.abspath(path.dirname(__file__))
 
+mcmc_kwargs = dict(depth_min=1.5, depth_max=99.5, cc=[1],
+                   cc1='IntCal13', cc2='Marine13', cc3='SHCal13', cc4='ConstCal',
+                   d_r=[0], d_std=[0], t_a=[3], t_b=[4], k=20,
+                   minyr=-1000, maxyr=1e6, th01=4147, th02=4145,
+                   acc_mean=20, acc_shape=1.5, mem_strength=4, mem_mean=0.7)
 fullrun_agemodel = AgeDepthModel(read_dates(path.join(here, 'MSB2K.csv')),
-                                 mcmc_kwargs=dict(depth_min=1.5, depth_max=99.5, cc=[1],
-                                                  cc1='IntCal13', cc2='Marine13', cc3='SHCal13', cc4='ConstCal',
-                                                  d_r=[0], d_std=[0], t_a=[3], t_b=[4], k=20,
-                                                  minyr=-1000, maxyr=1e6, th01=4147, th02=4145,
-                                                  acc_mean=20, acc_shape=1.5, mem_strength=4, mem_mean=0.7))
+                                 mcmc_kwargs=mcmc_kwargs)
 
 
 class TestAgeDepth(unittest.TestCase):
@@ -34,14 +36,14 @@ class TestAgeDepth(unittest.TestCase):
         self.assertEqual(goal_thick, self.testdummy.thick)
         self.assertTupleEqual(goal_depthrange, (min(self.testdummy.depth), max(self.testdummy.depth)))
 
-        np.testing.assert_allclose(self.testdummy.age_median[0], goal_agemedian_edges[0], atol=25)
-        np.testing.assert_allclose(self.testdummy.age_median[-1], goal_agemedian_edges[-1], atol=25)
+        np.testing.assert_allclose(self.testdummy.age_median()[0], goal_agemedian_edges[0], atol=25)
+        np.testing.assert_allclose(self.testdummy.age_median()[-1], goal_agemedian_edges[-1], atol=25)
 
-        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][0], goal_agemedian_025[0], atol=25)
-        np.testing.assert_allclose(self.testdummy.conf_interv[2.5][-1], goal_agemedian_025[-1], atol=25)
+        np.testing.assert_allclose(self.testdummy.age_percentile(2.5)[0], goal_agemedian_025[0], atol=25)
+        np.testing.assert_allclose(self.testdummy.age_percentile(2.5)[-1], goal_agemedian_025[-1], atol=25)
 
-        np.testing.assert_allclose(self.testdummy.conf_interv[97.5][0], goal_agemedian_975[0], atol=25)
-        np.testing.assert_allclose(self.testdummy.conf_interv[97.5][-1], goal_agemedian_975[-1], atol=25)
+        np.testing.assert_allclose(self.testdummy.age_percentile(97.5)[0], goal_agemedian_975[0], atol=25)
+        np.testing.assert_allclose(self.testdummy.age_percentile(97.5)[-1], goal_agemedian_975[-1], atol=25)
 
         self.assertEqual(goal_ageensemble_shape[0], len(self.testdummy.age_ensemble))
         np.testing.assert_allclose(len(self.testdummy.age_ensemble[0]), goal_ageensemble_shape[1], atol=50)

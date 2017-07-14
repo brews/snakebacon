@@ -5,10 +5,11 @@ import numpy as np
 from snakebacon.records import DateRecord
 from snakebacon.bacon import run_baconmcmc
 
+
 log = logging.getLogger(__name__)
 
 
-class McmcProblem:
+class McmcSetup:
     def __init__(self, coredates, **kwargs):
         self.coredates = DateRecord(coredates)
         self.mcmc_kwargs = kwargs
@@ -28,21 +29,23 @@ class McmcProblem:
         # TODO(brews): Write function for prior sediment memory distributions
         pass
 
-
-class McmcSetup(McmcProblem):
-    def __init___(self, coredates, **kwargs):
-        super().__init__(coredates, **kwargs)
+    def validate(self):
+        """Validate configs for mcmc run"""
+        # TODO(brews): Write mcmc config validation
+        pass
 
     def run(self):
-        return McmcResults(self.coredates, **self.mcmc_kwargs)
+        self.validate()
+        return McmcResults(self)
 
 
-class McmcResults(McmcProblem):
-    def __init__(self, coredates, **kwargs):
-        super().__init__(coredates, **kwargs)
-        mcmcout = run_baconmcmc(core_labid=self.coredates.labid, core_age=self.coredates.age,
-                                core_error=self.coredates.error, core_depth=self.coredates.depth, **self.mcmc_kwargs)
-        self.depth_segments = np.linspace(self.mcmc_kwargs['depth_min'], self.mcmc_kwargs['depth_max'], self.mcmc_kwargs['k'])
+class McmcResults:
+    def __init__(self, setup):
+        mcmcout = run_baconmcmc(core_labid=setup.coredates.labid, core_age=setup.coredates.age,
+                                core_error=setup.coredates.error, core_depth=setup.coredates.depth,
+                                **setup.mcmc_kwargs)
+        self.depth_segments = np.linspace(setup.mcmc_kwargs['depth_min'], setup.mcmc_kwargs['depth_max'],
+                                          setup.mcmc_kwargs['k'])
         self.headage = mcmcout['theta']
         self.sediment_rate = mcmcout['x']
         self.sediment_memory = mcmcout['w']
