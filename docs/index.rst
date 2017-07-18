@@ -5,6 +5,12 @@
 Sediment core age modeling in Python
 ====================================
 
+.. note::
+
+   The project is under heavy development. Code and documentation is not complete.
+
+
+
 **snakebacon** is an open source Python package that blah blah
 
 Our goal is to blah blah blah `bacon_`.
