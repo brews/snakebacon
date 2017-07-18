@@ -5,4 +5,4 @@ snakebacon
     :target: https://travis-ci.org/brews/snakebacon
 
 
-Under construction.
+The project is under heavy development. It may eat your hamster. Beware. Hic sunt dracones.
