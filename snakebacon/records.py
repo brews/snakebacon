@@ -291,7 +291,7 @@ class CalibCurve:
         return out
 
 
-def plot_acc_prior(mem_shape, mem_mean, thick):
+def plot_accmem_prior(mem_shape, mem_mean, thick):
     """Plot accumulation rate varibility between neighbouring depths ("memory") prior
 
     # PlotAccPrior @ Bacon.R ln 113 -> ln 1097-1115
@@ -336,7 +336,7 @@ def calib_plot(x, normalize=False):
     ax.set_xlabel('Depth')
 
 
-def plot_acc_prior(acc_shape, acc_mean):
+def plot_accrate_prior(acc_shape, acc_mean):
     """Plot prior distribution accumulation rate
     # PlotMemPrior @ Bacon.R ln 114 -> ln 1119 - 1141
     ## plot the prior for the memory (= accumulation rate varibility between neighbouring depths)
