@@ -183,7 +183,6 @@ class DateRecord:
 
         # Line #973
         # TODO(brews): Need to rewrite this so that is can handle *potenially* multible parameters per depths (i.e. t_b, etc)
-        # TODO(brews): Write CalibrationDecoderRing, translating calibration curve codes into class instances which can be modified by adding postbomb curves.
         assert t_b - 1 == t_a
         calib_probs = []
         # I think we can do the below without a loop.

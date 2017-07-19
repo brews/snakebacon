@@ -6,9 +6,6 @@ import numpy as np
 import snakebacon as snek
 from snakebacon.bacon import baconwrap
 
-# TODO(brews): Build cython as setup via distutils.core.run_setup
-# Be sure to run python setup.py build_ext --inplace
-
 
 here = path.abspath(path.dirname(__file__))
 
