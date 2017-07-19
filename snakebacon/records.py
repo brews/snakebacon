@@ -88,7 +88,7 @@ class DatedProxyRecord(ProxyRecord):
     def to_pandas(self):
         """Convert record to pandas.DataFrame"""
         agedepthdf = pd.DataFrame(self.age, index=self.data.depth)
-        agedepthdf.columns = ['mciter' + str(x) for x in range(self.n_members())]
+        agedepthdf.columns = [int(x) for x in range(self.n_members())]
         out = (agedepthdf.join(self.data.set_index('depth'))
                .reset_index()
                .melt(id_vars=self.data.columns.values, var_name='mciter', value_name='age'))
