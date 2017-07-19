@@ -169,13 +169,45 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     # Test with:
     # write_baconin('testout.txt', core_labid = c.labid, core_age = c.age, core_error = c.error, core_depth = c.depth, depth_min = 1.5, depth_max = 99.5, cc=[1], cc1='IntCal13', cc2='Marine13', cc3='SHCal13', cc4 = 'ConstCal', d_r = [0], d_std = [0], t_a=[3], t_b=[4], k= 20, minyr=-1000, maxyr = 1e6, th01=4147, th02=4145, acc_mean = 20, acc_shape = 1.5, mem_strength = 4, mem_mean = 0.7)
     # TODO(brews): Function cannot handle hiatus.
+    core_labid = np.array(core_labid, dtype='<U16')
+    core_depth = np.array(core_depth, dtype='float64')
+    if len(cc) == 1:
+        cc = np.repeat(cc, len(core_depth))
+    if len(d_r) == 1:
+        d_r = np.repeat(d_r, len(core_depth))
+    if len(d_std) == 1:
+        d_std = np.repeat(d_std, len(core_depth))
     if depth_min < min(core_depth):
-        extrap = [np.nan, max(core_age), np.max([1e4, np.max(100 * core_error)]), depth_max, 0]
-        dets = np.array([np.array([core_labid, core_age, core_error, core_depth]).T, extrap])
+        core_labid = np.insert(np.array(core_labid), 0, 'NA')
+        core_age = np.insert(np.array(core_age), 0, [np.min(core_age)])
+        core_error = np.insert(np.array(core_error), 0, np.max([1e4, np.max(100 * core_error)]))
+        core_depth = np.insert(np.array(core_depth), 0, [depth_min])
+        cc = np.insert(np.array(cc), 0, [0])
+        d_r = np.insert(np.array(d_r), 0, [0])
+        d_std = np.insert(np.array(d_std), 0, [0])
+    if depth_max > max(core_depth):
+        core_labid = np.append(np.array(core_labid), 'NA')
+        core_age = np.append(np.array(core_age), [np.max(core_age)])
+        core_error = np.append(np.array(core_error), np.max([1e4, np.max(100 * core_error)]))
+        core_depth = np.append(np.array(core_depth), [depth_max])
+        cc = np.append(np.array(cc), [0])
+        d_r = np.append(np.array(d_r), [0])
+        d_std = np.append(np.array(d_std), [0])
+
+    # Non-14C values do not have C-reservoir adjustments.
+    nonc14mask = cc == 0
+    d_r[nonc14mask] = 0
+    d_std[nonc14mask] = 0
+
     if t_a is None:
         t_a = [3]
     if t_b is None:
         t_b = [4]
+    if len(t_a) == 1:
+        t_a = np.repeat(t_a, len(core_depth))
+    if len(t_b) == 1:
+        t_b = np.repeat(t_b, len(core_depth))
+
     outlines = list()
     outlines.append('## Ran on {0}\n\n'.format(datetime.datetime.today().strftime('%c')))
     outlines.append('Cal 0 : ConstCal;\n')
@@ -187,21 +219,10 @@ def _baconin_str(*, core_labid, core_age, core_error, core_depth, depth_min, dep
     # Something with os.path.sep on windows, see Bacon.R 406:409
     outlines.append('\n##   id.   yr    std   depth  d.R  d.STD     t.a   t.b   cc\n')
     str_template = 'Det {count} : {id} , {age}, {error}, {depth}, {r}, {std}, {a}, {b}, {cc};\n'
-    # TODO(brews): Cannot do multiple callibration curves via dets[,5]. See Bacon.R @ ln 424:449
-    if len(d_r) == 1:
-        d_r = np.repeat(d_r, len(core_labid))
-    if len(d_std) == 1:
-        d_std = np.repeat(d_std, len(core_labid))
-    if len(t_a) == 1:
-        t_a = np.repeat(t_a, len(core_labid))
-    if len(t_b) == 1:
-        t_b = np.repeat(t_b, len(core_labid))
-    if len(cc) == 1:
-        cc = np.repeat(cc, len(core_labid))
-    for i, ln_labid in enumerate(core_labid):
+    for i, ln_depth in enumerate(core_depth):
         # ln_cc = # Bacon.R @ ln 448.
-        outlines.append(str_template.format(count=i, id=ln_labid,
-                                            age=core_age[i], error=core_error[i], depth=core_depth[i], r=d_r[i],
+        outlines.append(str_template.format(count=i, id=core_labid[i],
+                                            age=core_age[i], error=core_error[i], depth=ln_depth, r=d_r[i],
                                             std=d_std[i], a=t_a[i], b=t_b[i], cc=cc[i]))
     # TODO(brews): if for hiatus @ Bacon.R ln 451:469
     wrapup_header = '\n##\t\t K   MinYr   MaxYr   th0   th0p   w.a   w.b   alpha  beta  dmin  dmax\n'

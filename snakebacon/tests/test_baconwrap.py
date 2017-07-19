@@ -28,9 +28,11 @@ class TestBaconwrap(unittest.TestCase):
                 'Cal 2 : Marine13;\n',
                 'Cal 3 : SHCal13, 0;\n',
                 '\n##   id.   yr    std   depth  d.R  d.STD     t.a   t.b   cc\n',
-                'Det 0 : a , 1, 1, 2, 0, 0, 3, 4, 1;\n',
-                'Det 1 : b , 2, 2, 3, 0, 0, 3, 4, 1;\n',
-                'Det 2 : c , 3, 1, 4, 0, 0, 3, 4, 1;\n',
+                'Det 0 : NA , 1, 10000.0, 1.5, 0, 0, 3, 4, 0;\n',
+                'Det 1 : a , 1, 1.0, 2.0, 0, 0, 3, 4, 1;\n',
+                'Det 2 : b , 2, 2.0, 3.0, 0, 0, 3, 4, 1;\n',
+                'Det 3 : c , 3, 1.0, 4.0, 0, 0, 3, 4, 1;\n',
+                'Det 4 : NA , 3, 1000000.0, 99.5, 0, 0, 3, 4, 0;\n',
                 '\n##\t\t K   MinYr   MaxYr   th0   th0p   w.a   w.b   alpha  beta  dmin  dmax\n',
                 'Bacon 0: FixT, 20, -1000, 1000000.0, 4147, 4145, 2.8, 1.2000000000000002, 1.5, 0.075, 1.5, 99.5;\n']
         self.assertCountEqual(victim[1:], goal[1:])  # Skip first line because datetime won't match.
