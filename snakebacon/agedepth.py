@@ -98,16 +98,19 @@ class AgeDepthModel:
             out.append(age)
         return DatedProxyRecord(proxy.data.copy(), out)
 
-    def plot(self, agebins=50, p=(2.5, 97.5)):
+    def plot(self, agebins=50, p=(2.5, 97.5), ax=None):
         """Age-depth plot"""
-        plt.hist2d(np.repeat(self.depth, self.age_ensemble.shape[1]), self.age_ensemble.flatten(),
+        if ax is None:
+            ax = plt.gca()
+        ax.hist2d(np.repeat(self.depth, self.age_ensemble.shape[1]), self.age_ensemble.flatten(),
                    (len(self.depth), agebins), cmin=1)
-        plt.step(self.depth, self.age_median, where='mid', color='red')
-        plt.step(self.depth, self.age_percentile(p[0]), where='mid', color='red', linestyle=':')
-        plt.step(self.depth, self.age_percentile(p[1]), where='mid', color='red', linestyle=':')
-        plt.ylabel('Age (cal yr BP)')
-        plt.xlabel('Depth (cm)')
-        plt.grid()
+        ax.step(self.depth, self.age_median(), where='mid', color='red')
+        ax.step(self.depth, self.age_percentile(p[0]), where='mid', color='red', linestyle=':')
+        ax.step(self.depth, self.age_percentile(p[1]), where='mid', color='red', linestyle=':')
+        ax.set_ylabel('Age (cal yr BP)')
+        ax.set_xlabel('Depth (cm)')
+        ax.grid()
+        return ax
 
     def agedepth(self, d):
         """Get calendar age for a depth
