@@ -41,7 +41,6 @@ before_install:
 install:
   - conda env create -q -f ci/requirements-$CONDA_ENV.yml
   - source activate test_env
-  - python setup.py check -m -r -s
   - python setup.py build_ext --inplace
   - python setup.py install --user
 
