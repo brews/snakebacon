@@ -3,6 +3,11 @@
 snakebacon Internals
 ====================
 
+.. warning::
+
+   The project is under heavy development. Code and documentation is not complete.
+
+
 .. currentmodule:: xarray
 
 snakebacon builds on and wraps around the C/C++ in the Bacon from ...
