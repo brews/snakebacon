@@ -4,3 +4,4 @@ Maarten Blaauw (maarten.blaauw@qub.ac.uk) and  Andres Christen (jac@cimat.mx).
 """
 
 from .baconwrap import run_baconmcmc
+from .calibcurves import fetch_calibcurve
