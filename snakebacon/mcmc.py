@@ -17,18 +17,15 @@ class McmcSetup:
 
     def prior_dates(self):
         """Get the prior distribution of radiocarbon dates"""
-        # TODO(brews): Write function for prior dates distributions
-        pass
+        return self.mcmcbackend.prior_dates(self.coredates, **self.mcmc_kwargs)
 
     def prior_sediment_rate(self):
         """Get the prior distribution of sediment rates"""
-        # TODO(brews): Write function for prior sediment rate distributions
-        pass
+        return self.mcmcbackend.prior_sediment_rate(self.coredates, **self.mcmc_kwargs)
 
     def prior_sediment_memory(self):
         """Get the prior distribution of sediment memory"""
-        # TODO(brews): Write function for prior sediment memory distributions
-        pass
+        return self.mcmcbackend.prior_sediment_memory(self.coredates, **self.mcmc_kwargs)
 
     def validate(self):
         """Validate configs for mcmc run"""

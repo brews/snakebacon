@@ -1,7 +1,9 @@
 import os
 
+import numpy as np
+
 from .Curves import here as curvespath
-from snakebacon.records import read_14c
+from snakebacon.records import read_14c, CalibCurve
 
 
 available_curves = dict()
@@ -34,3 +36,10 @@ def fetch_marine13():
 @registercurve('SHCal13')
 def fetch_shcal13():
     return read_14c(os.path.join(curvespath, 'shcal13.14C'))
+
+
+@registercurve('ConstCal')
+def fetch_constcal():
+    return CalibCurve(calbp=np.arange(-100, 50000 + 1),
+                      c14age=np.arange(-100, 50000 + 1),
+                      error=np.zeros(50000 + 101))

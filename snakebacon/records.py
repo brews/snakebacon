@@ -142,58 +142,6 @@ class DateRecord:
         sugg = sugg.flat[ballpacc.argmin()]  # Suggest rounded acc.rate with lowest abs diff.
         return sugg
 
-    def calibrate_dates(self, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
-        """Get probability of calendar dates for each depth segment in core
-
-        Parameters
-        ----------
-        calib_curve : Curve
-            Radiocarbon calibration curve.
-        d_r : scalar or ndarray
-            Carbon reservoir offset.
-        d_std : scalar or ndarray
-            Carbon reservoir offset error standard deviation.
-        cutoff : scalar, optional
-            Unknown.
-        normal_distr : Bool, optional
-            Use normal distribution for date errors. If False, then use Student's t-distribution.
-        t_a : scalar, optional
-            Student's t-distribution parameter, a. t_a - 1 must equal t_b.
-        t_b : scalar, optional
-            Student's t-distribution parameter, b. t_a - 1 must equal t_b.
-
-        Returns
-        -------
-        depth : ndarray
-            Depth of Fixed-length sediment segment.
-        probs : list of ndarrays
-            Probabilities with one ndarray per fixed-length core segment.
-
-        Python version of .bacon.calib() on line 908 in Bacon.R
-        """
-        # .bacon.calib - line 908
-
-        # rcmean = 4128; w2 = 4225; t_a=3; t_b=4
-        # test = d_cal(cc = calib_curve.rename(columns = {0:'a', 1:'b', 2:'c'}), rcmean = 4128, w2 = 4225, t_a=t_a,
-        # t_b=t_b, cutoff=cutoff, normal = normal)
-
-        # Line 959 of Bacon.R
-        # calib = list(dets.iloc[:, 3])
-        # Now Bacon goes and checks the ncol in the dets See line #960 in Bacon.R
-
-        # Line #973
-        # TODO(brews): Need to rewrite this so that is can handle *potenially* multible parameters per depths (i.e. t_b, etc)
-        assert t_b - 1 == t_a
-        calib_probs = []
-        # I think we can do the below without a loop.
-        rcmean = self.age - d_r
-        w2 = self.error ** 2 + d_std ** 2
-        for i in range(len(self.depth)):
-            age_realizations = calib_curve.d_cal(rcmean=rcmean, w2=w2, t_a=t_a, t_b=t_b, cutoff=cutoff,
-                                                 normal_distr=normal_distr)
-            calib_probs.append(age_realizations)
-        return self.depth, calib_probs
-
 
 class CalibCurve:
     """A calibration curve
