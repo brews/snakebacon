@@ -28,13 +28,13 @@ short_version = '%s'
 
 write_version_py()
 
-bacon = Extension("snakebacon.bacon.baconwrap",
-                  sources=["snakebacon/bacon/baconwrap.pyx",
-                           "snakebacon/bacon/input.cpp",
-                           "snakebacon/bacon/Matrix.cpp",
-                           "snakebacon/bacon/ranfun.cpp",
-                           "snakebacon/bacon/vector.cpp",
-                           "snakebacon/bacon/kernel.cpp"],
+bacon = Extension("snakebacon.mcmcbackends.bacon.baconwrap",
+                  sources=["snakebacon/mcmcbackends/bacon/baconwrap.pyx",
+                           "snakebacon/mcmcbackends/bacon/input.cpp",
+                           "snakebacon/mcmcbackends/bacon/Matrix.cpp",
+                           "snakebacon/mcmcbackends/bacon/ranfun.cpp",
+                           "snakebacon/mcmcbackends/bacon/vector.cpp",
+                           "snakebacon/mcmcbackends/bacon/kernel.cpp"],
                   language="c++",
                   libraries=["gsl", "openblas"],
                   extra_compile_args=["-xc++", "-lstdc++", "-shared-libgcc", "-O2", "-fopenmp"],

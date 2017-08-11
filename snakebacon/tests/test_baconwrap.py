@@ -4,8 +4,7 @@ from os import path
 import numpy as np
 
 import snakebacon as snek
-from snakebacon.bacon import baconwrap
-
+from snakebacon.mcmcbackends.bacon import baconwrap
 
 here = path.abspath(path.dirname(__file__))
 

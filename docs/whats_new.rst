@@ -10,6 +10,8 @@ v0.0.2
 
 Enhancements
 ~~~~~~~~~~~~
+- McmcSetup and McmcResults now throw bacon its tasks through mcmcbackends.Bacon. This should make snakebacon more bacon-agnostic. Have a look at McmcSetup's mcmcbackend arg.
+
 
 Bug fixes
 ~~~~~~~~~

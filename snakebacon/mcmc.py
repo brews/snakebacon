@@ -2,17 +2,18 @@ import logging
 
 import numpy as np
 
+import snakebacon.mcmcbackends
 from snakebacon.records import DateRecord
-from snakebacon.bacon import run_baconmcmc
 
 
 log = logging.getLogger(__name__)
 
 
 class McmcSetup:
-    def __init__(self, coredates, **kwargs):
+    def __init__(self, coredates, mcmcbackend=snakebacon.mcmcbackends.Bacon, **kwargs):
         self.coredates = DateRecord(coredates)
         self.mcmc_kwargs = kwargs
+        self.mcmcbackend = mcmcbackend
 
     def prior_dates(self):
         """Get the prior distribution of radiocarbon dates"""
@@ -41,9 +42,11 @@ class McmcSetup:
 
 class McmcResults:
     def __init__(self, setup):
-        mcmcout = run_baconmcmc(core_labid=setup.coredates.labid, core_age=setup.coredates.age,
-                                core_error=setup.coredates.error, core_depth=setup.coredates.depth,
-                                **setup.mcmc_kwargs)
+        mcmcout = setup.mcmcbackend.runmcmc(core_labid=setup.coredates.labid,
+                                            core_age=setup.coredates.age,
+                                            core_error=setup.coredates.error,
+                                            core_depth=setup.coredates.depth,
+                                            **setup.mcmc_kwargs)
         self.depth_segments = np.linspace(setup.mcmc_kwargs['depth_min'], setup.mcmc_kwargs['depth_max'],
                                           setup.mcmc_kwargs['k'])
         self.headage = mcmcout['theta']
