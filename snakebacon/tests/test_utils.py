@@ -13,3 +13,7 @@ class TestUtils(unittest.TestCase):
         testcore = DateRecord(age=np.array([20, 50]), error=None, depth=np.array([1.5, 3]), labid=None)
         test_victim = suggest_accumulation_rate(testcore)
         self.assertEqual(test_victim, goal)
+
+
+if __name__ == '__main__':
+    unittest.main()
