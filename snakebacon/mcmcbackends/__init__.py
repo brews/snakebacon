@@ -50,7 +50,15 @@ class Bacon:
 
 
     def prior_sediment_rate(*args, **kwargs):
-        """Get the prior distribution of sediment rates"""
+        """Get the prior density of sediment rates
+
+        Returns
+        -------
+        y : ndarray
+            Array giving the density.
+        x : ndarray
+            Array of sediment accumulation values (yr/cm) over which the density was evaluated.
+        """
         # PlotAccPrior @ Bacon.R ln 113 -> ln 1097-1115
         # alpha = acc_shape, beta = acc_shape / acc_mean
         # TODO(brews): Check that these stats are correctly translated to scipy.stats distribs.
@@ -59,11 +67,19 @@ class Bacon:
         x = np.linspace(0, 3 * np.max(acc_mean), 100)
         y = stats.gamma.pdf(x, a=acc_shape,
                             scale=1 / (acc_shape/acc_mean))
-        return y
+        return y, x
 
 
     def prior_sediment_memory(*args, **kwargs):
-        """Get the prior distribution of sediment memory"""
+        """Get the prior density of sediment memory
+
+        Returns
+        -------
+        y : ndarray
+            Array giving the density.
+        x : ndarray
+            Array of Memory (ratio) values over which the density was evaluated.
+        """
         # "plot the prior for the memory (= accumulation rate varibility between neighbouring depths)"
         # PlotMemPrior @ Bacon.R ln 114 -> ln 1119 - 1141
         # w_a = mem_strength * mem_mean, w_b = mem_strength * (1 - mem_mean)
@@ -73,5 +89,5 @@ class Bacon:
         x = np.linspace(0, 1, 100)
         y = stats.beta.pdf(x, a=mem_shape * mem_mean,
                            b=mem_shape * (1 - mem_mean))
-        return y
+        return y, x
 

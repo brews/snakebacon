@@ -49,7 +49,7 @@ class TestBaconMethods(unittest.TestCase):
         goal_std = 0.01172658825323754
         goal_n = 100
 
-        victim = Bacon.prior_sediment_rate(**self.mcmc_kwargs)
+        victim, x = Bacon.prior_sediment_rate(**self.mcmc_kwargs)
 
         np.testing.assert_equal(len(victim), goal_n)
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
@@ -62,7 +62,7 @@ class TestBaconMethods(unittest.TestCase):
         goal_std = 0.71613816177236256
         goal_n = 100
 
-        victim = Bacon.prior_sediment_memory(**self.mcmc_kwargs)
+        victim, x = Bacon.prior_sediment_memory(**self.mcmc_kwargs)
 
         np.testing.assert_equal(len(victim), goal_n)
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
