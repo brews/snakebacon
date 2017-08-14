@@ -2,7 +2,7 @@ import numpy as np
 
 
 def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
-    """Get probability of calendar dates for each depth segment in core
+    """Get density of calendar dates for chron date segment in core
 
     Parameters
     ----------
@@ -24,12 +24,15 @@ def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=F
     Returns
     -------
     depth : ndarray
-        Depth of Fixed-length sediment segment.
-    probs : list of ndarrays
-        Probabilities with one ndarray per fixed-length core segment.
+        Depth of dated sediment sample.
+    probs : list of 2d arrays
+        Density of calendar age for each dated sediment sample. For each
+        sediment sample, the 2d array has two columns, the first is the
+        calendar age. The second column is the density for that calendar age.
 
-    Python version of .bacon.calib() on line 908 in Bacon.R
     """
+    # Python version of .bacon.calib() on line 908 in Bacon.R
+
     # .bacon.calib - line 908
 
     # rcmean = 4128; w2 = 4225; t_a=3; t_b=4
@@ -42,8 +45,10 @@ def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=F
 
     # Line #973
     # TODO(brews): Check that `normal_dist` is used and documented correctly in docstring above.
+    # TODO(brews): Check whether we call returned values densities, freqs or what options we should have.
     assert t_b - 1 == t_a
-    n = len(chron)
+    n = len(chron.depth)
+    calib_curve = np.array(calib_curve)
     t_a = np.array(t_a)
     t_b = np.array(t_b)
     d_r = np.array(d_r)
@@ -56,20 +61,16 @@ def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.001, normal_distr=F
         d_r = np.repeat(d_r, n)
     if len(d_std) == 1:
         d_std = np.repeat(d_std, n)
+    if len(calib_curve) == 1:
+        calib_curve = np.repeat(calib_curve, n)
 
     calib_probs = []
-    # TODO(brews): I think we can do the below without a loop.
     rcmean = chron.age - d_r
     w2 = chron.error ** 2 + d_std ** 2
-    try:
-        for i in range(n):
-            age_realizations = calib_curve[i].d_cal(rcmean=rcmean[i], w2=w2[i],
-                                                    t_a=t_a[i], t_b=t_b[i],
-                                                    cutoff=cutoff,
-                                                    normal_distr=normal_distr)
-            calib_probs.append(age_realizations)
-    except TypeError:
-        calib_probs = calib_curve.d_cal(rcmean=rcmean, w2=w2, t_a=t_a, t_b=t_b,
-                                        cutoff=cutoff,
-                                        normal_distr=normal_distr)
+    for i in range(n):
+        age_realizations = calib_curve[i].d_cal(rcmean=rcmean[i], w2=w2[i],
+                                                t_a=t_a[i], t_b=t_b[i],
+                                                cutoff=cutoff,
+                                                normal_distr=normal_distr)
+        calib_probs.append(age_realizations)
     return np.array(chron.depth), calib_probs

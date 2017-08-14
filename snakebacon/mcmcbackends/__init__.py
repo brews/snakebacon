@@ -18,7 +18,11 @@ class Bacon:
         d_std = np.array(kwargs['d_std'])
         t_a = np.array(kwargs['t_a'])
         t_b = np.array(kwargs['t_b'])
-        normal_distr = kwargs['normal_distr']
+
+        try:
+            normal_distr = kwargs['normal_distr']
+        except KeyError:
+            normal_distr = None
 
         cc_int = kwargs['cc']
 
