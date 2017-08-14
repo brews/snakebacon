@@ -10,13 +10,13 @@ v0.0.2
 
 Enhancements
 ~~~~~~~~~~~~
-- Can get prior distribution for chronology dates (`Issue #5 <https://github.com/brews/snakebacon/issues/5>`_).
+- Can query AgeDepthModels to get prior distribution for chronology dates, sediment rates, and sediment rate memory (`Issue #5 <https://github.com/brews/snakebacon/issues/5>`_).
 
-- Use snakebacon.mcmcbackends.bacon.fetch_calibcurve() and the @registercurve() decorator to define and fetch calibration curves by name (`Issue #6 <https://github.com/brews/snakebacon/issues/6>`_).
+- Now can use snakebacon.mcmcbackends.bacon.fetch_calibcurve() and the @registercurve() decorator to define and fetch calibration curves by name (`Issue #6 <https://github.com/brews/snakebacon/issues/6>`_).
 
 - McmcSetup and McmcResults now throw bacon its tasks through mcmcbackends.Bacon. This should make snakebacon more bacon-agnostic. Have a look at McmcSetup's mcmcbackend arg.
 
-- suggest_accumulation_rate() is no longer a method, but a function.
+- suggest_accumulation_rate() is no longer a method, but a humble function.
 
 Bug fixes
 ~~~~~~~~~
