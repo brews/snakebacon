@@ -183,51 +183,6 @@ class CalibCurve:
             self.c14age[idx] - self.calbp[idx - 1])
         return mu, sig
 
-    def d_cal(self, rcmean, w2, cutoff=0.001, normal_distr=False, t_a=3, t_b=4):
-        """Get calendar date probabilities
-
-        Parameters
-        ----------
-        rcmean : scalar
-            Reservoir-adjusted age.
-        w2 : scalar
-            r'$w^2_j(\theta)$' from pg 461 & 463 of Blaauw and Christen 2011.
-        cutoff : scalar, optional
-            Unknown.
-        normal_distr : Bool, optional
-            Use normal distribution for date errors. If False, then use Student's t-distribution.
-        t_a : scalar, optional
-            Student's t-distribution parameter, a. t_b - 1 must equal t_b.
-        t_b : scalar, optional
-            Student's t-distribution parameter, b. t_b - 1 must equal t_b.
-
-
-        #Line 943 of Bacon.R
-        #cc : calib_curve (3-col format)
-        #rcmean : det['age'][i] - d_R
-        #w2 : dat['error'][i]^2 + d_STD**2
-        """
-        assert t_b - 1 == t_a
-        if normal_distr:
-            # TODO(brews): Test this. Line 946 of Bacon.R.
-            std = np.sqrt(self.error ** 2 + w2)
-            dens = stats.norm(loc=rcmean, scale=std).pdf(self.c14age)
-        else:
-            # TODO(brews): Test this. Line 947 of Bacon.R.
-            dens = (t_b + ((rcmean - self.c14age) ** 2) / (2 * (self.error ** 2 + w2))) ** (-1 * (t_a + 0.5))
-        cal = np.array([self.calbp.copy(), dens]).T
-        cal[:, 1] = cal[:, 1] / cal[:, 1].sum()
-        # "ensure that also very precise dates get a range of probabilities"
-        cutoff_mask = cal[:, 1] > cutoff
-        if cutoff_mask.sum() > 5:
-            out = cal[cutoff_mask, :]
-        else:
-            calx = np.linspace(cal[:, 0].min(), cal[:, 0].max(), num=50)
-            caly = np.interp(calx, cal[:, 0], cal[:, 1])
-            out = np.array([calx, caly / caly.sum()]).T
-        return out
-
-
 def plot_accmem_prior(mem_shape, mem_mean, thick):
     """Plot accumulation rate varibility between neighbouring depths ("memory") prior
 
