@@ -12,6 +12,8 @@ Enhancements
 ~~~~~~~~~~~~
 - DateRecord class has been renamed ChronRecord to avoid confusion with DatedProxyRecord (`Issue #3 <https://github.com/brews/snakebacon/issues/3>`_).
 
+- AgeDepthModels now can plot prior distributions.
+
 - Can now query AgeDepthModels to get prior distribution for chronology dates, sediment rates, and sediment rate memory (`Issue #5 <https://github.com/brews/snakebacon/issues/5>`_).
 
 - Now can use snakebacon.mcmcbackends.bacon.fetch_calibcurve() and the @registercurve() decorator to define and fetch calibration curves by name (`Issue #6 <https://github.com/brews/snakebacon/issues/6>`_).

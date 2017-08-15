@@ -1,5 +1,6 @@
 import logging as logging
 
+import scipy
 import matplotlib.pylab as plt
 import numpy as np
 
@@ -148,11 +149,73 @@ class AgeDepthModel:
     def prior_dates(self):
         return self.mcmcsetup.prior_dates()
 
+    def plot_prior_dates(self, ax=None):
+        """Age-depth plot"""
+        if ax is None:
+            ax = plt.gca()
+        ax.plot()
+        ax.set_ylabel('Age (cal yr BP)')
+        ax.set_xlabel('Depth (cm)')
+        ax.grid()
+        return ax
+
     def prior_sediment_rate(self):
         return self.mcmcsetup.prior_sediment_rate()
 
+    def plot_sediment_rate(self, ax=None):
+        """Plot sediment accumulation rate prior and posterior distributions"""
+        if ax is None:
+            ax = plt.gca()
+
+        y_prior, x_prior = self.prior_sediment_rate()
+        ax.plot(x_prior, y_prior, label='Prior')
+
+        y_posterior = self.mcmcfit.sediment_rate
+        density = scipy.stats.gaussian_kde(y_posterior.flat)
+        density.covariance_factor = lambda: 0.25
+        density._compute_covariance()
+        ax.plot(x_prior, density(x_prior), label='Posterior')
+
+        acc_shape = self.mcmcsetup.mcmc_kwargs['acc_shape']
+        acc_mean = self.mcmcsetup.mcmc_kwargs['acc_mean']
+        annotstr_template = 'acc_shape: {0}\nacc_mean: {1}'
+        annotstr = annotstr_template.format(acc_shape, acc_mean)
+        ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',
+                    horizontalalignment='right', verticalalignment='top')
+
+        ax.set_ylabel('Density')
+        ax.set_xlabel('Acc. rate (yr/cm)')
+        ax.grid()
+        return ax
+
     def prior_sediment_memory(self):
         return self.mcmcsetup.prior_sediment_memory()
+
+    def plot_sediment_memory(self, ax=None):
+        """Plot sediment memory prior and posterior distributions"""
+        if ax is None:
+            ax = plt.gca()
+
+        y_prior, x_prior = self.prior_sediment_memory()
+        ax.plot(x_prior, y_prior, label='Prior')
+
+        y_posterior = self.mcmcfit.sediment_memory
+        density = scipy.stats.gaussian_kde(y_posterior ** (1/self.thick))
+        density.covariance_factor = lambda: 0.25
+        density._compute_covariance()
+        ax.plot(x_prior, density(x_prior), label='Posterior')
+
+        mem_mean = self.mcmcsetup.mcmc_kwargs['mem_mean']
+        mem_strength = self.mcmcsetup.mcmc_kwargs['mem_strength']
+        annotstr_template = 'mem_strength: {0}\nmem_mean: {1}\nK: {2}'
+        annotstr = annotstr_template.format(mem_strength, mem_mean, self.thick)
+        ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',
+                    horizontalalignment='right', verticalalignment='top')
+
+        ax.set_ylabel('Density')
+        ax.set_xlabel('Memory (ratio)')
+        ax.grid()
+        return ax
 
 
 class NeedFitError(Exception):
