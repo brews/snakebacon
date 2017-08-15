@@ -5,7 +5,7 @@ from os import path
 import numpy as np
 import pandas as pd
 
-from snakebacon import read_dates, ProxyRecord
+from snakebacon import read_chron, ProxyRecord
 from snakebacon.agedepth import AgeDepthModel
 
 
@@ -16,7 +16,7 @@ mcmc_kwargs = dict(depth_min=1.5, depth_max=99.5, cc=[1],
                    d_r=[0], d_std=[0], t_a=[3], t_b=[4], k=20,
                    minyr=-1000, maxyr=1e6, th01=4147, th02=4145,
                    acc_mean=20, acc_shape=1.5, mem_strength=4, mem_mean=0.7)
-fullrun_agemodel = AgeDepthModel(read_dates(path.join(here, 'MSB2K.csv')),
+fullrun_agemodel = AgeDepthModel(read_chron(path.join(here, 'MSB2K.csv')),
                                  mcmc_kwargs=mcmc_kwargs)
 
 
@@ -92,7 +92,7 @@ class TestAgeDepth(unittest.TestCase):
 
 
     def test_prior_sediment_rate(self):
-        goal_mean = 0.015989306883717701
+        goal_mean = 0.008194080517375957
         goal_std = 0.01172658825323754
         goal_n = 100
 

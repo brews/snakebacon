@@ -4,7 +4,7 @@ import os
 import numpy as np
 
 from snakebacon.mcmcbackends import Bacon
-from snakebacon import read_dates
+from snakebacon import read_chron
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -30,7 +30,7 @@ class TestBaconMethods(unittest.TestCase):
         dgoal_n = 40
         pgoal_n = dgoal_n
 
-        chron = read_dates(os.path.join(here, 'MSB2K.csv'))
+        chron = read_chron(os.path.join(here, 'MSB2K.csv'))
         d_target, p_target = Bacon.prior_dates(chron, **self.mcmc_kwargs)
         np.testing.assert_allclose(d_target[-3:], dgoal)
         np.testing.assert_equal(len(d_target), dgoal_n)
@@ -45,7 +45,7 @@ class TestBaconMethods(unittest.TestCase):
     def test_prior_sediment_rate(self):
         np.random.seed(123)
 
-        goal_mean = 0.015989306883717701
+        goal_mean = 0.008194080517375957
         goal_std = 0.01172658825323754
         goal_n = 100
 

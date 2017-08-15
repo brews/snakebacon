@@ -10,7 +10,7 @@ v0.0.2
 
 Enhancements
 ~~~~~~~~~~~~
-- DateRecord class has been renamed ChronRecord to avoid confusion with DatedProxyRecord (`Issue #3 <https://github.com/brews/snakebacon/issues/3>`_).
+- DateRecord class has been renamed ChronRecord to avoid confusion with DatedProxyRecord (`Issue #3 <https://github.com/brews/snakebacon/issues/3>`_). The read_chron() is also now read_chron().
 
 - AgeDepthModels now can plot prior distributions.
 
