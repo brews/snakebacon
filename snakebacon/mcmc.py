@@ -3,7 +3,7 @@ import logging
 import numpy as np
 
 import snakebacon.mcmcbackends
-from snakebacon.records import DateRecord
+from snakebacon.records import ChronRecord
 
 
 log = logging.getLogger(__name__)
@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 
 class McmcSetup:
     def __init__(self, coredates, mcmcbackend=snakebacon.mcmcbackends.Bacon, **kwargs):
-        self.coredates = DateRecord(coredates)
+        self.coredates = ChronRecord(coredates)
         self.mcmc_kwargs = kwargs
         self.mcmcbackend = mcmcbackend
 

@@ -2,14 +2,14 @@ import unittest
 
 import numpy as np
 
-from snakebacon.records import DateRecord
+from snakebacon.records import ChronRecord
 
 
-class TestDateRecordMethods(unittest.TestCase):
+class TestChronRecordMethods(unittest.TestCase):
 
     @unittest.skip('Test not written. Need methods to test equality.')
     def test__repr__(self):
-        testcore = DateRecord(age=np.array([20, 50]), error=None, depth=np.array([1.5, 3]), labid=None)
+        testcore = ChronRecord(age=np.array([20, 50]), error=None, depth=np.array([1.5, 3]), labid=None)
         self.assertTrue(testcore == eval(repr(testcore)))
 
 

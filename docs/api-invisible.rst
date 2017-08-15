@@ -10,7 +10,7 @@
 
    CalibCurve
    DatedProxyRecord
-   DateRecord
+   ChronRecord
    ProxyRecord
 
    read_14c

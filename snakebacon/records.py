@@ -28,10 +28,10 @@ def read_dates(fl):
     """Create proxy instance from Bacon proxy file
     """
     indata = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python')
-    outcore = DateRecord(age=indata['age'],
-                         error=indata['error'],
-                         depth=indata['depth'],
-                         labid=indata['labID'])
+    outcore = ChronRecord(age=indata['age'],
+                          error=indata['error'],
+                          depth=indata['depth'],
+                          labid=indata['labID'])
     return outcore
 
 
@@ -99,7 +99,7 @@ class DatedProxyRecord(ProxyRecord):
         return out
 
 
-class DateRecord:
+class ChronRecord:
     def __init__(self, obj=None, **kwargs):
         """Create a sediment core date instance
 
@@ -114,7 +114,7 @@ class DateRecord:
 
         Returns
         -------
-        A DateRecord instance.
+        A ChronRecord instance.
         """
         if obj is not None:
             self.labid = np.array(obj.labid)
