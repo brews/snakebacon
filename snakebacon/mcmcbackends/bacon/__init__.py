@@ -3,4 +3,6 @@ Cython wrapper for the C/C++ from Bacon age-modelling software (http://chrono.qu
 Maarten Blaauw (maarten.blaauw@qub.ac.uk) and  Andres Christen (jac@cimat.mx).
 """
 
-from snakebacon.bacon.baconwrap import run_baconmcmc
+from .baconwrap import run_baconmcmc
+from .calibcurves import fetch_calibcurve
+from .utils import calibrate_dates

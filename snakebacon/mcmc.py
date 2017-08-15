@@ -2,32 +2,30 @@ import logging
 
 import numpy as np
 
-from snakebacon.records import DateRecord
-from snakebacon.bacon import run_baconmcmc
+import snakebacon.mcmcbackends
+from snakebacon.records import ChronRecord
 
 
 log = logging.getLogger(__name__)
 
 
 class McmcSetup:
-    def __init__(self, coredates, **kwargs):
-        self.coredates = DateRecord(coredates)
+    def __init__(self, coredates, mcmcbackend=snakebacon.mcmcbackends.Bacon, **kwargs):
+        self.coredates = ChronRecord(coredates)
         self.mcmc_kwargs = kwargs
+        self.mcmcbackend = mcmcbackend
 
     def prior_dates(self):
         """Get the prior distribution of radiocarbon dates"""
-        # TODO(brews): Write function for prior dates distributions
-        pass
+        return self.mcmcbackend.prior_dates(self.coredates, **self.mcmc_kwargs)
 
     def prior_sediment_rate(self):
         """Get the prior distribution of sediment rates"""
-        # TODO(brews): Write function for prior sediment rate distributions
-        pass
+        return self.mcmcbackend.prior_sediment_rate(self.coredates, **self.mcmc_kwargs)
 
     def prior_sediment_memory(self):
         """Get the prior distribution of sediment memory"""
-        # TODO(brews): Write function for prior sediment memory distributions
-        pass
+        return self.mcmcbackend.prior_sediment_memory(self.coredates, **self.mcmc_kwargs)
 
     def validate(self):
         """Validate configs for mcmc run"""
@@ -41,9 +39,11 @@ class McmcSetup:
 
 class McmcResults:
     def __init__(self, setup):
-        mcmcout = run_baconmcmc(core_labid=setup.coredates.labid, core_age=setup.coredates.age,
-                                core_error=setup.coredates.error, core_depth=setup.coredates.depth,
-                                **setup.mcmc_kwargs)
+        mcmcout = setup.mcmcbackend.runmcmc(core_labid=setup.coredates.labid,
+                                            core_age=setup.coredates.age,
+                                            core_error=setup.coredates.error,
+                                            core_depth=setup.coredates.depth,
+                                            **setup.mcmc_kwargs)
         self.depth_segments = np.linspace(setup.mcmc_kwargs['depth_min'], setup.mcmc_kwargs['depth_max'],
                                           setup.mcmc_kwargs['k'])
         self.headage = mcmcout['theta']

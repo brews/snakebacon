@@ -52,16 +52,16 @@ Creating a DatedProxyRecord
 Attributes
 ----------
 
-DateRecord
-==========
+ChronRecord
+===========
 
-Creating a DateRecord
----------------------
+Creating a ChronRecord
+----------------------
 
 .. autosummary::
    :toctree: generated/
 
-   DateRecord
+   ChronRecord
    read_dates
 
 

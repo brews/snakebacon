@@ -130,13 +130,13 @@ class AgeDepthModel:
         theta0 = self.mcmcfit.headage  # Age abscissa (in yrs).  If array, dimension should be iterations or realizations of the sediment
         deltac = self.thick
         c0 = min(self.depth)  # Uniform depth segment abscissa (in cm).
-        assert d >= c0
+        assert d > c0 or np.isclose(c0, d, atol = 1e-4)
         out = theta0.astype(float)
         i = int(np.floor((d - c0) / deltac))
         for j in range(i):
             out += x[j] * deltac
         ci = c0 + i * deltac
-        assert ci <= d
+        assert ci < d or np.isclose(ci, d, atol = 1e-4)
         try:
             next_x = x[i]
         except IndexError:
