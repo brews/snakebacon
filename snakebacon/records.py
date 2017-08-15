@@ -53,7 +53,7 @@ class ProxyRecord:
         """
         assert 'depth' in data.columns.values
         assert 'age' not in data.columns.values
-        self.data = pd.DataFrame(data)
+        self.data = pd.DataFrame(data).copy()
 
     def __repr__(self):
         return '%s(data=%r)' % (type(self).__name__, self.data)
