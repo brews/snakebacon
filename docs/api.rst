@@ -53,10 +53,10 @@ Attributes
 ----------
 
 ChronRecord
-==========
+===========
 
 Creating a ChronRecord
----------------------
+----------------------
 
 .. autosummary::
    :toctree: generated/
