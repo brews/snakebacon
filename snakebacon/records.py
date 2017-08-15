@@ -161,27 +161,6 @@ class CalibCurve:
     def __repr__(self):
         return '%s(calbp=%r, c14age=%r, error=%r, delta14c=%r, sigma=%r)' % (type(self).__name__, self.calbp, self.c14age, self.error, self.delta14c, self.sigma)
 
-    def c14age_from_age(self, theta):
-        """Interpolate C14 mean age and variance from true age
-
-        Parameters
-        ----------
-        theta : float
-            A true age value in calendar years BP.
-
-        Returns
-        -------
-        A tuple, (mu, std), giving the mean and standard deviation of corresponding C14 age, interpolated from the curve.
-
-        Dertived from bacon @ cal.h lines 156 - 193.
-
-        """
-        idx = np.searchsorted(self.calbp, theta)
-        mu = self.c14age[idx - 1] + (theta - self.calbp[idx - 1]) * (self.c14age[idx] - self.c14age[idx - 1]) / (
-            self.c14age[idx] - self.calbp[idx - 1])
-        sig = self.error[idx - 1] + (theta - self.calbp[idx - 1]) * (self.error[idx] - self.error[idx - 1]) / (
-            self.c14age[idx] - self.calbp[idx - 1])
-        return mu, sig
 
 def plot_accmem_prior(mem_shape, mem_mean, thick):
     """Plot accumulation rate varibility between neighbouring depths ("memory") prior
