@@ -146,13 +146,13 @@ class AgeDepthModel:
         return out
 
     def prior_dates(self):
-        self.mcmcsetup.prior_dates()
+        return self.mcmcsetup.prior_dates()
 
     def prior_sediment_rate(self):
-        self.mcmcsetup.prior_sediment_rate()
+        return self.mcmcsetup.prior_sediment_rate()
 
     def prior_sediment_memory(self):
-        self.mcmcsetup.prior_sediment_memory()
+        return self.mcmcsetup.prior_sediment_memory()
 
 
 class NeedFitError(Exception):
