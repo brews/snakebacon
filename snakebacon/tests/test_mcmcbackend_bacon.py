@@ -68,31 +68,6 @@ class TestBaconMethods(unittest.TestCase):
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
         np.testing.assert_allclose(victim.std(), goal_std, atol=1e-3)
 
-    def test_calibrate_dates(self):
-        pgoal_age_mean = 6702.5
-        pgoal_age_std = 121.23496470353207
-
-        pgoal_density_mean = 0.011642671907680679
-        pgoal_density_std = 0.010893804880746285
-
-        dgoal = np.array([77.5, 79.5, 99.5])
-        dgoal_n = 40
-        pgoal_n = dgoal_n
-
-        chron = read_dates(os.path.join(here, 'MSB2K.csv'))
-
-        d_target, p_target = Bacon.prior_dates(chron, **self.mcmc_kwargs)
-        np.testing.assert_allclose(d_target[-3:], dgoal)
-        np.testing.assert_equal(len(d_target), dgoal_n)
-
-        np.testing.assert_allclose(np.mean(p_target[-1][:, 0]), pgoal_age_mean, atol=7)
-        np.testing.assert_allclose(np.std(p_target[-1][:, 0]), pgoal_age_std, atol=2)
-        np.testing.assert_equal(len(p_target), pgoal_n)
-
-
-        np.testing.assert_allclose(np.mean(p_target[-1][:, 1]), pgoal_density_mean, atol=1e-2)
-        np.testing.assert_allclose(np.std(p_target[-1][:, 1]), pgoal_density_std, atol=1e-2)
-
 
 if __name__ == '__main__':
     unittest.main()
