@@ -6,7 +6,7 @@ from setuptools.extension import Extension
 
 MAJOR = 0
 MINOR = 0
-MICRO = 2
+MICRO = 3
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 FULLVERSION = VERSION
 
@@ -41,7 +41,7 @@ bacon = Extension("snakebacon.mcmcbackends.bacon.baconwrap",
                   )
 
 setup_kwargs = dict(name='snakebacon',
-                    version='0.0.1',
+                    version=FULLVERSION,
                     description='snakebacon',
                     url='https://github.com/brews/snakebacon',
                     author='S. Brewster Malevich',

@@ -8,8 +8,7 @@ What's New
 v0.0.3
 ------
 
-Enhancements
-~~~~~~~~~~~~
+A quick patch to fix a show-stopping bug.
 
 Bug fixes
 ~~~~~~~~~
