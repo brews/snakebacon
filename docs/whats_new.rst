@@ -13,6 +13,7 @@ Enhancements
 
 Bug fixes
 ~~~~~~~~~
+- Fix AttributeError in AgeDepthModel.plot_prior_dates() (`Issue #9 <https://github.com/brews/snakebacon/issues/9>`_).
 
 
 .. _whats-new.0.0.3:

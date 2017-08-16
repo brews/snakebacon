@@ -167,7 +167,7 @@ class AgeDepthModel:
                              np.concatenate([zy, zy[::-1]])])
             pat.append(Polygon(pol.T))
         p = PatchCollection(pat)
-        p.set_labels('Prior dates')
+        p.set_label('Prior dates')
         ax.add_collection(p)
         ax.autoscale_view()
         ax.set_ylabel('Age (cal yr BP)')
