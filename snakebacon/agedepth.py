@@ -2,6 +2,8 @@ import logging as logging
 
 import scipy
 import matplotlib.pylab as plt
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Polygon
 import numpy as np
 
 from .mcmc import McmcSetup
@@ -110,7 +112,7 @@ class AgeDepthModel:
         ax.step(self.depth, self.age_percentile(p[1]), where='mid', color='red', linestyle=':')
         ax.set_ylabel('Age (cal yr BP)')
         ax.set_xlabel('Depth (cm)')
-        ax.grid()
+        ax.grid(True)
         return ax
 
     def agedepth(self, d):
@@ -149,14 +151,28 @@ class AgeDepthModel:
     def prior_dates(self):
         return self.mcmcsetup.prior_dates()
 
-    def plot_prior_dates(self, ax=None):
-        """Age-depth plot"""
+    def plot_prior_dates(self, dwidth=30, ax=None):
+        """Plot prior chronology dates in age-depth plot"""
         if ax is None:
             ax = plt.gca()
-        ax.plot()
+        depth, probs = self.prior_dates()
+        pat = []
+        for i, d in enumerate(depth):
+            p = probs[i]
+            z = np.array([p[:, 0], dwidth * p[:, 1] / np.sum(p[:, 1])])  # Normalize
+            z = z[:, z[0].argsort(kind='mergesort')]  # np.interp requires `xp` arg to be sorted
+            zy = np.linspace(np.min(z[0]), np.max(z[0]), num=200)
+            zp = np.interp(x=zy, xp=z[0], fp=z[1])
+            pol = np.vstack([np.concatenate([d + zp, d - zp[::-1]]),
+                             np.concatenate([zy, zy[::-1]])])
+            pat.append(Polygon(pol.T))
+        p = PatchCollection(pat)
+        p.set_labels('Prior dates')
+        ax.add_collection(p)
+        ax.autoscale_view()
         ax.set_ylabel('Age (cal yr BP)')
         ax.set_xlabel('Depth (cm)')
-        ax.grid()
+        ax.grid(True)
         return ax
 
     def prior_sediment_rate(self):
@@ -185,7 +201,7 @@ class AgeDepthModel:
 
         ax.set_ylabel('Density')
         ax.set_xlabel('Acc. rate (yr/cm)')
-        ax.grid()
+        ax.grid(True)
         return ax
 
     def prior_sediment_memory(self):
@@ -214,7 +230,7 @@ class AgeDepthModel:
 
         ax.set_ylabel('Density')
         ax.set_xlabel('Memory (ratio)')
-        ax.grid()
+        ax.grid(True)
         return ax
 
 
