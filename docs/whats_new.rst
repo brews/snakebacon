@@ -13,6 +13,7 @@ Enhancements
 
 Bug fixes
 ~~~~~~~~~
+- Fixes missing curves for bacon MCMC fitting (`Issue #7 <https://github.com/brews/snakebacon/issues/7>`_).
 
 
 .. _whats-new.0.0.2:

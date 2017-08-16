@@ -64,7 +64,7 @@ setup_kwargs = dict(name='snakebacon',
                     keywords='marine radiocarbon c14',
                     install_requires=['numpy', 'Cython', 'pandas', 'matplotlib', 'scipy'],
                     packages=find_packages(),
-                    package_data={'snakebacon': ['tests/*.csv', 'bacon/Curves/*.14C']},
+                    package_data={'snakebacon': ['tests/*.csv', 'mcmcbackends/bacon/Curves/*.14C']},
                     )
 
 # Deal with bad linking bug with conda in readthedocs builds.
