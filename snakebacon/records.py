@@ -24,8 +24,8 @@ def read_14c(fl):
     return outcurve
 
 
-def read_dates(fl):
-    """Create proxy instance from Bacon proxy file
+def read_chron(fl):
+    """Create ChronRecord instance from Bacon file
     """
     indata = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python')
     outcore = ChronRecord(age=indata['age'],

@@ -1,6 +1,6 @@
 from .agedepth import AgeDepthModel
 from .records import CalibCurve, ChronRecord, ProxyRecord, DatedProxyRecord
-from .records import read_14c, read_dates, read_proxy
+from .records import read_14c, read_chron, read_proxy
 from .utils import suggest_accumulation_rate
 
 try:

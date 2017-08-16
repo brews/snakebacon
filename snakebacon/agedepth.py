@@ -1,6 +1,9 @@
 import logging as logging
 
+import scipy
 import matplotlib.pylab as plt
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Polygon
 import numpy as np
 
 from .mcmc import McmcSetup
@@ -109,7 +112,7 @@ class AgeDepthModel:
         ax.step(self.depth, self.age_percentile(p[1]), where='mid', color='red', linestyle=':')
         ax.set_ylabel('Age (cal yr BP)')
         ax.set_xlabel('Depth (cm)')
-        ax.grid()
+        ax.grid(True)
         return ax
 
     def agedepth(self, d):
@@ -146,13 +149,89 @@ class AgeDepthModel:
         return out
 
     def prior_dates(self):
-        self.mcmcsetup.prior_dates()
+        return self.mcmcsetup.prior_dates()
+
+    def plot_prior_dates(self, dwidth=30, ax=None):
+        """Plot prior chronology dates in age-depth plot"""
+        if ax is None:
+            ax = plt.gca()
+        depth, probs = self.prior_dates()
+        pat = []
+        for i, d in enumerate(depth):
+            p = probs[i]
+            z = np.array([p[:, 0], dwidth * p[:, 1] / np.sum(p[:, 1])])  # Normalize
+            z = z[:, z[0].argsort(kind='mergesort')]  # np.interp requires `xp` arg to be sorted
+            zy = np.linspace(np.min(z[0]), np.max(z[0]), num=200)
+            zp = np.interp(x=zy, xp=z[0], fp=z[1])
+            pol = np.vstack([np.concatenate([d + zp, d - zp[::-1]]),
+                             np.concatenate([zy, zy[::-1]])])
+            pat.append(Polygon(pol.T))
+        p = PatchCollection(pat)
+        p.set_labels('Prior dates')
+        ax.add_collection(p)
+        ax.autoscale_view()
+        ax.set_ylabel('Age (cal yr BP)')
+        ax.set_xlabel('Depth (cm)')
+        ax.grid(True)
+        return ax
 
     def prior_sediment_rate(self):
-        self.mcmcsetup.prior_sediment_rate()
+        return self.mcmcsetup.prior_sediment_rate()
+
+    def plot_sediment_rate(self, ax=None):
+        """Plot sediment accumulation rate prior and posterior distributions"""
+        if ax is None:
+            ax = plt.gca()
+
+        y_prior, x_prior = self.prior_sediment_rate()
+        ax.plot(x_prior, y_prior, label='Prior')
+
+        y_posterior = self.mcmcfit.sediment_rate
+        density = scipy.stats.gaussian_kde(y_posterior.flat)
+        density.covariance_factor = lambda: 0.25
+        density._compute_covariance()
+        ax.plot(x_prior, density(x_prior), label='Posterior')
+
+        acc_shape = self.mcmcsetup.mcmc_kwargs['acc_shape']
+        acc_mean = self.mcmcsetup.mcmc_kwargs['acc_mean']
+        annotstr_template = 'acc_shape: {0}\nacc_mean: {1}'
+        annotstr = annotstr_template.format(acc_shape, acc_mean)
+        ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',
+                    horizontalalignment='right', verticalalignment='top')
+
+        ax.set_ylabel('Density')
+        ax.set_xlabel('Acc. rate (yr/cm)')
+        ax.grid(True)
+        return ax
 
     def prior_sediment_memory(self):
-        self.mcmcsetup.prior_sediment_memory()
+        return self.mcmcsetup.prior_sediment_memory()
+
+    def plot_sediment_memory(self, ax=None):
+        """Plot sediment memory prior and posterior distributions"""
+        if ax is None:
+            ax = plt.gca()
+
+        y_prior, x_prior = self.prior_sediment_memory()
+        ax.plot(x_prior, y_prior, label='Prior')
+
+        y_posterior = self.mcmcfit.sediment_memory
+        density = scipy.stats.gaussian_kde(y_posterior ** (1/self.thick))
+        density.covariance_factor = lambda: 0.25
+        density._compute_covariance()
+        ax.plot(x_prior, density(x_prior), label='Posterior')
+
+        mem_mean = self.mcmcsetup.mcmc_kwargs['mem_mean']
+        mem_strength = self.mcmcsetup.mcmc_kwargs['mem_strength']
+        annotstr_template = 'mem_strength: {0}\nmem_mean: {1}\nK: {2}'
+        annotstr = annotstr_template.format(mem_strength, mem_mean, self.thick)
+        ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',
+                    horizontalalignment='right', verticalalignment='top')
+
+        ax.set_ylabel('Density')
+        ax.set_xlabel('Memory (ratio)')
+        ax.grid(True)
+        return ax
 
 
 class NeedFitError(Exception):

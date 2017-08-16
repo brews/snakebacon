@@ -5,8 +5,7 @@ import numpy as np
 
 from snakebacon.mcmcbackends.bacon import fetch_calibcurve
 from snakebacon.mcmcbackends.bacon.utils import d_cal, calibrate_dates
-# from snakebacon.mcmcbackends import Bacon
-from snakebacon import read_dates
+from snakebacon import read_chron
 import snakebacon.records as curve
 
 
@@ -60,7 +59,7 @@ class TestBaconUtils(unittest.TestCase):
         dgoal_n = 40
         pgoal_n = dgoal_n
 
-        chron = read_dates(os.path.join(here, 'MSB2K.csv'))
+        chron = read_chron(os.path.join(here, 'MSB2K.csv'))
 
         d_r = [0]
         d_std = [0]

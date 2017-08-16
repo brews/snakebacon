@@ -14,6 +14,6 @@
    ProxyRecord
 
    read_14c
-   read_dates
+   read_chron
    read_proxy
 

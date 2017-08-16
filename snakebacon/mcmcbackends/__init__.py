@@ -64,7 +64,7 @@ class Bacon:
         # TODO(brews): Check that these stats are correctly translated to scipy.stats distribs.
         acc_mean = kwargs['acc_mean']
         acc_shape = kwargs['acc_shape']
-        x = np.linspace(0, 3 * np.max(acc_mean), 100)
+        x = np.linspace(0, 6 * np.max(acc_mean), 100)
         y = stats.gamma.pdf(x, a=acc_shape,
                             scale=1 / (acc_shape/acc_mean))
         return y, x

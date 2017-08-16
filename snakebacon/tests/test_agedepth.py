@@ -5,7 +5,7 @@ from os import path
 import numpy as np
 import pandas as pd
 
-from snakebacon import read_dates, ProxyRecord
+from snakebacon import read_chron, ProxyRecord
 from snakebacon.agedepth import AgeDepthModel
 
 
@@ -16,12 +16,13 @@ mcmc_kwargs = dict(depth_min=1.5, depth_max=99.5, cc=[1],
                    d_r=[0], d_std=[0], t_a=[3], t_b=[4], k=20,
                    minyr=-1000, maxyr=1e6, th01=4147, th02=4145,
                    acc_mean=20, acc_shape=1.5, mem_strength=4, mem_mean=0.7)
-fullrun_agemodel = AgeDepthModel(read_dates(path.join(here, 'MSB2K.csv')),
+fullrun_agemodel = AgeDepthModel(read_chron(path.join(here, 'MSB2K.csv')),
                                  mcmc_kwargs=mcmc_kwargs)
 
 
 class TestAgeDepth(unittest.TestCase):
     def setUp(self):
+        np.random.seed(123)
         self.testdummy = deepcopy(fullrun_agemodel)
 
     def test_init(self):
@@ -77,6 +78,29 @@ class TestAgeDepth(unittest.TestCase):
         np.testing.assert_allclose(len(victim), goal_len, atol=50)
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=10)
         np.testing.assert_allclose(victim.var(), goal_var, atol=550)
+
+    def test_prior_sediment_memory(self):
+        goal_mean = 0.98457848264590286
+        goal_std = 0.71613816177236256
+        goal_n = 100
+
+        victim, x = self.testdummy.prior_sediment_memory()
+
+        np.testing.assert_equal(len(victim), goal_n)
+        np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
+        np.testing.assert_allclose(victim.std(), goal_std, atol=1e-3)
+
+
+    def test_prior_sediment_rate(self):
+        goal_mean = 0.008194080517375957
+        goal_std = 0.01172658825323754
+        goal_n = 100
+
+        victim, x = self.testdummy.prior_sediment_rate()
+
+        np.testing.assert_equal(len(victim), goal_n)
+        np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
+        np.testing.assert_allclose(victim.std(), goal_std, atol=1e-3)
 
 
 if __name__ == '__main__':

@@ -62,7 +62,7 @@ Creating a ChronRecord
    :toctree: generated/
 
    ChronRecord
-   read_dates
+   read_chron
 
 
 Attributes
