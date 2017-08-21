@@ -13,6 +13,8 @@ Enhancements
 
 Bug fixes
 ~~~~~~~~~
+- Fixed bad label in prior accumulation memory plots. The 'thickness' had been 'K'. This has been corrected.
+
 - Fix AttributeError in AgeDepthModel.plot_prior_dates() (`Issue #9 <https://github.com/brews/snakebacon/issues/9>`_).
 
 

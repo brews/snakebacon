@@ -223,7 +223,7 @@ class AgeDepthModel:
 
         mem_mean = self.mcmcsetup.mcmc_kwargs['mem_mean']
         mem_strength = self.mcmcsetup.mcmc_kwargs['mem_strength']
-        annotstr_template = 'mem_strength: {0}\nmem_mean: {1}\nK: {2}'
+        annotstr_template = 'mem_strength: {0}\nmem_mean: {1}\nthick: {2} cm'
         annotstr = annotstr_template.format(mem_strength, mem_mean, self.thick)
         ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',
                     horizontalalignment='right', verticalalignment='top')
