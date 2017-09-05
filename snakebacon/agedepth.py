@@ -14,9 +14,9 @@ log = logging.getLogger(__name__)
 
 
 class AgeDepthModel:
-    def __init__(self, coredates, *, mcmc_kwargs, hold=False, burnin=200):
+    def __init__(self, coredates, *, mcmc_kws, hold=False, burnin=200):
         self.burnin = int(burnin)
-        self.mcmcsetup = McmcSetup(coredates, **mcmc_kwargs)
+        self.mcmcsetup = McmcSetup(coredates, **mcmc_kws)
         self._mcmcfit = None
         self._thick = None
         self._depth = None
@@ -53,7 +53,7 @@ class AgeDepthModel:
             raise NeedFitError('AgeDepthModel instance needs to be fit() first')
 
     def __repr__(self):
-        return '%s(coredates=%r, mcmc_kwargs=%r, burnin=%r)' % (type(self).__name__, self.mcmcsetup.coredates, self.mcmcsetup.mcmc_kwargs, self.burnin)
+        return '%s(coredates=%r, mcmc_kws=%r, burnin=%r)' % (type(self).__name__, self.mcmcsetup.coredates, self.mcmcsetup.mcmc_kws, self.burnin)
 
     def age_median(self):
         return np.median(self.age_ensemble, axis=1)
@@ -192,8 +192,8 @@ class AgeDepthModel:
         density._compute_covariance()
         ax.plot(x_prior, density(x_prior), label='Posterior')
 
-        acc_shape = self.mcmcsetup.mcmc_kwargs['acc_shape']
-        acc_mean = self.mcmcsetup.mcmc_kwargs['acc_mean']
+        acc_shape = self.mcmcsetup.mcmc_kws['acc_shape']
+        acc_mean = self.mcmcsetup.mcmc_kws['acc_mean']
         annotstr_template = 'acc_shape: {0}\nacc_mean: {1}'
         annotstr = annotstr_template.format(acc_shape, acc_mean)
         ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',
@@ -221,8 +221,8 @@ class AgeDepthModel:
         density._compute_covariance()
         ax.plot(x_prior, density(x_prior), label='Posterior')
 
-        mem_mean = self.mcmcsetup.mcmc_kwargs['mem_mean']
-        mem_strength = self.mcmcsetup.mcmc_kwargs['mem_strength']
+        mem_mean = self.mcmcsetup.mcmc_kws['mem_mean']
+        mem_strength = self.mcmcsetup.mcmc_kws['mem_strength']
         annotstr_template = 'mem_strength: {0}\nmem_mean: {1}\nthick: {2} cm'
         annotstr = annotstr_template.format(mem_strength, mem_mean, self.thick)
         ax.annotate(annotstr, xy=(0.9, 0.9), xycoords='axes fraction',

@@ -11,12 +11,12 @@ from snakebacon.mcmc import McmcResults, McmcSetup
 here = path.abspath(path.dirname(__file__))
 
 
-mcmc_kwargs = dict(depth_min=1.5, depth_max=99.5, cc=[1],
+mcmc_kws = dict(depth_min=1.5, depth_max=99.5, cc=[1],
                    cc1='IntCal13', cc2='Marine13', cc3='SHCal13', cc4='ConstCal',
                    d_r=[0], d_std=[0], t_a=[3], t_b=[4], k=20,
                    minyr=-1000, maxyr=1e6, th01=4147, th02=4145,
                    acc_mean=20, acc_shape=1.5, mem_strength=4, mem_mean=0.7)
-fullrun_setup = McmcSetup(read_chron(path.join(here, 'MSB2K.csv')), **mcmc_kwargs)
+fullrun_setup = McmcSetup(read_chron(path.join(here, 'MSB2K.csv')), **mcmc_kws)
 fullrun_victim = McmcResults(fullrun_setup)
 
 

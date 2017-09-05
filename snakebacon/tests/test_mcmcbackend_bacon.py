@@ -13,7 +13,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 class TestBaconMethods(unittest.TestCase):
 
     def setUp(self):
-        self.mcmc_kwargs = dict(depth_min=1.5, depth_max=99.5, cc=[1],
+        self.mcmc_kws = dict(depth_min=1.5, depth_max=99.5, cc=[1],
                                 cc1='IntCal13', cc2='Marine13', cc3='SHCal13', cc4='ConstCal',
                                 d_r=[0], d_std=[0], t_a=[3], t_b=[4], k=20,
                                 minyr=-1000, maxyr=1e6, th01=4147, th02=4145,
@@ -31,7 +31,7 @@ class TestBaconMethods(unittest.TestCase):
         pgoal_n = dgoal_n
 
         chron = read_chron(os.path.join(here, 'MSB2K.csv'))
-        d_target, p_target = Bacon.prior_dates(chron, **self.mcmc_kwargs)
+        d_target, p_target = Bacon.prior_dates(chron, **self.mcmc_kws)
         np.testing.assert_allclose(d_target[-3:], dgoal)
         np.testing.assert_equal(len(d_target), dgoal_n)
 
@@ -49,7 +49,7 @@ class TestBaconMethods(unittest.TestCase):
         goal_std = 0.01172658825323754
         goal_n = 100
 
-        victim, x = Bacon.prior_sediment_rate(**self.mcmc_kwargs)
+        victim, x = Bacon.prior_sediment_rate(**self.mcmc_kws)
 
         np.testing.assert_equal(len(victim), goal_n)
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
@@ -62,7 +62,7 @@ class TestBaconMethods(unittest.TestCase):
         goal_std = 0.71613816177236256
         goal_n = 100
 
-        victim, x = Bacon.prior_sediment_memory(**self.mcmc_kwargs)
+        victim, x = Bacon.prior_sediment_memory(**self.mcmc_kws)
 
         np.testing.assert_equal(len(victim), goal_n)
         np.testing.assert_allclose(victim.mean(), goal_mean, atol=1e-3)
