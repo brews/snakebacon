@@ -20,8 +20,8 @@ class TestBaconMethods(unittest.TestCase):
                                 acc_mean=20, acc_shape=1.5, mem_strength=4, mem_mean=0.7)
 
     def test_prior_dates(self):
-        pgoal_age_mean = 6702.5
-        pgoal_age_std = 121.23496470353207
+        pgoal_age_mean = 6726.8
+        pgoal_age_std = 192.94564322687978
 
         pgoal_density_mean = 0.011642671907680679
         pgoal_density_std = 0.010893804880746285

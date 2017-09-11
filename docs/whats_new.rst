@@ -15,6 +15,8 @@ Bug fixes
 ~~~~~~~~~
 - All *_kwargs arguments are now *_kws (`Issue #12 <https://github.com/brews/snakebacon/issues/12>`_).
 
+- Fixed some Constant Calibration curve prior dates looking bloated (`Issue #14 <https://github.com/brews/snakebacon/issues/14>`_).
+
 - Fixed bad label in prior accumulation memory plots. The 'thick' had been 'K'. This has been corrected.
 
 - Fix AttributeError in AgeDepthModel.plot_prior_dates() (`Issue #9 <https://github.com/brews/snakebacon/issues/9>`_).
