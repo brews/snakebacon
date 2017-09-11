@@ -49,7 +49,7 @@ def d_cal(calibcurve, rcmean, w2, cutoff=0.0001, normal_distr=False, t_a=3, t_b=
     return out
 
 
-def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.0001, normal_distr=False, t_a=3, t_b=4):
+def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.0001, normal_distr=False, t_a=[3], t_b=[4]):
     """Get density of calendar dates for chron date segment in core
 
     Parameters
@@ -64,9 +64,9 @@ def calibrate_dates(chron, calib_curve, d_r, d_std, cutoff=0.0001, normal_distr=
         Unknown.
     normal_distr : Bool, optional
         Use normal distribution for date errors. If False, then use Student's t-distribution.
-    t_a : scalar, optional
+    t_a : scalar or ndarray, optional
         Student's t-distribution parameter, a. t_a - 1 must equal t_b.
-    t_b : scalar, optional
+    t_b : scalar or ndarray, optional
         Student's t-distribution parameter, b. t_a - 1 must equal t_b.
 
     Returns
