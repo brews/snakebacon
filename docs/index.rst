@@ -15,7 +15,7 @@ Sediment core age modeling in Python
 
 Our goal is to blah blah blah Bacon_.
 
-.. _bacon: http://pandas.pydata.org
+.. _bacon: http://www.chrono.qub.ac.uk/blaauw/bacon.html
 
 Documentation
 -------------
