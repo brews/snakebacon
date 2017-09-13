@@ -8,8 +8,7 @@ What's New
 v0.0.4
 ------
 
-Enhancements
-~~~~~~~~~~~~
+A patch with minor refactoring and bug fixes.
 
 Bug fixes
 ~~~~~~~~~
