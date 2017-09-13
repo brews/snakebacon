@@ -3,6 +3,19 @@
 What's New
 ==========
 
+
+.. _whats-new.0.0.5:
+
+v0.0.5
+------
+
+Enhancements
+~~~~~~~~~~~~
+
+Bug fixes
+~~~~~~~~~
+
+
 .. _whats-new.0.0.4:
 
 v0.0.4
