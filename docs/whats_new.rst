@@ -14,6 +14,7 @@ Enhancements
 
 Bug fixes
 ~~~~~~~~~
+- Documentation spelling errors.
 
 
 .. _whats-new.0.0.4:
