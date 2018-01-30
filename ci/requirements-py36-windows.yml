@@ -5,7 +5,7 @@ channels:
 dependencies:
   - python=3.6
   - cython
-  - gcc
+  - mingw
   - gsl
   - openblas
   - setuptools
