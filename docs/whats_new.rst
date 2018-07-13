@@ -9,8 +9,7 @@ What's New
 v0.0.5
 ------
 
-Enhancements
-~~~~~~~~~~~~
+Minor patch mostly fixing compile issues and documentation.
 
 Bug fixes
 ~~~~~~~~~
