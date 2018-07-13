@@ -11,6 +11,11 @@ VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 FULLVERSION = VERSION
 
 
+def readme():
+    with open('README.rst') as f:
+        return f.read()
+
+
 def write_version_py(filename=None):
     cnt = """\
 version = '%s'
@@ -25,6 +30,7 @@ short_version = '%s'
         a.write(cnt % (FULLVERSION, VERSION))
     finally:
         a.close()
+
 
 write_version_py()
 
@@ -43,6 +49,7 @@ bacon = Extension("snakebacon.mcmcbackends.bacon.baconwrap",
 setup_kwargs = dict(name='snakebacon',
                     version=FULLVERSION,
                     description='snakebacon',
+                    long_description=readme(),
                     url='https://github.com/brews/snakebacon',
                     author='S. Brewster Malevich',
                     author_email='malevich@email.arizona.edu',
