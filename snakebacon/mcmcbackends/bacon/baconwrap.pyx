@@ -5,6 +5,7 @@ import contextlib
 import tempfile
 import numpy as np
 import pandas as pd
+from bacon cimport notmain
 from libc.stdlib cimport malloc, free
 from .Curves import here as curvespath
 
@@ -266,8 +267,6 @@ def _baconmain(str infile, str outfile, int ssize):
     -------
     int relating to burn-in and sub-sample thinning parameters. See bacon.cpp lines 41-44 and 156.
     """
-    cdef extern from "bacon.cpp":
-        int notmain(int argc, char *argv[])
     cdef char **outgoing_argv
     cdef bytes binfile
     cdef bytes boutfile

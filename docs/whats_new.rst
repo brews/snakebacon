@@ -15,6 +15,7 @@ Enhancements
 Bug fixes
 ~~~~~~~~~
 - Documentation spelling errors.
+- Fixed bad compiling C++ module (`Issue #19 <https://github.com/brews/snakebacon/issues/19>`_).
 
 
 .. _whats-new.0.0.4:
