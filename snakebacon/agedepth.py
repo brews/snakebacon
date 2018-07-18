@@ -68,7 +68,7 @@ class AgeDepthModel:
         dmin = min(self._mcmcfit.depth_segments)
         dmax = max(self._mcmcfit.depth_segments)
         self._thick = (dmax - dmin) / len(self.mcmcfit.depth_segments)
-        self._depth = np.arange(dmin, dmax + 1)
+        self._depth = np.arange(dmin, dmax + 0.001)
         self._age_ensemble = np.array([self.agedepth(d=dx) for dx in self.depth])
 
     def date(self, proxy, how='median', n=500):

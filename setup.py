@@ -6,7 +6,7 @@ from setuptools.extension import Extension
 
 MAJOR = 0
 MINOR = 0
-MICRO = 5
+MICRO = 6
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 FULLVERSION = VERSION
 

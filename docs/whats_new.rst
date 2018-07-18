@@ -13,6 +13,7 @@ Enhancements
 
 Bug fixes
 ~~~~~~~~~
+- Fix minor bug were certain min and max depths could cause an IndexError when searching for corresponding sedimentation rates as an AgeDepthModel runs ``self.fit()``.
 
 
 .. _whats-new.0.0.5:
