@@ -10,7 +10,7 @@ v0.0.6
 
 Bug fixes
 ~~~~~~~~~
-- Fix minor bug where certain min and max depths could cause an IndexError when searching for corresponding sedimentation rates as an AgeDepthModel runs ``self.fit()``.
+- Fix minor bug where certain min and max depths could cause an IndexError (`Issue #20 <https://github.com/brews/snakebacon/issues/20>`_).
 
 
 .. _whats-new.0.0.5:
