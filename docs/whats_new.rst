@@ -3,6 +3,21 @@
 What's New
 ==========
 
+.. _whats-new.0.0.7:
+
+v0.0.7
+------
+
+Minor patch.
+
+Enhancements
+~~~~~~~~~~~~
+-
+
+Bug fixes
+~~~~~~~~~
+-
+
 .. _whats-new.0.0.6:
 
 v0.0.6
