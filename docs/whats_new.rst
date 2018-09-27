@@ -8,6 +8,8 @@ What's New
 v0.0.6
 ------
 
+Patch for a minor but annoying bug.
+
 Bug fixes
 ~~~~~~~~~
 - Fix minor bug where certain min and max depths could cause an IndexError (`Issue #20 <https://github.com/brews/snakebacon/issues/20>`_).
