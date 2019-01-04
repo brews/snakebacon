@@ -43,7 +43,8 @@ bacon = Extension("snakebacon.mcmcbackends.bacon.baconwrap",
                            "snakebacon/mcmcbackends/bacon/kernel.cpp"],
                   language="c++",
                   libraries=["gsl", "openblas"],
-                  extra_compile_args=["-xc++", "-lstdc++", "-shared-libgcc", "-O2", "-fopenmp"],
+                  extra_compile_args=["-xc++", "-lstdc++", "-shared-libgcc", "-O2",
+                                      "-fopenmp"],
                   )
 
 setup_kwargs = dict(name='snakebacon',
