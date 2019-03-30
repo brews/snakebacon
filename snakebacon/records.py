@@ -27,7 +27,7 @@ def read_14c(fl):
 def read_chron(fl):
     """Create ChronRecord instance from Bacon file
     """
-    indata = pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python')
+    indata = pd.read_csv(fl, sep=r'\s*\,\s*', index_col=None, engine='python')
     outcore = ChronRecord(age=indata['age'],
                           error=indata['error'],
                           depth=indata['depth'],
@@ -38,7 +38,7 @@ def read_chron(fl):
 def read_proxy(fl):
     """Read a file to create a proxy record instance
     """
-    outcore = ProxyRecord(data=pd.read_table(fl, sep=r'\s*\,\s*', index_col=None, engine='python'))
+    outcore = ProxyRecord(data=pd.read_csv(fl, sep=r'\s*\,\s*', index_col=None, engine='python'))
     return outcore
 
 

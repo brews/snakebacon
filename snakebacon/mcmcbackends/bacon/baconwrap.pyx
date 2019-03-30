@@ -79,7 +79,7 @@ def read_baconout(path):
     along sediment core for each MCMC iteration member. 'objective' (i.e. 'Us'), an array (i) of objective or energy
     function values used in the twalk MCMC.
     """
-    d = pd.read_table(path, delim_whitespace=True, header=None)
+    d = pd.read_csv(path, delim_whitespace=True, header=None, sep='\t')
     # TODO(brews): Function cannot handle hiatus
     out = {'theta': d.iloc[:, 0].values,  # `theta0` or often just `theta`, array (i) of Age of sedimentation core head.
            'x': d.iloc[:, 1:-2].values.T,  # `x`, 2d array (i, j) of sediment accumulation rates for each segment (i) down the sediment core of each MCMC iteration (j).
