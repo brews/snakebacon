@@ -31,7 +31,6 @@ short_version = '%s'
     finally:
         a.close()
 
-
 write_version_py()
 
 bacon = Extension("snakebacon.mcmcbackends.bacon.baconwrap",
@@ -43,8 +42,8 @@ bacon = Extension("snakebacon.mcmcbackends.bacon.baconwrap",
                            "snakebacon/mcmcbackends/bacon/kernel.cpp"],
                   language="c++",
                   libraries=["gsl", "openblas"],
-                  extra_compile_args=["-xc++", "-lstdc++", "-shared-libgcc", "-O2",
-                                      "-fopenmp"],
+                  # Below for clang, need -fopenmp if using gcc
+                  extra_compile_args=["-xc++", "-lstdc++", "-shared-libgcc", "-O2"],
                   )
 
 setup_kwargs = dict(name='snakebacon',
