@@ -9,7 +9,7 @@ The project is currently unmaintained and probably no longer appropriate for pro
 
 ``snakebacon`` is a Python wrapper around the "Bacon" Bayesian age-depth modelling software `(Blaauw & Christen 2011)`_.
 
-.. _(Blaauw & Christen 2011): https://doi.org/10.1214/11-BA61
+.. _(Blaauw & Christen 2011): http://dx.doi.org/10.1214%2F11-BA618
 
 
 Acknowledgements and support
