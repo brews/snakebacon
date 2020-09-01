@@ -15,7 +15,7 @@ The project is currently unmaintained and probably no longer appropriate for pro
 Acknowledgements and support
 ----------------------------
 
-C/C++ code in this repository is modified from the original "Bacon" software available under the GPL-3.0 /GPL-2.0 License. An updated version of this software is available in R package `rbacon`, available on CRAN (https://cran.r-project.org/web/packages/rbacon).
+C/C++ code in this repository is modified from the original "Bacon" software, available under the GPL-3.0 /GPL-2.0 License. An updated version of "Bacon" is available in R package ``rbacon``, available on CRAN (https://cran.r-project.org/web/packages/rbacon).
 
 We recommend the ``rbacon`` package if you require similar age-modeling software, as ``rbacon`` is regularly updated and maintained.
 
